@@ -3,8 +3,6 @@ package interfaces;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -13,13 +11,8 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JTabbedPane;
 import java.awt.CardLayout;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.LinkedHashMap;
-import java.beans.PropertyChangeEvent;
 
 public class MainInterface {
 
