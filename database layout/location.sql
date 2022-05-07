@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 07, 2022 at 05:22 PM
+-- Generation Time: May 07, 2022 at 05:57 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -92,7 +92,8 @@ CREATE TABLE `vehicule` (
   `carburant` varchar(20) NOT NULL,
   `kilometrage` int(11) NOT NULL,
   `dateMiseCirculation` date NOT NULL,
-  `codePark` int(11) NOT NULL
+  `codePark` int(11) NOT NULL,
+  `prixLocation` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
