@@ -31,7 +31,6 @@ public class ClientController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public static boolean creatClient (String nom, String prenom, String numTel) {

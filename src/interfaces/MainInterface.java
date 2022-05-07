@@ -2,7 +2,6 @@ package interfaces;
 
 import java.awt.EventQueue;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,7 +25,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.CardLayout;
 import java.util.LinkedHashMap;
-import java.awt.FlowLayout;
 
 public class MainInterface {
 
