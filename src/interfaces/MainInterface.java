@@ -2,17 +2,31 @@ package interfaces;
 
 import java.awt.EventQueue;
 
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import controller.ClientController;
+
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.CardLayout;
 import java.util.LinkedHashMap;
+import java.awt.FlowLayout;
 
 public class MainInterface {
 
@@ -26,6 +40,9 @@ public class MainInterface {
 	private JPanel mainPanel;
 	private String currentPane;
 	private LinkedHashMap<String, JLabel> navItemList;
+	// client panel field
+	private JTable clienttable;
+	private JTextField clienttextField;
 	/**
 	 * Launch the application.
 	 */
@@ -47,6 +64,7 @@ public class MainInterface {
 	 */
 	public MainInterface() {
 		initialize();
+		ClientController.fetchAll(clienttable);
 	}
 
 	/**
@@ -134,9 +152,6 @@ public class MainInterface {
 		JPanel client = new JPanel();
 		mainPanel.add(client, "client");
 		
-		JLabel lblNewLabel = new JLabel("Gestion des clients");
-		client.add(lblNewLabel);
-		
 		JPanel parking = new JPanel();
 		mainPanel.add(parking, "parking");
 		
@@ -178,6 +193,91 @@ public class MainInterface {
 		
 		JLabel lblUtilisateurs = new JLabel("utilisateurs");
 		utilisateurs.add(lblUtilisateurs);
+		client.setLayout(null);
+		
+		// Client Panel generation 
+		//*********************************************************************************************************************
+		JScrollPane clientscrollPane = new JScrollPane();
+		clientscrollPane.setBounds(10, 58, 574, 478);
+		client.add(clientscrollPane);
+		
+		clienttable = new JTable();
+		clienttable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		Object[] clientcolumns = {"id", "nom", "prenom", "numTel"};
+		DefaultTableModel clientmodel = new DefaultTableModel();
+		clientmodel.setColumnCount(4);
+		clientmodel.setColumnIdentifiers(clientcolumns);
+		clienttable.setModel(clientmodel);
+		clientscrollPane.setViewportView(clienttable);
+		
+		JButton clientbtnNewButton = new JButton("Rechercher");
+		clientbtnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String string = clienttextField.getText();
+				ClientController.findClient(string, clienttable);
+				clienttextField.setText("");
+			}
+		});
+		clientbtnNewButton.setBounds(594, 11, 128, 36);
+		client.add(clientbtnNewButton);
+		
+		JButton clientbtnNewButton_1 = new JButton("Nouveau Client");
+		clientbtnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreerNouveauClient nouveauClient = new CreerNouveauClient();
+				ClientController.fetchAll(clienttable);
+			}
+		});
+		clientbtnNewButton_1.setBounds(594, 76, 128, 36);
+		client.add(clientbtnNewButton_1);
+		
+		clienttextField = new JTextField();
+		clienttextField.setBounds(10, 11, 574, 36);
+		client.add(clienttextField);
+		clienttextField.setColumns(10);
+		
+		JButton clientbtnNewButton_2 = new JButton("Modifier");
+		clientbtnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = clienttable.getSelectedRow();
+				ModifierClient.setId(clienttable.getModel().getValueAt(index, 0).toString());
+				if (index >= 0) {
+				ModifierClient window = new ModifierClient();
+				window.setTextField(clienttable.getModel().getValueAt(index, 1).toString());
+				window.setTextField_1(clienttable.getModel().getValueAt(index, 2).toString());
+				window.setTextField_2(clienttable.getModel().getValueAt(index, 3).toString());
+				}
+			}
+		});
+		clientbtnNewButton_2.setBounds(594, 170, 128, 36);
+		client.add(clientbtnNewButton_2);
+		
+		JButton clientbtnNewButton_3 = new JButton("Actualiser");
+		clientbtnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClientController.fetchAll(clienttable);
+			}
+		});
+		clientbtnNewButton_3.setBounds(594, 264, 128, 36);
+		client.add(clientbtnNewButton_3);
+		
+		JButton clientbtnNewButton_4 = new JButton("Supprimer");
+		clientbtnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = clienttable.getSelectedRow();
+				ClientController.deleteClient(clienttable.getModel().getValueAt(index, 0).toString());
+				ClientController.fetchAll(clienttable);
+			}
+		});
+		clientbtnNewButton_4.setBounds(594, 217, 128, 36);
+		client.add(clientbtnNewButton_4);
+		
+		JButton clientbtnNewButton_5 = new JButton("Afficher");
+		clientbtnNewButton_5.setBounds(594, 123, 128, 36);
+		client.add(clientbtnNewButton_5);
+		//*********************************************************************************************************************
+		
+		
 	}
 	
 	private void setupNavItem(JLabel lab, String name) {
