@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ClientController;
+import controller.ReservationController;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.CardLayout;
 import java.util.LinkedHashMap;
+import java.awt.Button;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import controller.ReservationController.filtre;
 
 public class MainInterface {
 
@@ -41,6 +46,8 @@ public class MainInterface {
 	// client panel field
 	private JTable clienttable;
 	private JTextField clienttextField;
+	private JTable reserv_table;
+	private JTextField textField;
 	/**
 	 * Launch the application.
 	 */
@@ -62,7 +69,7 @@ public class MainInterface {
 	 */
 	public MainInterface() {
 		initialize();
-		ClientController.fetchAll(clienttable);
+//		ClientController.fetchAll(clienttable);
 	}
 
 	/**
@@ -156,12 +163,62 @@ public class MainInterface {
 		JLabel lblNewLabel_1 = new JLabel("Parking");
 		parking.add(lblNewLabel_1);
 		
+		//Panel des RESERVATIONS -------------------------------------------------------------------------------------------------------------------------------------------
 		JPanel reservations = new JPanel();
 		mainPanel.add(reservations, "reserv");
+		reservations.setLayout(null);
 		
-		JLabel lblNewLabel_2 = new JLabel("Reservations");
-		reservations.add(lblNewLabel_2);
 		
+		JScrollPane reserv_scroll = new JScrollPane();
+		reserv_scroll.setBounds(23, 57, 484, 462);
+		reservations.add(reserv_scroll);
+		
+		reserv_table = new JTable();
+		reserv_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		reserv_scroll.setViewportView(reserv_table);
+		
+		JComboBox reserv_filtre = new JComboBox();
+		reserv_filtre.setModel(new DefaultComboBoxModel(filtre.values()));
+		reserv_filtre.setMaximumRowCount(4);
+		reserv_filtre.setBounds(527, 432, 175, 21);
+		reservations.add(reserv_filtre);
+		
+		JButton reserv_actualiser_btn = new JButton("Actualiser");
+		reserv_actualiser_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReservationController.fetchAll(reserv_table, (filtre)reserv_filtre.getSelectedItem());
+			}
+		});
+		reserv_actualiser_btn.setBounds(527, 463, 175, 56);
+		reservations.add(reserv_actualiser_btn);
+		
+		JLabel filtre_lbl = new JLabel("Filtre :");
+		filtre_lbl.setBounds(530, 401, 172, 21);
+		reservations.add(filtre_lbl);
+		
+		JButton newReserv_btn = new JButton("Nouveau reservation");
+		newReserv_btn.setBounds(517, 155, 185, 56);
+		reservations.add(newReserv_btn);
+		
+		JButton delReserv_btn = new JButton("Supprimer reservation");
+		delReserv_btn.setBounds(517, 225, 185, 56);
+		reservations.add(delReserv_btn);
+		
+		JButton modReserv_btn = new JButton("Modifier reservation");
+		modReserv_btn.setBounds(517, 291, 185, 56);
+		reservations.add(modReserv_btn);
+		
+		textField = new JTextField();
+		textField.setBounds(23, 10, 371, 37);
+		reservations.add(textField);
+		textField.setColumns(10);
+		
+		JButton searchReserv_btn = new JButton("Rechercher");
+		searchReserv_btn.setBounds(404, 10, 103, 37);
+		reservations.add(searchReserv_btn);
+		
+		
+		//END PANEL RESERVATIONS -------------------------------------------------------------------------------------------------------------------------------------------
 		JPanel contrats = new JPanel();
 		mainPanel.add(contrats, "contrat");
 		
@@ -195,86 +252,87 @@ public class MainInterface {
 		
 		// Client Panel generation 
 		//*********************************************************************************************************************
-		JScrollPane clientscrollPane = new JScrollPane();
-		clientscrollPane.setBounds(10, 58, 574, 478);
-		client.add(clientscrollPane);
-		
-		clienttable = new JTable();
-		clienttable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		Object[] clientcolumns = {"id", "nom", "prenom", "numTel"};
-		DefaultTableModel clientmodel = new DefaultTableModel();
-		clientmodel.setColumnCount(4);
-		clientmodel.setColumnIdentifiers(clientcolumns);
-		clienttable.setModel(clientmodel);
-		clientscrollPane.setViewportView(clienttable);
-		
-		JButton clientbtnNewButton = new JButton("Rechercher");
-		clientbtnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String string = clienttextField.getText();
-				ClientController.findClient(string, clienttable);
-				clienttextField.setText("");
-			}
-		});
-		clientbtnNewButton.setBounds(594, 11, 128, 36);
-		client.add(clientbtnNewButton);
-		
-		JButton clientbtnNewButton_1 = new JButton("Nouveau Client");
-		clientbtnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CreerNouveauClient nouveauClient = new CreerNouveauClient();
-				ClientController.fetchAll(clienttable);
-			}
-		});
-		clientbtnNewButton_1.setBounds(594, 76, 128, 36);
-		client.add(clientbtnNewButton_1);
-		
-		clienttextField = new JTextField();
-		clienttextField.setBounds(10, 11, 574, 36);
-		client.add(clienttextField);
-		clienttextField.setColumns(10);
-		
-		JButton clientbtnNewButton_2 = new JButton("Modifier");
-		clientbtnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = clienttable.getSelectedRow();
-				ModifierClient.setId(clienttable.getModel().getValueAt(index, 0).toString());
-				if (index >= 0) {
-				ModifierClient window = new ModifierClient();
-				window.setTextField(clienttable.getModel().getValueAt(index, 1).toString());
-				window.setTextField_1(clienttable.getModel().getValueAt(index, 2).toString());
-				window.setTextField_2(clienttable.getModel().getValueAt(index, 3).toString());
-				}
-			}
-		});
-		clientbtnNewButton_2.setBounds(594, 170, 128, 36);
-		client.add(clientbtnNewButton_2);
-		
-		JButton clientbtnNewButton_3 = new JButton("Actualiser");
-		clientbtnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ClientController.fetchAll(clienttable);
-			}
-		});
-		clientbtnNewButton_3.setBounds(594, 264, 128, 36);
-		client.add(clientbtnNewButton_3);
-		
-		JButton clientbtnNewButton_4 = new JButton("Supprimer");
-		clientbtnNewButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = clienttable.getSelectedRow();
-				ClientController.deleteClient(clienttable.getModel().getValueAt(index, 0).toString());
-				ClientController.fetchAll(clienttable);
-			}
-		});
-		clientbtnNewButton_4.setBounds(594, 217, 128, 36);
-		client.add(clientbtnNewButton_4);
-		
-		JButton clientbtnNewButton_5 = new JButton("Afficher");
-		clientbtnNewButton_5.setBounds(594, 123, 128, 36);
-		client.add(clientbtnNewButton_5);
+//		JScrollPane clientscrollPane = new JScrollPane();
+//		clientscrollPane.setBounds(10, 58, 574, 478);
+//		client.add(clientscrollPane);
+//		
+//		clienttable = new JTable();
+//		clienttable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		Object[] clientcolumns = {"id", "nom", "prenom", "numTel"};
+//		DefaultTableModel clientmodel = new DefaultTableModel();
+//		clientmodel.setColumnCount(4);
+//		clientmodel.setColumnIdentifiers(clientcolumns);
+//		clienttable.setModel(clientmodel);
+//		clientscrollPane.setViewportView(clienttable);
+//		
+//		JButton clientbtnNewButton = new JButton("Rechercher");
+//		clientbtnNewButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				String string = clienttextField.getText();
+//				ClientController.findClient(string, clienttable);
+//				clienttextField.setText("");
+//			}
+//		});
+//		clientbtnNewButton.setBounds(594, 11, 128, 36);
+//		client.add(clientbtnNewButton);
+//		
+//		JButton clientbtnNewButton_1 = new JButton("Nouveau Client");
+//		clientbtnNewButton_1.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				CreerNouveauClient nouveauClient = new CreerNouveauClient();
+//				ClientController.fetchAll(clienttable);
+//			}
+//		});
+//		clientbtnNewButton_1.setBounds(594, 76, 128, 36);
+//		client.add(clientbtnNewButton_1);
+//		
+//		clienttextField = new JTextField();
+//		clienttextField.setBounds(10, 11, 574, 36);
+//		client.add(clienttextField);
+//		clienttextField.setColumns(10);
+//		
+//		JButton clientbtnNewButton_2 = new JButton("Modifier");
+//		clientbtnNewButton_2.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				int index = clienttable.getSelectedRow();
+//				ModifierClient.setId(clienttable.getModel().getValueAt(index, 0).toString());
+//				if (index >= 0) {
+//				ModifierClient window = new ModifierClient();
+//				window.setTextField(clienttable.getModel().getValueAt(index, 1).toString());
+//				window.setTextField_1(clienttable.getModel().getValueAt(index, 2).toString());
+//				window.setTextField_2(clienttable.getModel().getValueAt(index, 3).toString());
+//				}
+//			}
+//		});
+//		clientbtnNewButton_2.setBounds(594, 170, 128, 36);
+//		client.add(clientbtnNewButton_2);
+//		
+//		JButton clientbtnNewButton_3 = new JButton("Actualiser");
+//		clientbtnNewButton_3.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				ClientController.fetchAll(clienttable);
+//			}
+//		});
+//		clientbtnNewButton_3.setBounds(594, 264, 128, 36);
+//		client.add(clientbtnNewButton_3);
+//		
+//		JButton clientbtnNewButton_4 = new JButton("Supprimer");
+//		clientbtnNewButton_4.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				int index = clienttable.getSelectedRow();
+//				ClientController.deleteClient(clienttable.getModel().getValueAt(index, 0).toString());
+//				ClientController.fetchAll(clienttable);
+//			}
+//		});
+//		clientbtnNewButton_4.setBounds(594, 217, 128, 36);
+//		client.add(clientbtnNewButton_4);
+//		
+//		JButton clientbtnNewButton_5 = new JButton("Afficher");
+//		clientbtnNewButton_5.setBounds(594, 123, 128, 36);
+//		client.add(clientbtnNewButton_5);
 		//*********************************************************************************************************************
 		
+		cl.show(mainPanel, "reserv");
 		
 	}
 	
