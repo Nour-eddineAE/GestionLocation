@@ -19,7 +19,7 @@ public class ReservationController {
 		Annule
 	};
 	public static void fetchAll (JTable table, filtre fil) {
-		String query= "SELECT nomClient, prenomClient, dateDepReservation, dateRetReservation, isValid, isCanceled FROM reservation, client WHERE reservation.codeClient = client.codeClient";
+		String query= "SELECT codeReservation, nomClient, prenomClient, dateDepReservation, dateRetReservation, isValid, isCanceled FROM reservation, client WHERE reservation.codeClient = client.codeClient";
 		switch(fil) {
 			case Tous:
 				query += ";";
@@ -36,28 +36,41 @@ public class ReservationController {
 		}
 		ResultSet result = ConnectionManager.execute(query);
 		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("Code Reservation");
 		dtm.addColumn("Prenom Client");
 		dtm.addColumn("Nom Client");
 		dtm.addColumn("Date Depart");
 		dtm.addColumn("Date Retour");
 		dtm.addColumn("Valid");
-		dtm.addColumn("Annulee");
+		dtm.addColumn("Annulée");
 		dtm.setRowCount(0);
 		table.setModel(dtm);
 		try {
 			while (result.next()) {
+				String codeReserv = result.getString("codeReservation");
 				String nomClient = result.getString("nomClient");
 				String prenomClient = result.getString("prenomClient");
 				Date dateDepart = result.getDate("dateDepReservation");
 				Date dateRetour = result.getDate("dateRetReservation");
 				boolean isValid = result.getBoolean("isValid");
 				boolean isCanceled = result.getBoolean("isCanceled");
-				Object[] row = {nomClient, prenomClient, dateDepart, dateRetour, isValid, isCanceled};
+				Object[] row = {codeReserv, nomClient, prenomClient, dateDepart, dateRetour, isValid, isCanceled};
 				
 				dtm.addRow(row);
 			}
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void deleteReservation (String codeReserv) {
+		try {
+			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("DELETE FROM reservation WHERE codeReservation = ?");
+			prepared.setString(1, codeReserv);
+			prepared.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
