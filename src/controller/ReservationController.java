@@ -35,16 +35,9 @@ public class ReservationController {
 				break;
 		}
 		ResultSet result = ConnectionManager.execute(query);
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("Code Reservation");
-		dtm.addColumn("Prenom Client");
-		dtm.addColumn("Nom Client");
-		dtm.addColumn("Date Depart");
-		dtm.addColumn("Date Retour");
-		dtm.addColumn("Valid");
-		dtm.addColumn("Annulée");
-		dtm.setRowCount(0);
-		table.setModel(dtm);
+		
+		DefaultTableModel dtm = prepareTable(table);
+		
 		try {
 			while (result.next()) {
 				String codeReserv = result.getString("codeReservation");
@@ -73,5 +66,46 @@ public class ReservationController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void findReservation(String codeReservation, JTable table) {
+		String query = "SELECT codeReservation, nomClient, prenomClient, dateDepReservation, dateRetReservation, isValid, isCanceled FROM reservation, client WHERE reservation.codeClient = client.codeClient AND codeReservation = ?;";
+		PreparedStatement preparedSt;
+		
+		DefaultTableModel dtm = prepareTable(table);
+		try {
+			preparedSt = ConnectionManager.getConnection().prepareStatement(query);
+			preparedSt.setString(1, codeReservation);
+			ResultSet result = preparedSt.executeQuery();
+			while (result.next()) {
+				String codeReserv = result.getString("codeReservation");
+				String nomClient = result.getString("nomClient");
+				String prenomClient = result.getString("prenomClient");
+				Date dateDepart = result.getDate("dateDepReservation");
+				Date dateRetour = result.getDate("dateRetReservation");
+				boolean isValid = result.getBoolean("isValid");
+				boolean isCanceled = result.getBoolean("isCanceled");
+				Object[] row = {codeReserv, nomClient, prenomClient, dateDepart, dateRetour, isValid, isCanceled};
+				
+				dtm.addRow(row);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static DefaultTableModel prepareTable(JTable table) {
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("Code Reservation");
+		dtm.addColumn("Prenom Client");
+		dtm.addColumn("Nom Client");
+		dtm.addColumn("Date Depart");
+		dtm.addColumn("Date Retour");
+		dtm.addColumn("Valid");
+		dtm.addColumn("Annulée");
+		dtm.setRowCount(0);
+		table.setModel(dtm);
+		return dtm;
 	}
 }

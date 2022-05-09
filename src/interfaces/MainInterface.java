@@ -115,25 +115,6 @@ public class MainInterface {
 		navigation.setBackground(secondaryColor);
 		navigation.setLayout(new GridLayout(8, 1, 0, 0));
 		
-		/*
-		JLabel clients_lbl = new JLabel("Gestion de clients");
-		
-		JLabel reservations_lbl = new JLabel("Gestion des reservations");
-		
-		JLabel contrats_lbl = new JLabel("Gestion des contrats");
-		
-		JLabel factures_lbl = new JLabel("Gestion des factures");
-		
-		JLabel sanctions_lbl = new JLabel("Gestion des sanctions");
-		
-		JLabel vehicules_lbl = new JLabel("Gestion des vehicules");
-		
-		JLabel parking_lbl = new JLabel("Gestion des parkings");
-		
-		JLabel utilisateurs_lbl = new JLabel("Gestion des utilisateurs");
-		*/
-		
-		//Add all labels to list so we can modify their properties in the method below [Respect name Order Above]
 		navItemList = new LinkedHashMap<String,JLabel>();
 		navItemList.put("client", new JLabel("Gestion de clients"));
 		navItemList.put("reserv", new JLabel("Gestion des reservations"));
@@ -382,6 +363,12 @@ public class MainInterface {
 		
 		JButton searchReserv_btn = new JButton("Rechercher");
 		searchReserv_btn.setBounds(404, 10, 103, 37);
+		searchReserv_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String codeReserv = reserv_field.getText();
+				ReservationController.findReservation(codeReserv, reserv_table);
+			}
+		});
 		reservations.add(searchReserv_btn);
 		
 	}
