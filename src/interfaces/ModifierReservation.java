@@ -23,15 +23,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.ListSelectionModel;
+import javax.swing.JCheckBox;
 
 public class ModifierReservation {
 
 	private JFrame frmCreerReservation;
-	private JTable reserv_client_table;
 	private JTable reserv_table;
 	
 	private String dateDepart, dateRetour;
-	private JTable serv_vehi_table;
 	private Color mainColor;
 	private Color secondaryColor;
 	
@@ -77,80 +76,31 @@ public class ModifierReservation {
 		frmCreerReservation.setResizable(false);
 		frmCreerReservation.setVisible(true);
 		frmCreerReservation.setTitle("Creer reservation");
-		frmCreerReservation.setBounds(100, 100, 1053, 648);
+		frmCreerReservation.setBounds(100, 100, 1053, 444);
 		frmCreerReservation.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmCreerReservation.getContentPane().setLayout(null);
 		
-		JScrollPane reserv_client_Scroll = new JScrollPane();
-		reserv_client_Scroll.setBounds(29, 58, 452, 150);
-		frmCreerReservation.getContentPane().add(reserv_client_Scroll);
-		
-		reserv_client_table = new JTable();
-		reserv_client_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		reserv_client_table.setBackground(new Color(255, 255, 255));
-		reserv_client_Scroll.setViewportView(reserv_client_table);
-		
-		
-		JLabel choice_lbl = new JLabel("Choisir un client :");
-		choice_lbl.setBounds(29, 22, 347, 34);
-		frmCreerReservation.getContentPane().add(choice_lbl);
-		
 		JLabel dateDepart_lbl = new JLabel("Date depart:");
-		dateDepart_lbl.setBounds(218, 275, 124, 28);
+		dateDepart_lbl.setBounds(227, 35, 124, 28);
 		frmCreerReservation.getContentPane().add(dateDepart_lbl);
 		
 		JLabel dateRetour_lbl = new JLabel("Date Retour:");
-		dateRetour_lbl.setBounds(218, 390, 124, 28);
+		dateRetour_lbl.setBounds(227, 150, 124, 28);
 		frmCreerReservation.getContentPane().add(dateRetour_lbl);
-		
-		JButton reserv_client_actualiser = new JButton("Actualiser");
-		reserv_client_actualiser.setBackground(secondaryColor);
-		reserv_client_actualiser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ClientController.fetchAll(reserv_client_table);
-			}
-		});
-		reserv_client_actualiser.setBounds(29, 227, 168, 34);
-		frmCreerReservation.getContentPane().add(reserv_client_actualiser);
-		
-		ClientController.fetchAll(reserv_client_table);
 		
 		//Creation des panel de choix de date
 		dateDep();
 		dateRet();
-		
-		JScrollPane reserv_vehi_Scroll = new JScrollPane();
-		reserv_vehi_Scroll.setBounds(526, 58, 452, 150);
-		frmCreerReservation.getContentPane().add(reserv_vehi_Scroll);
-		
-		serv_vehi_table = new JTable();
-		serv_vehi_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		reserv_vehi_Scroll.setViewportView(serv_vehi_table);
-		
-		JButton reserv_vehi_actualiser = new JButton("Actualiser");
-		reserv_vehi_actualiser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		reserv_vehi_actualiser.setBackground(secondaryColor);
-		reserv_vehi_actualiser.setBounds(526, 227, 168, 34);
-		frmCreerReservation.getContentPane().add(reserv_vehi_actualiser);
 		
 		JButton sauvegarder_btn = new JButton("Sauvegarder");
 		sauvegarder_btn.setForeground(new Color(255, 255, 255));
 		sauvegarder_btn.setBackground(mainColor);
 		sauvegarder_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int index = reserv_client_table.getSelectedRow();
 				
-				//TODO: check if user hasnt chosen any client or vehicle first
-				String codeClient = Integer.toString((int)reserv_client_table.getValueAt(index, 0));
-				ReservationController.createReservation(codeClient, "NULL", dateDepart, dateRetour); 
-				ReservationController.fetchAll(reserv_table, filtre.Tous);
-				OperationEffectue op = new OperationEffectue();
 			}
 		});
-		sauvegarder_btn.setBounds(869, 548, 109, 34);
+		sauvegarder_btn.setBounds(869, 350, 109, 34);
 		frmCreerReservation.getContentPane().add(sauvegarder_btn);
 		
 		JButton Annuler_btn = new JButton("Annuler");
@@ -161,8 +111,16 @@ public class ModifierReservation {
 				frmCreerReservation.dispose();
 			}
 		});
-		Annuler_btn.setBounds(29, 548, 109, 34);
+		Annuler_btn.setBounds(29, 350, 109, 34);
 		frmCreerReservation.getContentPane().add(Annuler_btn);
+		
+		JCheckBox valide_box = new JCheckBox("Valid\u00E9");
+		valide_box.setBounds(227, 307, 270, 21);
+		frmCreerReservation.getContentPane().add(valide_box);
+		
+		JCheckBox annul_box = new JCheckBox("Annul\u00E9");
+		annul_box.setBounds(516, 307, 270, 21);
+		frmCreerReservation.getContentPane().add(annul_box);
 		
 	}
 	
@@ -171,7 +129,7 @@ public class ModifierReservation {
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		
 		JPanel dateDepInput = new JPanel();
-		dateDepInput.setBounds(218, 313, 559, 67);
+		dateDepInput.setBounds(227, 73, 559, 67);
 		frmCreerReservation.getContentPane().add(dateDepInput);
 		dateDepInput.setLayout(null);
 		
@@ -222,7 +180,7 @@ public class ModifierReservation {
 		
 		JPanel dateRetInput = new JPanel();
 		dateRetInput.setLayout(null);
-		dateRetInput.setBounds(218, 428, 559, 67);
+		dateRetInput.setBounds(227, 188, 559, 67);
 		frmCreerReservation.getContentPane().add(dateRetInput);
 		
 		JComboBox annee_comboBox = new JComboBox();

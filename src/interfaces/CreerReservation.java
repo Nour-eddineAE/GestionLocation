@@ -156,6 +156,10 @@ public class CreerReservation {
 		Annuler_btn.setBounds(29, 548, 109, 34);
 		frmCreerReservation.getContentPane().add(Annuler_btn);
 		
+		JLabel choice_lbl_1 = new JLabel("Choisir une voiture:");
+		choice_lbl_1.setBounds(526, 22, 347, 34);
+		frmCreerReservation.getContentPane().add(choice_lbl_1);
+		
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
