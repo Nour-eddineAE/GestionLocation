@@ -108,4 +108,21 @@ public class ReservationController {
 		table.setModel(dtm);
 		return dtm;
 	}
+	
+	public static boolean createReservation(String codeClient, String codeVoiture, String dateDep, String dateRet) {
+		try {
+			String query = "INSERT INTO `reservation` (`codeReservation`, `dateReservation`, `dateDepReservation`, `dateRetReservation`, `isValid`, `isCanceled`, `codeClient`, `codeVehicule`) VALUES (NULL, CURRENT_DATE(), ?, ?, '0', '0', ?, ?);";
+			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
+			prepared.setString(1, dateDep);
+			prepared.setString(2, dateRet);
+			prepared.setString(3, codeClient);
+			prepared.setString(4, codeVoiture);
+			prepared.execute();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

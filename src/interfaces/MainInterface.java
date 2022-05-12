@@ -303,7 +303,7 @@ public class MainInterface {
 	}
 	
 	private void createReservationPanel() {
-
+		
 		JPanel reservations = new JPanel();
 		mainPanel.add(reservations, "reserv");
 		reservations.setLayout(null);
@@ -316,6 +316,7 @@ public class MainInterface {
 		reserv_table = new JTable();
 		reserv_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		reserv_scroll.setViewportView(reserv_table);
+		ReservationController.fetchAll(reserv_table, filtre.Tous);
 		
 		JComboBox reserv_filtre = new JComboBox();
 		reserv_filtre.setModel(new DefaultComboBoxModel(filtre.values()));
@@ -337,6 +338,12 @@ public class MainInterface {
 		reservations.add(filtre_lbl);
 		
 		JButton newReserv_btn = new JButton("Nouveau reservation");
+		newReserv_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreerReservation newReserv = new CreerReservation(reserv_table);
+				ReservationController.fetchAll(reserv_table, (filtre)reserv_filtre.getSelectedItem());
+			}
+		});
 		newReserv_btn.setBounds(517, 155, 185, 56);
 		reservations.add(newReserv_btn);
 		

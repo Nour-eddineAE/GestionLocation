@@ -15,18 +15,26 @@ import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
 import controller.ClientController;
+import controller.ReservationController;
+import controller.ReservationController.filtre;
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.ListSelectionModel;
 
-public class CreerRerservation {
+public class ModifierReservation {
 
 	private JFrame frmCreerReservation;
 	private JTable reserv_client_table;
+	private JTable reserv_table;
 	
 	private String dateDepart, dateRetour;
 	private JTable serv_vehi_table;
+	private Color mainColor;
+	private Color secondaryColor;
+	
 
 	/**
 	 * Launch the application.
@@ -35,7 +43,7 @@ public class CreerRerservation {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreerRerservation window = new CreerRerservation();
+					ModifierReservation window = new ModifierReservation();
 					window.frmCreerReservation.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +55,16 @@ public class CreerRerservation {
 	/**
 	 * Create the application.
 	 */
-	public CreerRerservation() {
+	public ModifierReservation() {
+		mainColor = new Color(75, 0, 130);
+		secondaryColor = new Color(224, 199, 242);
+		initialize();
+	}
+	
+	public ModifierReservation(JTable reserv_table, String dateDep, String dateRet) {
+		this.reserv_table = reserv_table;
+		mainColor = new Color(75, 0, 130);
+		secondaryColor = new Color(224, 199, 242);
 		initialize();
 	}
 
@@ -56,7 +73,9 @@ public class CreerRerservation {
 	 */
 	private void initialize() {
 		frmCreerReservation = new JFrame();
+		frmCreerReservation.getContentPane().setBackground(new Color(255, 255, 255));
 		frmCreerReservation.setResizable(false);
+		frmCreerReservation.setVisible(true);
 		frmCreerReservation.setTitle("Creer reservation");
 		frmCreerReservation.setBounds(100, 100, 1053, 648);
 		frmCreerReservation.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -67,7 +86,10 @@ public class CreerRerservation {
 		frmCreerReservation.getContentPane().add(reserv_client_Scroll);
 		
 		reserv_client_table = new JTable();
+		reserv_client_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		reserv_client_table.setBackground(new Color(255, 255, 255));
 		reserv_client_Scroll.setViewportView(reserv_client_table);
+		
 		
 		JLabel choice_lbl = new JLabel("Choisir un client :");
 		choice_lbl.setBounds(29, 22, 347, 34);
@@ -82,6 +104,7 @@ public class CreerRerservation {
 		frmCreerReservation.getContentPane().add(dateRetour_lbl);
 		
 		JButton reserv_client_actualiser = new JButton("Actualiser");
+		reserv_client_actualiser.setBackground(secondaryColor);
 		reserv_client_actualiser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClientController.fetchAll(reserv_client_table);
@@ -101,23 +124,44 @@ public class CreerRerservation {
 		frmCreerReservation.getContentPane().add(reserv_vehi_Scroll);
 		
 		serv_vehi_table = new JTable();
+		serv_vehi_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		reserv_vehi_Scroll.setViewportView(serv_vehi_table);
 		
 		JButton reserv_vehi_actualiser = new JButton("Actualiser");
+		reserv_vehi_actualiser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		reserv_vehi_actualiser.setBackground(secondaryColor);
 		reserv_vehi_actualiser.setBounds(526, 227, 168, 34);
 		frmCreerReservation.getContentPane().add(reserv_vehi_actualiser);
 		
 		JButton sauvegarder_btn = new JButton("Sauvegarder");
-		sauvegarder_btn.setBounds(526, 548, 109, 34);
+		sauvegarder_btn.setForeground(new Color(255, 255, 255));
+		sauvegarder_btn.setBackground(mainColor);
+		sauvegarder_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = reserv_client_table.getSelectedRow();
+				
+				//TODO: check if user hasnt chosen any client or vehicle first
+				String codeClient = Integer.toString((int)reserv_client_table.getValueAt(index, 0));
+				ReservationController.createReservation(codeClient, "NULL", dateDepart, dateRetour); 
+				ReservationController.fetchAll(reserv_table, filtre.Tous);
+				OperationEffectue op = new OperationEffectue();
+			}
+		});
+		sauvegarder_btn.setBounds(869, 548, 109, 34);
 		frmCreerReservation.getContentPane().add(sauvegarder_btn);
 		
 		JButton Annuler_btn = new JButton("Annuler");
+		Annuler_btn.setForeground(new Color(255, 255, 255));
+		Annuler_btn.setBackground(mainColor);
 		Annuler_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmCreerReservation.dispose();
 			}
 		});
-		Annuler_btn.setBounds(372, 548, 109, 34);
+		Annuler_btn.setBounds(29, 548, 109, 34);
 		frmCreerReservation.getContentPane().add(Annuler_btn);
 		
 	}
@@ -132,18 +176,21 @@ public class CreerRerservation {
 		dateDepInput.setLayout(null);
 		
 		JComboBox annee_comboBox = new JComboBox();
+		annee_comboBox.setBackground(secondaryColor);
 		annee_comboBox.setModel(new DefaultComboBoxModel(new String[] {Integer.toString(currentYear), Integer.toString(currentYear+1), Integer.toString(currentYear+2), Integer.toString(currentYear+3), Integer.toString(currentYear+4)}));
 		annee_comboBox.setBounds(41, 27, 124, 27);
 		dateDepInput.add(annee_comboBox);
 		
 		JComboBox jour_comboBox = new JComboBox();
 		jour_comboBox.setBounds(388, 27, 124, 27);
+		jour_comboBox.setBackground(secondaryColor);
 		dateDepInput.add(jour_comboBox);
 		
 		JComboBox mois_comboBox = new JComboBox();
 		
 		mois_comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 		mois_comboBox.setBounds(212, 27, 124, 27);
+		mois_comboBox.setBackground(secondaryColor);
 		dateDepInput.add(mois_comboBox);
 		
 		setupDayChooser(annee_comboBox, mois_comboBox, jour_comboBox);
@@ -181,15 +228,18 @@ public class CreerRerservation {
 		JComboBox annee_comboBox = new JComboBox();
 		annee_comboBox.setModel(new DefaultComboBoxModel(new String[] {Integer.toString(currentYear), Integer.toString(currentYear+1), Integer.toString(currentYear+2), Integer.toString(currentYear+3), Integer.toString(currentYear+4)}));
 		annee_comboBox.setBounds(42, 27, 124, 27);
+		annee_comboBox.setBackground(secondaryColor);
 		dateRetInput.add(annee_comboBox);
 		
 		JComboBox jour_comboBox = new JComboBox();
 		jour_comboBox.setBounds(391, 27, 124, 27);
+		jour_comboBox.setBackground(secondaryColor);
 		dateRetInput.add(jour_comboBox);
 		
 		JComboBox mois_comboBox = new JComboBox();
 		mois_comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 		mois_comboBox.setBounds(212, 27, 124, 27);
+		mois_comboBox.setBackground(secondaryColor);
 		dateRetInput.add(mois_comboBox);
 		
 		setupDayChooser(annee_comboBox, mois_comboBox, jour_comboBox);
