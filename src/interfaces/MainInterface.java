@@ -320,7 +320,7 @@ public class MainInterface {
 		JComboBox reserv_filtre = new JComboBox();
 		reserv_filtre.setModel(new DefaultComboBoxModel(filtre.values()));
 		reserv_filtre.setMaximumRowCount(4);
-		reserv_filtre.setBounds(527, 432, 175, 21);
+		reserv_filtre.setBounds(517, 432, 185, 21);
 		reservations.add(reserv_filtre);
 		
 		JButton reserv_actualiser_btn = new JButton("Actualiser");
@@ -329,11 +329,11 @@ public class MainInterface {
 				ReservationController.fetchAll(reserv_table, (filtre)reserv_filtre.getSelectedItem());
 			}
 		});
-		reserv_actualiser_btn.setBounds(527, 463, 175, 56);
+		reserv_actualiser_btn.setBounds(517, 463, 185, 56);
 		reservations.add(reserv_actualiser_btn);
 		
 		JLabel filtre_lbl = new JLabel("Filtre :");
-		filtre_lbl.setBounds(530, 401, 172, 21);
+		filtre_lbl.setBounds(517, 401, 185, 21);
 		reservations.add(filtre_lbl);
 		
 		JButton newReserv_btn = new JButton("Nouveau reservation");

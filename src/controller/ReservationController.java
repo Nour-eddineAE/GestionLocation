@@ -102,7 +102,7 @@ public class ReservationController {
 		dtm.addColumn("Nom Client");
 		dtm.addColumn("Date Depart");
 		dtm.addColumn("Date Retour");
-		dtm.addColumn("Valid");
+		dtm.addColumn("Validée");
 		dtm.addColumn("Annulée");
 		dtm.setRowCount(0);
 		table.setModel(dtm);
