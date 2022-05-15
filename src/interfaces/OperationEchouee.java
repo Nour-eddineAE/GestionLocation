@@ -40,23 +40,57 @@ public class OperationEchouee extends JFrame {
 		this.frame.setVisible(true);
 		frame.getContentPane().setEnabled(false);
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 400, 150);
+		frame.setBounds(100, 100, 657, 195);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 384, 111);
+		panel.setBounds(0, 0, 643, 158);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Op\u00E9ration Echouer Avec Succ\u00E9e");
 		lblNewLabel.setFont(new Font("Yu Gothic", Font.BOLD, 21));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 11, 364, 43);
+		lblNewLabel.setBounds(10, 11, 623, 79);
 		panel.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("OK");
-		btnNewButton.setBounds(142, 65, 115, 35);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		btnNewButton.setBounds(262, 113, 115, 35);
+		panel.add(btnNewButton);
+	}
+	public OperationEchouee(String msg) {
+		frame = new JFrame();
+		this.frame.setVisible(true);
+		frame.getContentPane().setEnabled(false);
+		frame.setResizable(false);
+		frame.setBounds(100, 100, 657, 195);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 643, 158);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("<html>"+msg+"</html>");
+		lblNewLabel.setFont(new Font("Yu Gothic", Font.BOLD, 21));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(10, 11, 623, 79);
+		panel.add(lblNewLabel);
+		
+		JButton btnNewButton = new JButton("OK");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		btnNewButton.setBounds(262, 113, 115, 35);
 		panel.add(btnNewButton);
 	}
 

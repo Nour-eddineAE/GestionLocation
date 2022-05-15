@@ -16,14 +16,14 @@ public class ClientController {
 		String query = "SELECT * FROM client";
 		ResultSet result = ConnectionManager.execute(query);
 		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("Id");
-		dtm.addColumn("nom");
-		dtm.addColumn("prenom");
-		dtm.addColumn("num Tel");
+		dtm.addColumn("Code");
+		dtm.addColumn("Nom");
+		dtm.addColumn("Prenom");
+		dtm.addColumn("Num Tel");
 		table.setModel(dtm);
 		try {
 			while (result.next()) {
-				Object[] object = {result.getString("id"), result.getString("nom"), result.getString("prenom"), result.getString("numTel")};
+				Object[] object = {result.getInt("codeClient"), result.getString("nomClient"), result.getString("prenomClient"), result.getString("telClient")};
 				dtm.addRow(object);
 			}
 			

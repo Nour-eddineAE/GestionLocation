@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 07, 2022 at 05:57 PM
+-- Generation Time: May 12, 2022 at 10:48 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -35,6 +35,13 @@ CREATE TABLE `client` (
   `telClient` varchar(20) NOT NULL,
   `imageClient` varchar(50) NOT NULL COMMENT 'Path/link to client image'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `client`
+--
+
+INSERT INTO `client` (`codeClient`, `nomClient`, `prenomClient`, `adresseClient`, `telClient`, `imageClient`) VALUES
+(1, 'test', 'prenom', 'hello', '64546465', 'jgshfdsdf');
 
 -- --------------------------------------------------------
 
@@ -76,8 +83,19 @@ CREATE TABLE `reservation` (
   `dateRetReservation` date NOT NULL,
   `isValid` tinyint(1) NOT NULL,
   `isCanceled` tinyint(1) NOT NULL,
-  `codeClient` int(11) NOT NULL
+  `codeClient` int(11) NOT NULL,
+  `codeVehicule` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`codeReservation`, `dateReservation`, `dateDepReservation`, `dateRetReservation`, `isValid`, `isCanceled`, `codeClient`, `codeVehicule`) VALUES
+(2, '2022-05-08', '2022-05-08', '2022-05-08', 1, 0, 1, ''),
+(3, '2022-05-09', '2022-05-09', '2022-05-09', 0, 1, 1, ''),
+(4, '2022-05-09', '2022-05-09', '2022-05-09', 0, 0, 1, ''),
+(5, '2022-05-12', '2022-05-10', '2022-05-31', 0, 0, 1, '');
 
 -- --------------------------------------------------------
 
@@ -138,7 +156,7 @@ ALTER TABLE `vehicule`
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `codeClient` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `codeClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contrat`
@@ -156,7 +174,7 @@ ALTER TABLE `facture`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `codeReservation` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `codeReservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
