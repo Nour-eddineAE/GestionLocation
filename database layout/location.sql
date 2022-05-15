@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 12, 2022 at 10:48 AM
+-- Generation Time: May 15, 2022 at 09:10 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -52,7 +52,7 @@ INSERT INTO `client` (`codeClient`, `nomClient`, `prenomClient`, `adresseClient`
 CREATE TABLE `contrat` (
   `codeContrat` int(11) NOT NULL,
   `dateContrat` date NOT NULL,
-  `dateEcheance` int(11) NOT NULL,
+  `dateEcheance` date NOT NULL,
   `codeReservation` int(11) NOT NULL,
   `codeMaticule` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -69,6 +69,13 @@ CREATE TABLE `facture` (
   `montantFacture` int(11) NOT NULL,
   `codeContrat` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `facture`
+--
+
+INSERT INTO `facture` (`codeFacture`, `dateFacture`, `montantFacture`, `codeContrat`) VALUES
+(1, '2022-05-02', 420, 1);
 
 -- --------------------------------------------------------
 
@@ -92,10 +99,9 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`codeReservation`, `dateReservation`, `dateDepReservation`, `dateRetReservation`, `isValid`, `isCanceled`, `codeClient`, `codeVehicule`) VALUES
-(2, '2022-05-08', '2022-05-08', '2022-05-08', 1, 0, 1, ''),
-(3, '2022-05-09', '2022-05-09', '2022-05-09', 0, 1, 1, ''),
-(4, '2022-05-09', '2022-05-09', '2022-05-09', 0, 0, 1, ''),
-(5, '2022-05-12', '2022-05-10', '2022-05-31', 0, 0, 1, '');
+(8, '2022-05-13', '2023-01-01', '2024-01-01', 1, 0, 1, 'NULL'),
+(9, '2022-05-13', '2023-01-01', '2022-01-01', 1, 0, 1, 'NULL'),
+(16, '2022-05-14', '2022-01-01', '2023-01-01', 0, 1, 1, 'ABC');
 
 -- --------------------------------------------------------
 
@@ -113,6 +119,13 @@ CREATE TABLE `vehicule` (
   `codePark` int(11) NOT NULL,
   `prixLocation` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `vehicule`
+--
+
+INSERT INTO `vehicule` (`codeMatricule`, `marqueVehicule`, `typeVehicule`, `carburant`, `kilometrage`, `dateMiseCirculation`, `codePark`, `prixLocation`) VALUES
+('ABC', 'rb16b', '1 seater', 'your dreams', 300, '2022-05-01', 0, 100);
 
 --
 -- Indexes for dumped tables
@@ -168,13 +181,13 @@ ALTER TABLE `contrat`
 -- AUTO_INCREMENT for table `facture`
 --
 ALTER TABLE `facture`
-  MODIFY `codeFacture` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `codeFacture` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `codeReservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `codeReservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
