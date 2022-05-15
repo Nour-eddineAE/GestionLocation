@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ClientController;
+import controller.FactureController;
 import controller.ReservationController;
 
 import java.awt.GridLayout;
@@ -150,11 +151,11 @@ public class MainInterface {
 		JLabel lblNewLabel_1 = new JLabel("Parking");
 		parking.add(lblNewLabel_1);
 		
-		//Panel des RESERVATIONS -------------------------------------------------------------------------------------------------------------------------------------------
+		//Panel des RESERVATIONS ---------------------------------------------------------------------
 		
 		createReservationPanel();
 		
-		//END PANEL RESERVATIONS -------------------------------------------------------------------------------------------------------------------------------------------
+		//END PANEL RESERVATIONS ---------------------------------------------------------------------
 		JPanel contrats = new JPanel();
 		mainPanel.add(contrats, "contrat");
 		
@@ -162,42 +163,10 @@ public class MainInterface {
 		contrats.add(lblContrats);
 		
 		//Panel des factures -------------------------------------------------------------------------
-		JPanel factures = new JPanel();
-		mainPanel.add(factures, "facture");
-		factures.setLayout(null);
 		
-		JScrollPane facture_scroll = new JScrollPane();
-		facture_scroll.setBounds(10, 57, 467, 480);
-		factures.add(facture_scroll);
+		createFacturePanel();
 		
-		facture_table = new JTable();
-		facture_scroll.setViewportView(facture_table);
-		
-		facture_field = new JTextField();
-		facture_field.setToolTipText("");
-		facture_field.setBounds(10, 10, 333, 36);
-		factures.add(facture_field);
-		facture_field.setColumns(10);
-		
-		JButton searchFacture_btn = new JButton("Rechercher");
-		searchFacture_btn.setBounds(353, 10, 124, 36);
-		factures.add(searchFacture_btn);
-		
-		JButton newFacture_btn = new JButton("Nouvelle facture");
-		newFacture_btn.setBounds(501, 220, 198, 43);
-		factures.add(newFacture_btn);
-		
-		JButton dltFacture_btn = new JButton("Supprimer");
-		dltFacture_btn.setBounds(501, 326, 198, 43);
-		factures.add(dltFacture_btn);
-		
-		JButton modFacture_btn = new JButton("Modifier");
-		modFacture_btn.setBounds(501, 274, 198, 43);
-		factures.add(modFacture_btn);
-		
-		JButton facture_actualiser_btn = new JButton("Actualiser");
-		facture_actualiser_btn.setBounds(501, 494, 198, 43);
-		factures.add(facture_actualiser_btn);
+		//END Panel des factures ---------------------------------------------------------------------
 		
 		JPanel sanctions = new JPanel();
 		mainPanel.add(sanctions, "sanction");
@@ -300,7 +269,7 @@ public class MainInterface {
 		client.add(clientbtnNewButton_5);
 		//*********************************************************************************************************************
 		
-		cl.show(mainPanel, "reserv");
+		cl.show(mainPanel, "facture");
 		
 	}
 	
@@ -476,5 +445,50 @@ public class MainInterface {
 			}
 		});
 		reservations.add(searchReserv_btn);
+	}
+
+	private void createFacturePanel() {
+		JPanel factures = new JPanel();
+		mainPanel.add(factures, "facture");
+		factures.setLayout(null);
+		
+		JScrollPane facture_scroll = new JScrollPane();
+		facture_scroll.setBounds(10, 57, 467, 480);
+		factures.add(facture_scroll);
+		
+		facture_table = new JTable();
+		facture_scroll.setViewportView(facture_table);
+		
+		facture_field = new JTextField();
+		facture_field.setToolTipText("");
+		facture_field.setBounds(10, 10, 333, 36);
+		factures.add(facture_field);
+		facture_field.setColumns(10);
+		
+		JButton searchFacture_btn = new JButton("Rechercher");
+		searchFacture_btn.setBounds(353, 10, 124, 36);
+		factures.add(searchFacture_btn);
+		
+		JButton newFacture_btn = new JButton("Nouvelle facture");
+		newFacture_btn.setBounds(501, 220, 198, 43);
+		factures.add(newFacture_btn);
+		
+		JButton dltFacture_btn = new JButton("Supprimer");
+		dltFacture_btn.setBounds(501, 326, 198, 43);
+		factures.add(dltFacture_btn);
+		
+		JButton modFacture_btn = new JButton("Modifier");
+		modFacture_btn.setBounds(501, 274, 198, 43);
+		factures.add(modFacture_btn);
+		
+		JButton facture_actualiser_btn = new JButton("Actualiser");
+		facture_actualiser_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FactureController.fetchAll(facture_table);
+			}
+		});
+		facture_actualiser_btn.setBounds(501, 494, 198, 43);
+		factures.add(facture_actualiser_btn);
+		
 	}
 }

@@ -180,8 +180,8 @@ public class ReservationController {
 	public static DefaultTableModel prepareTable(JTable table) {
 		DefaultTableModel dtm = new DefaultTableModel();
 		dtm.addColumn("Code Reservation");
-		dtm.addColumn("Prenom Client");
 		dtm.addColumn("Nom Client");
+		dtm.addColumn("Prenom Client");
 		dtm.addColumn("Vehicule");
 		dtm.addColumn("Date Depart");
 		dtm.addColumn("Date Retour");

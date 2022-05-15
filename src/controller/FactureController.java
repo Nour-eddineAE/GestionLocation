@@ -15,6 +15,8 @@ public class FactureController {
 					+ "WHERE facture.codeContrat = contrat.codeContrat "
 					+ "AND contrat.codeReservation = reservation.codeReservation "
 					+ "AND reservation.codeClient = client.codeClient;";
+		// We dont need to order by date because they are ordered by id which auto increment when we add a new date in
+		
 		ResultSet result = ConnectionManager.execute(query);
 		
 		DefaultTableModel dtm = prepareTable(table);
@@ -27,7 +29,7 @@ public class FactureController {
 				int codeContrat = result.getInt("codeContrat");;
 				int montant = result.getInt("montantFacture");
 				
-				Object[] row = {};
+				Object[] row = {codeFacture, prenomClient, nomClient, codeContrat, montant};
 				
 				dtm.addRow(row);
 			}
