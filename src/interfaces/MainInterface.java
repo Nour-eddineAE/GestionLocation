@@ -405,10 +405,10 @@ public class MainInterface {
 					return;
 				}
 				String codeReserv = reserv_table.getValueAt(index, 0).toString();
-				String dateDep = reserv_table.getValueAt(index, 3).toString();
-				String dateRet = reserv_table.getValueAt(index, 4).toString();
-				boolean isValid = (boolean)reserv_table.getValueAt(index, 5);
-				boolean isCanceled = (boolean)reserv_table.getValueAt(index, 6);
+				String dateDep = reserv_table.getValueAt(index, 4).toString();
+				String dateRet = reserv_table.getValueAt(index, 5).toString();
+				boolean isValid = (boolean)reserv_table.getValueAt(index, 6);
+				boolean isCanceled = (boolean)reserv_table.getValueAt(index, 7);
 				
 				//Open reservation modification window
 				ModifierReservation newReserv = new ModifierReservation(reserv_table, codeReserv, dateDep, dateRet, isValid, isCanceled);

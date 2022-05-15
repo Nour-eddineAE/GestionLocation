@@ -182,7 +182,7 @@ public class CreerReservation {
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					//OperationEchouee op = new OperationEchouee(e1.getMessage());
-					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.OK_OPTION ,JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION ,JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 					return;
 				} catch (InvalidDate e1) {

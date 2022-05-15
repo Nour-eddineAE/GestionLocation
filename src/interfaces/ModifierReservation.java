@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
@@ -124,14 +125,14 @@ public class ModifierReservation {
 				try {
 					ReservationController.modifyReservation(codeReserv, dateDepart, dateRetour, valide_box.isSelected(), annul_box.isSelected());
 					ReservationController.fetchAll(reserv_table, filtre.Tous);
-					OperationEffectue op = new OperationEffectue();
+					JOptionPane.showConfirmDialog(null, "Operation Effectuee", "Operation Effectuee", JOptionPane.DEFAULT_OPTION ,JOptionPane.INFORMATION_MESSAGE);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					OperationEchouee op = new OperationEchouee(e1.getMessage());
+					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION ,JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 					return;
 				} catch (InvalidDate e1) {
-					OperationEchouee op = new OperationEchouee(e1.getMessage());
+					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION ,JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 					return;
 				}

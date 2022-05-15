@@ -140,7 +140,7 @@ public class ReservationController {
 				+ " `dateRetReservation` = ?,"
 				+ " `isCanceled` = ?,"
 				+ " `isValid` = ?"
-				+ " WHERE `reservation`.`codeReservation` = '?';";
+				+ " WHERE `reservation`.`codeReservation` = ?;";
 		PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
 		prepared.setString(1, dateDep);
 		prepared.setString(2, dateRet);
