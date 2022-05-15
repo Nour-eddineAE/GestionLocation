@@ -100,21 +100,6 @@ public class ReservationController {
 		}
 	}
 	
-	public static DefaultTableModel prepareTable(JTable table) {
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("Code Reservation");
-		dtm.addColumn("Prenom Client");
-		dtm.addColumn("Nom Client");
-		dtm.addColumn("Vehicule");
-		dtm.addColumn("Date Depart");
-		dtm.addColumn("Date Retour");
-		dtm.addColumn("Validée");
-		dtm.addColumn("Annulée");
-		dtm.setRowCount(0);
-		table.setModel(dtm);
-		return dtm;
-	}
-	
 	public static void createReservation(String codeClient, String codeVoiture, String dateDep, String dateRet) throws SQLException, InvalidDate {
 		
 		//check if dates are valid and non of the values is null
@@ -189,5 +174,21 @@ public class ReservationController {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	
+	public static DefaultTableModel prepareTable(JTable table) {
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("Code Reservation");
+		dtm.addColumn("Prenom Client");
+		dtm.addColumn("Nom Client");
+		dtm.addColumn("Vehicule");
+		dtm.addColumn("Date Depart");
+		dtm.addColumn("Date Retour");
+		dtm.addColumn("Validée");
+		dtm.addColumn("Annulée");
+		dtm.setRowCount(0);
+		table.setModel(dtm);
+		return dtm;
 	}
 }

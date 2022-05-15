@@ -52,6 +52,8 @@ public class MainInterface {
 	// reservation panel
 	private JTable reserv_table;
 	private JTextField reserv_field;
+	private JTable facture_table;
+	private JTextField facture_field;
 	/**
 	 * Launch the application.
 	 */
@@ -159,11 +161,43 @@ public class MainInterface {
 		JLabel lblContrats = new JLabel("contrats");
 		contrats.add(lblContrats);
 		
+		//Panel des factures -------------------------------------------------------------------------
 		JPanel factures = new JPanel();
 		mainPanel.add(factures, "facture");
+		factures.setLayout(null);
 		
-		JLabel lblFactures = new JLabel("factures");
-		factures.add(lblFactures);
+		JScrollPane facture_scroll = new JScrollPane();
+		facture_scroll.setBounds(10, 57, 467, 480);
+		factures.add(facture_scroll);
+		
+		facture_table = new JTable();
+		facture_scroll.setViewportView(facture_table);
+		
+		facture_field = new JTextField();
+		facture_field.setToolTipText("");
+		facture_field.setBounds(10, 10, 333, 36);
+		factures.add(facture_field);
+		facture_field.setColumns(10);
+		
+		JButton searchFacture_btn = new JButton("Rechercher");
+		searchFacture_btn.setBounds(353, 10, 124, 36);
+		factures.add(searchFacture_btn);
+		
+		JButton newFacture_btn = new JButton("Nouvelle facture");
+		newFacture_btn.setBounds(501, 220, 198, 43);
+		factures.add(newFacture_btn);
+		
+		JButton dltFacture_btn = new JButton("Supprimer");
+		dltFacture_btn.setBounds(501, 326, 198, 43);
+		factures.add(dltFacture_btn);
+		
+		JButton modFacture_btn = new JButton("Modifier");
+		modFacture_btn.setBounds(501, 274, 198, 43);
+		factures.add(modFacture_btn);
+		
+		JButton facture_actualiser_btn = new JButton("Actualiser");
+		facture_actualiser_btn.setBounds(501, 494, 198, 43);
+		factures.add(facture_actualiser_btn);
 		
 		JPanel sanctions = new JPanel();
 		mainPanel.add(sanctions, "sanction");
