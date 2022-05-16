@@ -22,21 +22,24 @@ public class ReservationController {
 		Annule
 	};
 	public static void fetchAll (JTable table, filtre fil) {
-		String query= "SELECT * FROM reservation, client WHERE reservation.codeClient = client.codeClient";
+		String query= "SELECT * FROM reservation, client WHERE reservation.codeClient = client.codeClient ";
 		switch(fil) {
 			case Tous:
-				query += ";";
 				break;
 			case Valide:
-				query += " AND isValid = true AND isCanceled = false;";
+				//Select only valid an not canceled reservations
+				query += "AND isValid = true AND isCanceled = false ";
 				break;
 			case Non_valide:
-				query += " AND isValid = false AND isCanceled = false;";
+				//Select only non valid an not canceled reservations
+				query += "AND isValid = false AND isCanceled = false ";
 				break;
 			case Annule:
-				query += " AND isCanceled = true;";
+				//Select canceled reservations
+				query += "AND isCanceled = true ";
 				break;
 		}
+		query += "ORDER BY dateReservation DESC;";
 		ResultSet result = ConnectionManager.execute(query);
 		
 		DefaultTableModel dtm = prepareTable(table);

@@ -34,7 +34,8 @@ public class FactureController {
 					+ "FROM facture, contrat, client, reservation "
 					+ "WHERE facture.codeContrat = contrat.codeContrat "
 					+ "AND contrat.codeReservation = reservation.codeReservation "
-					+ "AND reservation.codeClient = client.codeClient;";
+					+ "AND reservation.codeClient = client.codeClient "
+					+ "ORDER BY dateFacture DESC;";
 		// We dont need to order by date because they are ordered by id which auto increment when we add a new date in
 		
 		ResultSet result = ConnectionManager.execute(query);
@@ -101,7 +102,8 @@ public class FactureController {
 				     + "	 FROM contrat, vehicule"
 				     + "	 WHERE contrat.codeMatricule = vehicule.codeMatricule"
 				     + "	 AND contrat.codeContrat = ?),"
-				     + "	?);";
+				     + "	?) "
+					 + "ORDER BY dateFacture DESC;";
 		
 		PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
 		prepared.setInt(1, codeContrat);
@@ -145,7 +147,8 @@ public class FactureController {
 				+ "AND contrat.codeReservation = reservation.codeReservation "
 				+ "AND reservation.codeClient = client.codeClient "
 				+ "AND contrat.codeMatricule = vehicule.codeMatricule "
-				+ "AND contrat.codeContrat = ?;";
+				+ "AND contrat.codeContrat = ? "
+				+ "ORDER BY dateFacture DESC;";
 		
 		
 		try {
