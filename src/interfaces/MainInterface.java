@@ -29,7 +29,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.CardLayout;
 import java.util.LinkedHashMap;
-import java.awt.Button;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import controller.ReservationController.filtre;
@@ -520,12 +519,8 @@ public class MainInterface {
 				}
 			}
 		});
-		dltFacture_btn.setBounds(535, 326, 164, 43);
+		dltFacture_btn.setBounds(535, 273, 164, 43);
 		factures.add(dltFacture_btn);
-		
-		JButton modFacture_btn = new JButton("Modifier");
-		modFacture_btn.setBounds(535, 274, 164, 43);
-		factures.add(modFacture_btn);
 		
 		JButton facture_actualiser_btn = new JButton("Actualiser");
 		facture_actualiser_btn.addActionListener(new ActionListener() {

@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,7 +37,6 @@ public class FactureController {
 					+ "AND contrat.codeReservation = reservation.codeReservation "
 					+ "AND reservation.codeClient = client.codeClient "
 					+ "ORDER BY dateFacture DESC;";
-		// We dont need to order by date because they are ordered by id which auto increment when we add a new date in
 		
 		ResultSet result = ConnectionManager.execute(query);
 		
@@ -56,7 +56,7 @@ public class FactureController {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -86,8 +86,7 @@ public class FactureController {
 				dtm.addRow(row);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -102,8 +101,7 @@ public class FactureController {
 				     + "	 FROM contrat, vehicule"
 				     + "	 WHERE contrat.codeMatricule = vehicule.codeMatricule"
 				     + "	 AND contrat.codeContrat = ?),"
-				     + "	?) "
-					 + "ORDER BY dateFacture DESC;";
+				     + "	?);";
 		
 		PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
 		prepared.setInt(1, codeContrat);
@@ -117,8 +115,7 @@ public class FactureController {
 			prepared.setInt(1, codeFacture);
 			prepared.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	public static DefaultTableModel prepareTable(JTable table) {
@@ -169,7 +166,7 @@ public class FactureController {
 				prixLocation = result.getInt("prixLocation");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 		
 		String path = ".\\factures\\facture_"+codeFacture+".pdf";
@@ -199,7 +196,7 @@ public class FactureController {
 				 .setTextAlignment(TextAlignment.LEFT)
 				.setVerticalAlignment(VerticalAlignment.MIDDLE)
 				.setFontSize(7f)
-				.setBorderLeft(new SolidBorder(new DeviceRgb(255, 255, 255), 1.5f))
+				.setBorderLeft(new SolidBorder(new DeviceRgb(224, 199, 242), 1.5f))
 				);
 		
 		doc.add(header);
@@ -215,6 +212,7 @@ public class FactureController {
 				new Cell(0,4).add(new Paragraph("Informations: ").setBold())
 					.setFontSize(9f)
 					.setBorder(Border.NO_BORDER)
+					.setBorderLeft(new SolidBorder(new DeviceRgb(224, 199, 242), 1.5f))
 				);
 		
 		//first row
@@ -222,6 +220,7 @@ public class FactureController {
 				new Cell().add(new Paragraph("Nom: ").setBold())
 					.setFontSize(7f)
 					.setBorder(Border.NO_BORDER)
+					.setBorderLeft(new SolidBorder(new DeviceRgb(224, 199, 242), 1.5f))
 				);
 		
 		clientInfo.addCell(
@@ -234,6 +233,7 @@ public class FactureController {
 				new Cell().add(new Paragraph("N° Facture:").setBold())
 					.setFontSize(7f)
 					.setBorder(Border.NO_BORDER)
+					.setBorderLeft(new SolidBorder(new DeviceRgb(224, 199, 242), 1.5f))
 				);
 		
 		clientInfo.addCell(
@@ -247,6 +247,7 @@ public class FactureController {
 				new Cell().add(new Paragraph("Prenom:").setBold())
 					.setFontSize(7f)
 					.setBorder(Border.NO_BORDER)
+					.setBorderLeft(new SolidBorder(new DeviceRgb(224, 199, 242), 1.5f))
 				);
 		
 		clientInfo.addCell(
@@ -259,6 +260,7 @@ public class FactureController {
 				new Cell().add(new Paragraph("Date Facture: ").setBold())
 					.setFontSize(7f)
 					.setBorder(Border.NO_BORDER)
+					.setBorderLeft(new SolidBorder(new DeviceRgb(224, 199, 242), 1.5f))
 				);
 		
 		clientInfo.addCell(
@@ -272,6 +274,7 @@ public class FactureController {
 				new Cell().add(new Paragraph("N° Client:").setBold())
 					.setFontSize(7f)
 					.setBorder(Border.NO_BORDER)
+					.setBorderLeft(new SolidBorder(new DeviceRgb(224, 199, 242), 1.5f))
 				);
 		
 		clientInfo.addCell(
@@ -283,6 +286,7 @@ public class FactureController {
 				new Cell().add(new Paragraph("N° Contrat: ").setBold())
 					.setFontSize(7f)
 					.setBorder(Border.NO_BORDER)
+					.setBorderLeft(new SolidBorder(new DeviceRgb(224, 199, 242), 1.5f))
 				);
 		
 		clientInfo.addCell(
@@ -353,19 +357,22 @@ public class FactureController {
 					.setBorder(Border.NO_BORDER)
 				);
 		location.addCell(
-				new Cell().add(new Paragraph(Integer.toString(prixLocation)))
+				new Cell().add(new Paragraph(Integer.toString(prixLocation)+"dh"))
 					.setFontSize(7f)
 					.setTextAlignment(TextAlignment.CENTER)
 					.setBorder(Border.NO_BORDER)
 				);
 		location.addCell(
-				new Cell().add(new Paragraph(Integer.toString(montant)))
+				new Cell().add(new Paragraph(Integer.toString(montant)+"dh"))
 					.setFontSize(7f)
 					.setTextAlignment(TextAlignment.CENTER)
 					.setBorder(Border.NO_BORDER)
 				);
 		
 		doc.add(location);
+		
+		
+		
 		doc.close();
 		
 		Desktop.getDesktop().open(new File(path));

@@ -114,14 +114,12 @@ public class CreerFacture {
 					FactureController.fetchAll(facture_table);
 					TempContratController.fetchAll(contrat_table);
 				} catch (SQLException e1) {
-					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Operation Echouée.", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
