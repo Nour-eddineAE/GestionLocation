@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDate;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,21 +23,24 @@ public class ReservationController {
 		Annule
 	};
 	public static void fetchAll (JTable table, filtre fil) {
-		String query= "SELECT * FROM reservation, client WHERE reservation.codeClient = client.codeClient";
+		String query= "SELECT * FROM reservation, client WHERE reservation.codeClient = client.codeClient ";
 		switch(fil) {
 			case Tous:
-				query += ";";
 				break;
 			case Valide:
-				query += " AND isValid = true AND isCanceled = false;";
+				//Select only valid an not canceled reservations
+				query += "AND isValid = true AND isCanceled = false ";
 				break;
 			case Non_valide:
-				query += " AND isValid = false AND isCanceled = false;";
+				//Select only non valid an not canceled reservations
+				query += "AND isValid = false AND isCanceled = false ";
 				break;
 			case Annule:
-				query += " AND isCanceled = true;";
+				//Select canceled reservations
+				query += "AND isCanceled = true ";
 				break;
 		}
+		query += "ORDER BY dateReservation DESC;";
 		ResultSet result = ConnectionManager.execute(query);
 		
 		DefaultTableModel dtm = prepareTable(table);
@@ -57,7 +61,7 @@ public class ReservationController {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -67,8 +71,7 @@ public class ReservationController {
 			prepared.setString(1, codeReserv);
 			prepared.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -95,24 +98,8 @@ public class ReservationController {
 				dtm.addRow(row);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
-	}
-	
-	public static DefaultTableModel prepareTable(JTable table) {
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("Code Reservation");
-		dtm.addColumn("Prenom Client");
-		dtm.addColumn("Nom Client");
-		dtm.addColumn("Vehicule");
-		dtm.addColumn("Date Depart");
-		dtm.addColumn("Date Retour");
-		dtm.addColumn("Validée");
-		dtm.addColumn("Annulée");
-		dtm.setRowCount(0);
-		table.setModel(dtm);
-		return dtm;
 	}
 	
 	public static void createReservation(String codeClient, String codeVoiture, String dateDep, String dateRet) throws SQLException, InvalidDate {
@@ -189,5 +176,21 @@ public class ReservationController {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	
+	public static DefaultTableModel prepareTable(JTable table) {
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("Code Reservation");
+		dtm.addColumn("Nom Client");
+		dtm.addColumn("Prenom Client");
+		dtm.addColumn("Vehicule");
+		dtm.addColumn("Date Depart");
+		dtm.addColumn("Date Retour");
+		dtm.addColumn("Validée");
+		dtm.addColumn("Annulée");
+		dtm.setRowCount(0);
+		table.setModel(dtm);
+		return dtm;
 	}
 }
