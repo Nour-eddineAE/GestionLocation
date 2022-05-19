@@ -31,7 +31,8 @@ import java.awt.CardLayout;
 import java.util.LinkedHashMap;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import controller.ReservationController.filtre;
+import model.Reservation.filtre;
+import view.ReservationPanel;
 
 public class MainInterface {
 
@@ -152,7 +153,9 @@ public class MainInterface {
 		
 		//Panel des RESERVATIONS ---------------------------------------------------------------------
 		
-		createReservationPanel();
+		//createReservationPanel();
+		ReservationPanel reservPanel = new ReservationPanel();
+		mainPanel.add(reservPanel, "reserv");
 		
 		//END PANEL RESERVATIONS ---------------------------------------------------------------------
 		JPanel contrats = new JPanel();
@@ -330,7 +333,7 @@ public class MainInterface {
 		
 		reserv_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		reserv_scroll.setViewportView(reserv_table);
-		ReservationController.fetchAll(reserv_table, filtre.Tous);
+		//ReservationController.fetchAll(reserv_table, filtre.Tous);
 		
 		JComboBox reserv_filtre = new JComboBox();
 		reserv_filtre.setModel(new DefaultComboBoxModel(filtre.values()));
@@ -341,7 +344,7 @@ public class MainInterface {
 		JButton reserv_actualiser_btn = new JButton("Actualiser");
 		reserv_actualiser_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ReservationController.fetchAll(reserv_table, (filtre)reserv_filtre.getSelectedItem());
+				//ReservationController.fetchAll(reserv_table, (filtre)reserv_filtre.getSelectedItem());
 				
 				//Reset warning label on succesful reload
 				reserv_warning_lbl.setText("");
@@ -387,7 +390,7 @@ public class MainInterface {
 				if(result == JOptionPane.YES_OPTION) {
 					String codeReserv = (String) reserv_table.getValueAt(index, 0);
 					ReservationController.deleteReservation(codeReserv);
-					ReservationController.fetchAll(reserv_table, (filtre)reserv_filtre.getSelectedItem());	
+					//ReservationController.fetchAll(reserv_table, (filtre)reserv_filtre.getSelectedItem());	
 				}
 				//Reset warning label on succesful operation
 				reserv_warning_lbl.setText("");
