@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class ConnectionManager {
 	private static String USER = "root";
 	private static String PASS = "root";
-	private static String URL = "jdbc:mysql://localhost:8889/ProjectDB";
+	private static String URL = "jdbc:mysql://localhost:8889/location";
 	private static Connection connection;
 
 	static {

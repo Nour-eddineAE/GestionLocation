@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,6 +19,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 
 import controller.ClientController;
+import model.Client;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -26,7 +30,7 @@ public class ModifierClient extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private static String id;
+	private JTextField textField_3;
 
 	/**
 	 * Launch the application.
@@ -50,52 +54,36 @@ public class ModifierClient extends JFrame {
 		
 	};
 	
-	public ModifierClient(JTable table, int index) {
+	public ModifierClient(JTable table, Client client) {
 		frame = new JFrame();
 		this.frame.setVisible(true);
 		frame.getContentPane().setEnabled(false);
 		frame.setResizable(false);
-		frame.setBounds(400, 200, 450, 305);
+		frame.setBounds(100, 100, 680, 471);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		textField = new JTextField();
-		textField.setBounds(217, 40, 207, 20);
+		textField.setBounds(217, 40, 408, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
-		textField.setText(table.getModel().getValueAt(index, 1).toString());
+		textField.setText(client.getNomClient());
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(217, 85, 207, 20);
+		textField_1.setBounds(217, 85, 408, 20);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
-		textField_1.setText(table.getModel().getValueAt(index, 2).toString());
+		textField_1.setText(client.getPrenomClient());
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(217, 131, 207, 20);
+		textField_2.setBounds(217, 131, 408, 20);
 		frame.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
-		textField_2.setText(table.getModel().getValueAt(index, 3).toString());
-		
-		JButton btnNewButton = new JButton("Sauvgarder");
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				boolean b = ClientController.modifyClient(ModifierClient.id, textField.getText(), textField_1.getText(), textField_2.getText());
-				if (b) {
-					JOptionPane.showConfirmDialog(null, "Opération Effectuée avce Succée", "Succée", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					JOptionPane.showConfirmDialog(null, "Opération Echouée", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-				}
-				ClientController.fetchAll(table);
-			}
-		});
-		btnNewButton.setBounds(305, 208, 89, 23);
-		frame.getContentPane().add(btnNewButton);
+		textField_2.setText(client.getAddresseClient());
 		
 		JLabel lblNewLabel = new JLabel("nom client");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 43, 197, 14);
+		lblNewLabel.setBounds(0, 43, 197, 14);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("prenom client");
@@ -108,6 +96,14 @@ public class ModifierClient extends JFrame {
 		lblNewLabel_2.setBounds(10, 134, 197, 14);
 		frame.getContentPane().add(lblNewLabel_2);
 		
+		JLabel lblNewLabel_6 = new JLabel(client.getImage());
+		lblNewLabel_6.setBounds(336, 240, 289, 14);
+		frame.getContentPane().add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_7 = new JLabel(client.getPermisScannee());
+		lblNewLabel_7.setBounds(336, 292, 289, 14);
+		frame.getContentPane().add(lblNewLabel_7);
+		
 		JButton btnNewButton_1 = new JButton("Effacer");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -115,9 +111,11 @@ public class ModifierClient extends JFrame {
 				textField.setText("");
 				textField_1.setText("");
 				textField_2.setText("");
+				lblNewLabel_6.setText("");
+				lblNewLabel_7.setText("");
 			}
 		});
-		btnNewButton_1.setBounds(165, 208, 89, 23);
+		btnNewButton_1.setBounds(272, 346, 129, 43);
 		frame.getContentPane().add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Quitter");
@@ -126,24 +124,77 @@ public class ModifierClient extends JFrame {
 				frame.dispose();
 			}
 		});
-		btnNewButton_2.setBounds(35, 208, 89, 23);
+		btnNewButton_2.setBounds(68, 346, 129, 43);
 		frame.getContentPane().add(btnNewButton_2);
-	}
-
-	public void setTextField(String string) {
-		this.textField.setText(string);
-	}
-
-	public void setTextField_1(String string) {
-		this.textField_1.setText(string);
-	}
-
-	public void setTextField_2(String string) {
-		this.textField_2.setText(string);
-	}
-
-	public static void setId(String nid) {
-		id = nid;
+		
+		JLabel lblNewLabel_3 = new JLabel("Adresse Client");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setBounds(10, 188, 187, 14);
+		frame.getContentPane().add(lblNewLabel_3);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(217, 185, 408, 20);
+		frame.getContentPane().add(textField_3);
+		textField_3.setColumns(10);
+		textField_3.setText(client.getNumTelClient());
+		
+		JLabel lblNewLabel_4 = new JLabel("Image Client");
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4.setBounds(10, 240, 187, 14);
+		frame.getContentPane().add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("Permis Scan\u00E9e de Client");
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setBounds(10, 292, 187, 14);
+		frame.getContentPane().add(lblNewLabel_5);
+		
+		JButton btnNewButton_3 = new JButton("choisir un fichier");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setDialogTitle("Choisir une Image");
+				chooser.showOpenDialog(null);
+				File file = chooser.getSelectedFile();
+				if (file != null) {
+					lblNewLabel_6.setText(file.getAbsolutePath());
+				} else {
+					JOptionPane.showConfirmDialog(null, "tu dois séléctionnée une image", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnNewButton_3.setBounds(217, 236, 109, 23);
+		frame.getContentPane().add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("choisir un fichier");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setDialogTitle("Choisir une Image");
+				chooser.showOpenDialog(null);
+				File file = chooser.getSelectedFile();
+				lblNewLabel_7.setText(file.getAbsolutePath());
+			}
+		});
+		btnNewButton_4.setBounds(217, 288, 109, 23);
+		frame.getContentPane().add(btnNewButton_4);
+		
+		JButton btnNewButton = new JButton("Sauvgarder");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Client client1 = new Client(textField.getText(), textField_1.getText(), textField_3.getText(), textField_2.getText(), lblNewLabel_6.getText(), lblNewLabel_7.getText());
+				client1.setCodeClient(client.getCodeClient());
+				boolean b = ClientController.modifyClient(client1);
+				if (b) {
+					JOptionPane.showConfirmDialog(null, "Opération Effectuée avce Succée", "Succée", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showConfirmDialog(null, "Opération Echouée", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				}
+				ClientController.fetchAll(table);
+			}
+		});
+		btnNewButton.setBounds(496, 346, 129, 43);
+		frame.getContentPane().add(btnNewButton);
 	}
 	}
 

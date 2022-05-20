@@ -93,6 +93,14 @@ public class CreerNouveauClient extends JFrame {
 		lblNewLabel_2.setBounds(10, 134, 197, 14);
 		frame.getContentPane().add(lblNewLabel_2);
 		
+		JLabel lblNewLabel_6 = new JLabel("image de taille 179x217");
+		lblNewLabel_6.setBounds(336, 240, 289, 14);
+		frame.getContentPane().add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_7 = new JLabel("");
+		lblNewLabel_7.setBounds(336, 292, 289, 14);
+		frame.getContentPane().add(lblNewLabel_7);
+		
 		JButton btnNewButton_1 = new JButton("Effacer");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -100,6 +108,8 @@ public class CreerNouveauClient extends JFrame {
 				textField.setText("");
 				textField_1.setText("");
 				textField_2.setText("");
+				lblNewLabel_6.setText("");
+				lblNewLabel_7.setText("");
 			}
 		});
 		btnNewButton_1.setBounds(272, 346, 129, 43);
@@ -133,14 +143,6 @@ public class CreerNouveauClient extends JFrame {
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_5.setBounds(10, 292, 187, 14);
 		frame.getContentPane().add(lblNewLabel_5);
-		
-		JLabel lblNewLabel_6 = new JLabel("");
-		lblNewLabel_6.setBounds(336, 240, 289, 14);
-		frame.getContentPane().add(lblNewLabel_6);
-		
-		JLabel lblNewLabel_7 = new JLabel("");
-		lblNewLabel_7.setBounds(336, 292, 289, 14);
-		frame.getContentPane().add(lblNewLabel_7);
 		
 		JButton btnNewButton_3 = new JButton("choisir un fichier");
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -183,6 +185,9 @@ public class CreerNouveauClient extends JFrame {
 				textField_1.setText("");
 				textField_2.setText("");
 				textField_3.setText("");
+				lblNewLabel_6.setText("");
+				lblNewLabel_7.setText("");
+				ClientController.fetchAll(table);
 			}
 		});
 		btnNewButton.setBounds(496, 346, 129, 43);

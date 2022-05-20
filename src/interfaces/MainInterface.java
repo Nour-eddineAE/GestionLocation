@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ClientController;
 import controller.ParkingController;
+import model.Client;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -261,7 +262,7 @@ public class MainInterface {
 		clientbtnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String string = clienttextField.getText();
-				ClientController.findClient(string, clienttable);
+				ClientController.findClientByName(string, clienttable);
 				clienttextField.setText("");
 			}
 		});
@@ -287,8 +288,9 @@ public class MainInterface {
 			public void actionPerformed(ActionEvent e) {
 				int index = clienttable.getSelectedRow();
 				if (index >= 0) {
-					ModifierClient.setId(clienttable.getModel().getValueAt(index, 0).toString());
-					ModifierClient window = new ModifierClient(clienttable, index);
+					int code = (int) clienttable.getModel().getValueAt(index, 0);
+					Client client = ClientController.findClientByCode(code);
+					ModifierClient window = new ModifierClient(clienttable, client);
 				} else {
 					JOptionPane.showConfirmDialog(null,
 							"Tu dois séléctionnée un élément du tableau pour le modifier!", "Attention",
@@ -334,7 +336,9 @@ public class MainInterface {
 			public void actionPerformed (ActionEvent e) {
 				int index = clienttable.getSelectedRow();
 				if (index >= 0) {
-					afficherClient window = new afficherClient(clienttable.getModel(), index);
+					int code = Integer.parseInt(clienttable.getModel().getValueAt(index, 0).toString());
+					Client client = ClientController.findClientByCode(code);
+					afficherClient window = new afficherClient(client);
 				} else {
 					JOptionPane.showConfirmDialog(null,
 							"Tu dois séléctionnée un élément du tableau pour l'afficher!", "Attention",

@@ -37,37 +37,32 @@ public class ClientController {
 		return ClientDAO.creerClient(client);
 	}
 	
-	public static void findClient (String nom, JTable table) {
-		try {
-			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("SELECT * FROM client WHERE nom LIKE ?");
-			prepared.setString(1, nom);
-			ResultSet result = prepared.executeQuery();
-			DefaultTableModel dtm = new DefaultTableModel();
-			dtm.addColumn("Id");
-			dtm.addColumn("nom");
-			dtm.addColumn("prenom");
-			dtm.addColumn("num Tel");
-			table.setModel(dtm);
-			try {
-				while (result.next()) {
-					Object[] object = {result.getString("id"), result.getString("nom"), result.getString("prenom"), result.getString("numTel")};
-					dtm.addRow(object);
-				}
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public static void findClientByName (String nom, JTable table) {
+		ArrayList<Client> list = ClientDAO.findClient(nom);
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("Id");
+		dtm.addColumn("nom");
+		dtm.addColumn("prenom");
+		dtm.addColumn("num Tel");
+		table.setModel(dtm);
+		Iterator itr = list.iterator();
+		
+		while (itr.hasNext()) {
+			Client client = (Client)itr.next();
+			Object[] object = {client.getCodeClient(), client.getNomClient(), client.getPrenomClient(), client.getNumTelClient()};
+			dtm.addRow(object);
 		}
 		
 	}
 	
+	public static Client findClientByCode (int code) {
+		Client client = ClientDAO.chercherClient(code);
+		return client;
+	}
+	
 	public static void deleteClient (String id) {
 		try {
-			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("DELETE FROM `client` WHERE `client`.`id` = ?");
+			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("DELETE FROM `client` WHERE `client`.`codeClient` = ?");
 			prepared.setString(1, id);
 			prepared.execute();
 		} catch (SQLException e) {
@@ -76,20 +71,8 @@ public class ClientController {
 		}
 	}
 	
-	public static boolean modifyClient (String id, String nom, String prenom, String numTel) {
-		try {
-			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("UPDATE `client` SET `nom` = ?, `prenom` = ?, `numTel` = ? WHERE `client`.`id` = ?");
-			prepared.setString(1, nom);
-			prepared.setString(2, prenom);
-			prepared.setString(3, numTel);
-			prepared.setString(4, id);
-			prepared.execute();
-			return true;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
+	public static boolean modifyClient (Client client) {
+		return ClientDAO.modifierClient(client);
 	}
 
 }

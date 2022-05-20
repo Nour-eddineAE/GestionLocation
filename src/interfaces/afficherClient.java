@@ -16,6 +16,7 @@ import javax.swing.table.TableModel;
 
 import connectionManager.ConnectionManager;
 import controller.ClientController;
+import model.Client;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -94,7 +95,7 @@ public class afficherClient extends JFrame {
 		textField.setBounds(118, 33, 398, 32);
 		panel.add(textField);
 		textField.setColumns(10);
-		//textField.setText(model.getValueAt(index, 0).toString());
+		//textField.setText(""+client.getCodeClient());
 		
 		textField_1 = new JTextField();
 		textField_1.setBackground(Color.WHITE);
@@ -104,7 +105,7 @@ public class afficherClient extends JFrame {
 		textField_1.setBounds(118, 76, 398, 32);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
-		//textField_1.setText(model.getValueAt(index, 1).toString());
+		//textField_1.setText(client.getNomClient());
 		
 		textField_2 = new JTextField();
 		textField_2.setBackground(Color.WHITE);
@@ -114,7 +115,7 @@ public class afficherClient extends JFrame {
 		textField_2.setBounds(118, 119, 398, 32);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
-		//textField_2.setText(model.getValueAt(index, 2).toString());
+		//textField_2.setText(client.getPrenomClient());
 		
 		textField_3 = new JTextField();
 		textField_3.setBackground(Color.WHITE);
@@ -124,7 +125,7 @@ public class afficherClient extends JFrame {
 		textField_3.setBounds(118, 162, 398, 32);
 		panel.add(textField_3);
 		textField_3.setColumns(10);
-		//textField_3.setText(model.getValueAt(index, 3).toString());
+		//textField_3.setText(client.getAddresseClient());
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(41, 280, 703, 151);
@@ -144,17 +145,17 @@ public class afficherClient extends JFrame {
 		panel.add(lblNewLabel_4);
 		
 		textField_4 = new JTextField();
+		textField_4.setBackground(Color.WHITE);
+		textField_4.setEnabled(false);
+		textField_4.setEditable(false);
 		textField_4.setBounds(118, 212, 398, 38);
 		panel.add(textField_4);
 		textField_4.setColumns(10);
+		//textField.setText(""+client.getCodeClient());
 		
-		JLabel lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5.setBounds(555, 33, 189, 217);
-		panel.add(lblNewLabel_5);
 	};
 	
-	public afficherClient(TableModel model, int index) {
+	public afficherClient(Client client) {
 		frame = new JFrame();
 		this.frame.setVisible(true);
 		frame.getContentPane().setEnabled(false);
@@ -196,6 +197,7 @@ public class afficherClient extends JFrame {
 		textField.setBounds(118, 33, 398, 32);
 		panel.add(textField);
 		textField.setColumns(10);
+		textField.setText(""+client.getCodeClient());
 		
 		textField_1 = new JTextField();
 		textField_1.setBackground(Color.WHITE);
@@ -205,6 +207,7 @@ public class afficherClient extends JFrame {
 		textField_1.setBounds(118, 76, 398, 32);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
+		textField_1.setText(client.getNomClient());
 		
 		textField_2 = new JTextField();
 		textField_2.setBackground(Color.WHITE);
@@ -214,6 +217,7 @@ public class afficherClient extends JFrame {
 		textField_2.setBounds(118, 119, 398, 32);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
+		textField_2.setText(client.getPrenomClient());
 		
 		textField_3 = new JTextField();
 		textField_3.setBackground(Color.WHITE);
@@ -223,6 +227,7 @@ public class afficherClient extends JFrame {
 		textField_3.setBounds(118, 162, 398, 32);
 		panel.add(textField_3);
 		textField_3.setColumns(10);
+		textField_3.setText(client.getAddresseClient());
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(41, 280, 703, 151);
@@ -242,33 +247,19 @@ public class afficherClient extends JFrame {
 		panel.add(lblNewLabel_4);
 		
 		textField_4 = new JTextField();
+		textField_4.setBackground(Color.WHITE);
+		textField_4.setEnabled(false);
+		textField_4.setEditable(false);
 		textField_4.setBounds(118, 212, 398, 38);
 		panel.add(textField_4);
 		textField_4.setColumns(10);
+		textField_4.setText(client.getNumTelClient());
 		
-		JLabel lblNewLabel_5 = new JLabel();
+		ImageIcon image = new ImageIcon(client.getImage());
+		
+		JLabel lblNewLabel_5 = new JLabel(image, JLabel.CENTER);
 		lblNewLabel_5.setBounds(565, 33, 179, 217);
 		panel.add(lblNewLabel_5);
-		
-		PreparedStatement prepared;
-		ResultSet result = null;
-		try {
-			prepared = ConnectionManager.getConnection().prepareStatement("SELECT * FROM client WHERE id LIKE ?");
-			prepared.setString(1, model.getValueAt(index, 0).toString());
-			result = prepared.executeQuery();
-			while (result.next()) {
-				 byte[] img = result.getBytes("image");
-				 ImageIcon image = new ImageIcon(img);
-				 Image im = image.getImage();
-				 Image myimg = im.getScaledInstance(lblNewLabel_5.getWidth(), lblNewLabel_5.getHeight(), Image.SCALE_SMOOTH);
-				 ImageIcon newImageIcon = new ImageIcon(myimg);
-				 lblNewLabel_5.setIcon(newImageIcon);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		
 	}
 }

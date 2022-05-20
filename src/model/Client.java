@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.image.BufferedImage;
+
 public class Client {
 	private int codeClient;
 	private String nomClient;
@@ -86,6 +88,11 @@ public class Client {
 		this.numTelClient = numTelClient;
 		this.image = image;
 		this.permisScannee = permisScannee;
+	}
+
+	public Client() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }
