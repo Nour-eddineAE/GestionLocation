@@ -168,6 +168,37 @@ public class ReservationDAO {
 	}
 	
 	/**
+	 * Méthode qui modifie une réservation dans la BD
+	 * @param codeReservation
+	 * @param dateDep
+	 * @param dateRet
+	 * @param isValid
+	 * @param isCanceled
+	 * @throws SQLException
+	 * @throws InvalidDate
+	 */
+	public static void modifyReservation(int codeReservation, Date dateDep, Date dateRet, boolean isValid, boolean isCanceled){
+		
+		String query = "UPDATE `reservation`"
+				+ " SET `dateDepReservation` = ?,"
+				+ " `dateRetReservation` = ?,"
+				+ " `isCanceled` = ?,"
+				+ " `isValid` = ?"
+				+ " WHERE `reservation`.`codeReservation` = ?;";
+		try {
+			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
+			prepared.setDate(1, dateDep);
+			prepared.setDate(2, dateRet);
+			prepared.setBoolean(3, isCanceled);
+			prepared.setBoolean(4, isValid);
+			prepared.setInt(5, codeReservation);
+			prepared.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
 	 * Supprime la reservation qui correspond aux codeReserv passé comme argument
 	 * @param codeReserv
 	 */
@@ -184,20 +215,26 @@ public class ReservationDAO {
 	
 	
 	/**
-	 * Methode qui verifie si une reservation intersect avec une autre
+	 * Methode qui verifie si une reservation intersect avec une autre 
+	 * 
 	 * @param codeVehi
 	 * @param dateDep
 	 * @param dateRet
+	 * @param codeReserv (veuillez utiliser codeReserv < 0 pour la creation d'une nouvelle reservation)
 	 * @return boolean: true si la date est disponible, false sinon
 	 */
-	public static boolean isReservationDateAvailable(String codeVehi, Date dateDep, Date dateRet){
+	public static boolean isReservationDateAvailable(String codeVehi, Date dateDep, Date dateRet, int codeReserv){
 		
 		//query that return a list of reservations that are in the specified periode
 		String query = "SELECT codeReservation "
 					 + "FROM reservation, vehicule "
 					 + "WHERE reservation.codeVehicule = vehicule.codeMatricule "
 					 + "AND vehicule.codeMatricule = ? "
-					 + "AND (dateDepReservation <= ? AND dateRetReservation >= ?);";
+					 + "AND (dateDepReservation <= ? AND dateRetReservation >= ?)";
+		
+		if(codeReserv > 0) {
+			query += " AND codeReservation <> ?;";
+		}
 		PreparedStatement preparedSt;
 		
 		try {
@@ -205,6 +242,9 @@ public class ReservationDAO {
 			preparedSt.setString(1, codeVehi);
 			preparedSt.setDate(2, dateRet);
 			preparedSt.setDate(3, dateDep);
+			if(codeReserv > 0) {
+				preparedSt.setInt(4, codeReserv);
+			}
 			ResultSet result = preparedSt.executeQuery();
 			
 			//if there is no reservation return true; 

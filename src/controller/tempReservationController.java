@@ -9,13 +9,22 @@ import javax.swing.JOptionPane;
 
 import dao.ReservationDAO;
 import interfaces.CreerReservation;
+import interfaces.ModifierReservation;
 import model.Reservation;
 import model.Reservation.filtre;
 import view.ReservationPanel;
 
+
+/**
+ * Controlleur qui gére l'interaction entre la BD et l'interface
+ * @author Abd-AB
+ * @version 1.0
+ */
+
 public class tempReservationController {
 	private ReservationPanel reserv_panel;
 	private CreerReservation creer_reserv;
+	private ModifierReservation mod_reserv;
 	
 	/**
 	 * Constructeur par defaut
@@ -32,11 +41,22 @@ public class tempReservationController {
 	}
 	
 	/**
-	 * Constructeur pour associer l'interface de creation des reservation aux controlleur
+	 * Constructeur pour associer l'interface de creation des reservations aux controlleur
 	 * @param reserv_panel
+	 * @param creer_reserv
 	 */
 	public tempReservationController(ReservationPanel reserv_panel, CreerReservation creer_reserv) {
 		this.creer_reserv = creer_reserv;
+		this.reserv_panel = reserv_panel;
+	}
+	
+	/**
+	 * Constructeur pour associer l'interface de modification de reservation aux controlleur
+	 * @param reserv_panel
+	 * @param mod_reserv
+	 */
+	public tempReservationController(ReservationPanel reserv_panel, ModifierReservation mod_reserv) {
+		this.mod_reserv = mod_reserv;
 		this.reserv_panel = reserv_panel;
 	}
 	
@@ -87,7 +107,7 @@ public class tempReservationController {
 		
 		
 		if(checkDates(dateDep, dateRet)) {
-			if(ReservationDAO.isReservationDateAvailable(codeVehicule, dateDep, dateRet)) {
+			if(ReservationDAO.isReservationDateAvailable(codeVehicule, dateDep, dateRet, -1)) {
 				//si vehicule disponible pendant cette date creer reservation
 				ReservationDAO.createReservation(codeClient, codeVehicule, dateDep, dateRet);	
 				JOptionPane.showConfirmDialog(null, "Operation Effectuée.", "Operation Effectuée", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -102,6 +122,51 @@ public class tempReservationController {
 		}
 	}
 	
+	
+	/**
+	 * Methode qui recupere les donnés a partir de l'interface ModifierReservation et les verifie, puis il les enregistre dans la BD
+	 */
+	public void ModifierReservation() {
+		
+		Date dateDep, dateRet;
+		
+		//Si la valeur de date est erroné
+		try {
+			dateDep = mod_reserv.getDateDepart();			
+		} catch (IllegalArgumentException e1) {
+			mod_reserv.getWarning_lbl().setText("Veillez choisir une date de depart.");
+			return;
+		}
+		
+		//Si la valeur de date est erroné
+		try {
+			dateRet = mod_reserv.getDateRetour();
+		} catch (IllegalArgumentException e1) {
+			mod_reserv.getWarning_lbl().setText("Veillez choisir une date de retour.");
+			return;
+		}
+		
+		String codeVehicule = mod_reserv.getCodeVehicule();
+		int codeReserv = mod_reserv.getCodeReserv();
+		boolean isValid = mod_reserv.isValid();
+		boolean isCanceled = mod_reserv.isCanceled();
+		
+		if(checkDates(dateDep, dateRet)) {
+			if(ReservationDAO.isReservationDateAvailable(codeVehicule, dateDep, dateRet, codeReserv)) {
+				//si vehicule disponible pendant cette date creer reservation
+				ReservationDAO.modifyReservation(codeReserv, dateDep, dateRet, isValid, isCanceled);
+				JOptionPane.showConfirmDialog(null, "Operation Effectuée.", "Operation Effectuée", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				mod_reserv.getWarning_lbl().setText("");
+				
+				ActualiserTableau();
+			}
+			else
+				mod_reserv.getWarning_lbl().setText("<html>La vehicule est déja reservé pendant cette interval choisi.</html>");
+		} else {
+			mod_reserv.getWarning_lbl().setText("<html>La date depart doit etre avant la date de retour</html>");
+		}
+		
+	}
 	/**
 	 * Methode qui recuperere la reservation selectionnée dans le tableau des reservations
 	 * et le supprime.
@@ -113,6 +178,7 @@ public class tempReservationController {
 			reserv_panel.getReserv_warning_lbl().setText("<html>Veuillez choisir une reservation à supprimer.</html>");
 			return;
 		}
+		reserv_panel.getReserv_warning_lbl().setText("");
 		
 		int result = JOptionPane.showConfirmDialog(null, "Êtes vous sûr?", "Verification", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(result == JOptionPane.YES_OPTION) {
@@ -120,7 +186,6 @@ public class tempReservationController {
 			ReservationDAO.deleteReservation(Integer.parseInt((String) reserv_panel.getReserv_table().getValueAt(index, 0)));
 		}
 		
-		reserv_panel.getReserv_warning_lbl().setText("");
 		ActualiserTableau();
 	}
 	

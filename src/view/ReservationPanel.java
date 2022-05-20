@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -20,6 +21,7 @@ import controller.tempReservationController;
 import interfaces.CreerReservation;
 import interfaces.ModifierReservation;
 import model.ReservationTableModel;
+import model.Reservation;
 import model.Reservation.filtre;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -53,12 +55,12 @@ public class ReservationPanel extends JPanel {
 		//ReservationController.fetchAll(reserv_table, filtre.Tous);
 		
 		reserv_filtre = new JComboBox();
-		reserv_filtre.setBounds(512, 432, 185, 21);
+		reserv_filtre.setBounds(522, 432, 193, 21);
 		reserv_filtre.setModel(new DefaultComboBoxModel(filtre.values()));
 		reserv_filtre.setMaximumRowCount(4);
 		
 		JButton reserv_actualiser_btn = new JButton("Actualiser");
-		reserv_actualiser_btn.setBounds(512, 463, 185, 56);
+		reserv_actualiser_btn.setBounds(522, 463, 193, 56);
 		reserv_actualiser_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cont.ActualiserTableau();
@@ -66,11 +68,13 @@ public class ReservationPanel extends JPanel {
 			}
 		});
 		
+		cont.ActualiserTableau();
+		
 		JLabel filtre_lbl = new JLabel("Filtre :");
-		filtre_lbl.setBounds(512, 401, 185, 21);
+		filtre_lbl.setBounds(522, 401, 193, 21);
 		
 		JButton newReserv_btn = new JButton("Nouveau reservation");
-		newReserv_btn.setBounds(512, 155, 185, 56);
+		newReserv_btn.setBounds(522, 155, 193, 56);
 		newReserv_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Open reservation creation window
@@ -82,7 +86,7 @@ public class ReservationPanel extends JPanel {
 		});
 		
 		JButton delReserv_btn = new JButton("Supprimer reservation");
-		delReserv_btn.setBounds(512, 225, 185, 56);
+		delReserv_btn.setBounds(522, 225, 193, 56);
 		delReserv_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cont.SupprimerReservation();
@@ -90,7 +94,7 @@ public class ReservationPanel extends JPanel {
 		});
 		
 		JButton modReserv_btn = new JButton("Modifier reservation");
-		modReserv_btn.setBounds(512, 291, 185, 56);
+		modReserv_btn.setBounds(522, 291, 193, 56);
 		modReserv_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = reserv_table.getSelectedRow();
@@ -100,14 +104,18 @@ public class ReservationPanel extends JPanel {
 					// ^ html tag is for automatic text wrapping
 					return;
 				}
-				String codeReserv = reserv_table.getValueAt(index, 0).toString();
-				String dateDep = reserv_table.getValueAt(index, 4).toString();
-				String dateRet = reserv_table.getValueAt(index, 5).toString();
-				boolean isValid = (boolean)reserv_table.getValueAt(index, 6);
-				boolean isCanceled = (boolean)reserv_table.getValueAt(index, 7);
+				
+				Reservation r = new Reservation();
+				
+				r.setCodeReservation(Integer.parseInt((String) reserv_table.getValueAt(index, 0)));
+				r.setCodeVehicule((String) reserv_table.getValueAt(index, 3));
+				r.setDateDepart(Date.valueOf((String) reserv_table.getValueAt(index, 4)));
+				r.setDateRetour(Date.valueOf((String) reserv_table.getValueAt(index, 5)));
+				r.setValid(Boolean.parseBoolean((String) reserv_table.getValueAt(index, 6)));
+				r.setCanceled(Boolean.parseBoolean((String) reserv_table.getValueAt(index, 7)));
 				
 				//Open reservation modification window
-				ModifierReservation newReserv = new ModifierReservation(reserv_table, codeReserv, dateDep, dateRet, isValid, isCanceled);
+				ModifierReservation newReserv = new ModifierReservation(self, r);
 				
 				//Reset warning label on succesful operation
 				reserv_warning_lbl.setText("");

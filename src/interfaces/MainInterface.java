@@ -149,14 +149,7 @@ public class MainInterface {
 		
 		//createReservationPanel();
 		ReservationPanel reservPanel = new ReservationPanel();
-		reservPanel.getReserv_field().setBounds(23, 10, 371, 37);
-		reservPanel.getReserv_filtre().setBounds(517, 432, 185, 21);
-		reservPanel.getReserv_table().setBounds(24, 82, 482, 0);
-		reservPanel.getReserv_warning_lbl().setBounds(517, 57, 185, 88);
 		mainPanel.add(reservPanel, "reserv");
-		reservPanel.add(reservPanel.getReserv_warning_lbl());
-		reservPanel.add(reservPanel.getReserv_filtre());
-		reservPanel.add(reservPanel.getReserv_field());
 		reservPanel.setLayout(null);
 		
 		//END PANEL RESERVATIONS ---------------------------------------------------------------------
@@ -318,7 +311,7 @@ public class MainInterface {
 			}
 		});
 	}
-	
+	/*
 	private void createReservationPanel() {
 		
 		JPanel reservations = new JPanel();
@@ -459,6 +452,8 @@ public class MainInterface {
 		reservations.add(searchReserv_btn);
 	}
 
+	*/
+	
 	private void createFacturePanel() {
 		JPanel factures = new JPanel();
 		mainPanel.add(factures, "facture");
