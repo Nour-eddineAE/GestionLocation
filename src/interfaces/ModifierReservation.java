@@ -7,38 +7,36 @@ import java.time.Year;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
-import controller.ClientController;
-import controller.ReservationController;
-import controller.ReservationController.filtre;
-import exceptions.InvalidDate;
+import controller.tempReservationController;
+import model.Reservation;
+import view.ReservationPanel;
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.sql.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import javax.swing.ListSelectionModel;
 import javax.swing.JCheckBox;
 
 public class ModifierReservation {
 
-	private JFrame frmCreerReservation;
-	private JTable reserv_table;
+	private JFrame frmModReservation;
+	private ReservationPanel reserv_panel;
 	
-	private String dateDepart, dateRetour;
+	private String dateDepart, dateRetour, codeVehicule;
 	private Color mainColor;
 	private Color secondaryColor;
 	private boolean isValid;
 	private boolean isCanceled;
-	private String codeReserv;
+	private int codeReserv;
+	
+	private tempReservationController cont;
+	private JLabel warning_lbl;
 	
 
 	/**
@@ -49,7 +47,7 @@ public class ModifierReservation {
 			public void run() {
 				try {
 					ModifierReservation window = new ModifierReservation();
-					window.frmCreerReservation.setVisible(true);
+					window.frmModReservation.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -66,14 +64,16 @@ public class ModifierReservation {
 		initialize();
 	}
 	
-	public ModifierReservation(JTable reserv_table,String codeReserv, String dateDep, String dateRet, boolean isValid, boolean isCanceled) {
-		this.dateDepart = dateDep;
-		this.dateRetour = dateRet;
-		this.isValid = isValid;
-		this.isCanceled = isCanceled;
-		this.codeReserv = codeReserv;
-
-		this.reserv_table = reserv_table;
+	public ModifierReservation(ReservationPanel reserv_panel, Reservation r) {
+		this.dateDepart = r.getDateDepart().toString();
+		this.dateRetour = r.getDateRetour().toString();
+		this.isValid = r.isValid();
+		this.isCanceled = r.isCanceled();
+		this.reserv_panel = reserv_panel;
+		this.codeReserv = r.getCodeReservation();
+		this.codeVehicule = r.getCodeVehicule();
+		
+		this.cont = new tempReservationController(reserv_panel, this);
 		mainColor = new Color(75, 0, 130);
 		secondaryColor = new Color(224, 199, 242);
 		initialize();
@@ -83,22 +83,22 @@ public class ModifierReservation {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmCreerReservation = new JFrame();
-		frmCreerReservation.getContentPane().setBackground(new Color(255, 255, 255));
-		frmCreerReservation.setResizable(false);
-		frmCreerReservation.setVisible(true);
-		frmCreerReservation.setTitle("Creer reservation");
-		frmCreerReservation.setBounds(100, 100, 1053, 444);
-		frmCreerReservation.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmCreerReservation.getContentPane().setLayout(null);
+		frmModReservation = new JFrame();
+		frmModReservation.getContentPane().setBackground(new Color(255, 255, 255));
+		frmModReservation.setResizable(false);
+		frmModReservation.setVisible(true);
+		frmModReservation.setTitle("Creer reservation");
+		frmModReservation.setBounds(100, 100, 1053, 471);
+		frmModReservation.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmModReservation.getContentPane().setLayout(null);
 		
 		JLabel dateDepart_lbl = new JLabel("Date depart:");
-		dateDepart_lbl.setBounds(227, 35, 124, 28);
-		frmCreerReservation.getContentPane().add(dateDepart_lbl);
+		dateDepart_lbl.setBounds(225, 48, 124, 28);
+		frmModReservation.getContentPane().add(dateDepart_lbl);
 		
 		JLabel dateRetour_lbl = new JLabel("Date Retour:");
-		dateRetour_lbl.setBounds(227, 150, 124, 28);
-		frmCreerReservation.getContentPane().add(dateRetour_lbl);
+		dateRetour_lbl.setBounds(225, 163, 124, 28);
+		frmModReservation.getContentPane().add(dateRetour_lbl);
 		
 		//Creation des panel de choix de date
 		dateDep();
@@ -106,50 +106,61 @@ public class ModifierReservation {
 		
 		
 		JCheckBox valide_box = new JCheckBox("Valid\u00E9");
+		valide_box.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isValid = valide_box.isSelected();
+			}
+		});
 		valide_box.setSelected(isValid);
-		valide_box.setBounds(227, 307, 270, 21);
-		frmCreerReservation.getContentPane().add(valide_box);
+		valide_box.setBounds(225, 320, 270, 21);
+		frmModReservation.getContentPane().add(valide_box);
 		
 		JCheckBox annul_box = new JCheckBox("Annul\u00E9");
+		annul_box.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isCanceled = annul_box.isSelected();
+			}
+		});
 		annul_box.setSelected(isCanceled);
-		annul_box.setBounds(516, 307, 270, 21);
-		frmCreerReservation.getContentPane().add(annul_box);
+		annul_box.setBounds(514, 320, 270, 21);
+		frmModReservation.getContentPane().add(annul_box);
 		
 		JButton sauvegarder_btn = new JButton("Sauvegarder");
 		sauvegarder_btn.setForeground(new Color(255, 255, 255));
 		sauvegarder_btn.setBackground(mainColor);
-		sauvegarder_btn.setBounds(869, 350, 109, 34);
+		sauvegarder_btn.setBounds(869, 379, 109, 34);
 		sauvegarder_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					ReservationController.modifyReservation(codeReserv, dateDepart, dateRetour, valide_box.isSelected(), annul_box.isSelected());
-					ReservationController.fetchAll(reserv_table, filtre.Tous);
-					JOptionPane.showConfirmDialog(null, "Operation Effectuee", "Operation Effectuee", JOptionPane.DEFAULT_OPTION ,JOptionPane.INFORMATION_MESSAGE);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION ,JOptionPane.ERROR_MESSAGE);
-					e1.printStackTrace();
-					return;
-				} catch (InvalidDate e1) {
-					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION ,JOptionPane.ERROR_MESSAGE);
-					e1.printStackTrace();
-					return;
-				}
+				cont.ModifierReservation();
 			}
 		});
-		frmCreerReservation.getContentPane().add(sauvegarder_btn);
+		frmModReservation.getContentPane().add(sauvegarder_btn);
 		
 		JButton Annuler_btn = new JButton("Annuler");
 		Annuler_btn.setForeground(new Color(255, 255, 255));
 		Annuler_btn.setBackground(mainColor);
 		Annuler_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmCreerReservation.dispose();
+				frmModReservation.dispose();
 			}
 		});
-		Annuler_btn.setBounds(29, 350, 109, 34);
-		frmCreerReservation.getContentPane().add(Annuler_btn);
+		Annuler_btn.setBounds(29, 379, 109, 34);
+		frmModReservation.getContentPane().add(Annuler_btn);
+		
+		JLabel codeReserv_lbl = new JLabel("N\u00B0 reservation:");
+		codeReserv_lbl.setBounds(225, 25, 160, 13);
+		frmModReservation.getContentPane().add(codeReserv_lbl);
+		
+		JLabel codeReservValue_lbl = new JLabel(Integer.toString(codeReserv));
+		codeReservValue_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		codeReservValue_lbl.setBounds(326, 25, 160, 13);
+		frmModReservation.getContentPane().add(codeReservValue_lbl);
+		
+		warning_lbl = new JLabel("");
+		warning_lbl.setForeground(Color.RED);
+		warning_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		warning_lbl.setBounds(225, 378, 559, 35);
+		frmModReservation.getContentPane().add(warning_lbl);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -157,8 +168,8 @@ public class ModifierReservation {
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		
 		JPanel dateDepInput = new JPanel();
-		dateDepInput.setBounds(227, 73, 559, 67);
-		frmCreerReservation.getContentPane().add(dateDepInput);
+		dateDepInput.setBounds(225, 86, 559, 67);
+		frmModReservation.getContentPane().add(dateDepInput);
 		dateDepInput.setLayout(null);
 		
 		JComboBox annee_comboBox = new JComboBox();
@@ -217,8 +228,8 @@ public class ModifierReservation {
 		
 		JPanel dateRetInput = new JPanel();
 		dateRetInput.setLayout(null);
-		dateRetInput.setBounds(227, 188, 559, 67);
-		frmCreerReservation.getContentPane().add(dateRetInput);
+		dateRetInput.setBounds(225, 201, 559, 67);
+		frmModReservation.getContentPane().add(dateRetInput);
 		
 		JComboBox annee_comboBox = new JComboBox();
 		annee_comboBox.setModel(new DefaultComboBoxModel(new String[] {Integer.toString(currentYear), Integer.toString(currentYear+1), Integer.toString(currentYear+2), Integer.toString(currentYear+3), Integer.toString(currentYear+4)}));
@@ -326,4 +337,35 @@ public class ModifierReservation {
 				break;
 		}
 	}
+
+	
+	//Getters
+	public Date getDateDepart() {
+		return Date.valueOf(dateDepart);
+	}
+	
+
+	public int getCodeReserv() {
+		return codeReserv;
+	}
+
+	public JLabel getWarning_lbl() {
+		return warning_lbl;
+	}
+
+	public Date getDateRetour() {
+		return Date.valueOf(dateRetour);
+	}
+
+	public boolean isValid() {
+		return isValid;
+	}
+
+	public boolean isCanceled() {
+		return isCanceled;
+	}
+	public String getCodeVehicule() {
+		return codeVehicule;
+	}
+	
 }

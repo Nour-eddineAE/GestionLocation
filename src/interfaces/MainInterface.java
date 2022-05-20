@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ClientController;
 import controller.FactureController;
-import controller.ReservationController;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -29,9 +28,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.CardLayout;
 import java.util.LinkedHashMap;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import controller.ReservationController.filtre;
+import view.ReservationPanel;
 
 public class MainInterface {
 
@@ -84,10 +81,8 @@ public class MainInterface {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setEnabled(false);
-		frame.setResizable(false);
 		frame.setBounds(100, 100, 1000, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
 		mainColor = new Color(75, 0, 130);
 		secondaryColor = new Color(224, 199, 242);
@@ -95,27 +90,21 @@ public class MainInterface {
 		navFontSize = 12;
 		
 		JPanel titleBar = new JPanel();
-		titleBar.setBackground(mainColor);
 		titleBar.setBounds(0, 0, 986, 102);
-		frame.getContentPane().add(titleBar);
-		titleBar.setLayout(null);
+		titleBar.setBackground(mainColor);
 		
 		JLabel logoPlaceHolder = new JLabel("LOGO here");
+		logoPlaceHolder.setBounds(333, 17, 315, 75);
 		logoPlaceHolder.setHorizontalAlignment(SwingConstants.CENTER);
 		logoPlaceHolder.setForeground(new Color(255, 255, 255));
 		logoPlaceHolder.setFont(new Font("Tahoma", Font.BOLD, 24));
-		logoPlaceHolder.setBounds(333, 17, 315, 75);
-		titleBar.add(logoPlaceHolder);
 		
 		JPanel sideBar = new JPanel();
 		sideBar.setBounds(0, 100, 234, 563);
 		sideBar.setBackground(secondaryColor);
-		frame.getContentPane().add(sideBar);
-		sideBar.setLayout(null);
 		
 		JPanel navigation = new JPanel();
 		navigation.setBounds(0, 80, 234, 388);
-		sideBar.add(navigation);
 		navigation.setBackground(secondaryColor);
 		navigation.setLayout(new GridLayout(8, 1, 0, 0));
 		
@@ -137,7 +126,6 @@ public class MainInterface {
 		
 		mainPanel = new JPanel();
 		mainPanel.setBounds(244, 106, 732, 547);
-		frame.getContentPane().add(mainPanel);
 		mainPanel.setLayout(new CardLayout(0, 0));
 		cl = (CardLayout) mainPanel.getLayout();
 		
@@ -152,7 +140,10 @@ public class MainInterface {
 		
 		//Panel des RESERVATIONS ---------------------------------------------------------------------
 		
-		createReservationPanel();
+		//createReservationPanel();
+		ReservationPanel reservPanel = new ReservationPanel();
+		mainPanel.add(reservPanel, "reserv");
+		reservPanel.setLayout(null);
 		
 		//END PANEL RESERVATIONS ---------------------------------------------------------------------
 		JPanel contrats = new JPanel();
@@ -269,6 +260,14 @@ public class MainInterface {
 		//*********************************************************************************************************************
 		
 		cl.show(mainPanel, "facture");
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().add(sideBar);
+		sideBar.setLayout(null);
+		sideBar.add(navigation);
+		frame.getContentPane().add(mainPanel);
+		frame.getContentPane().add(titleBar);
+		titleBar.setLayout(null);
+		titleBar.add(logoPlaceHolder);
 		
 	}
 	
@@ -306,146 +305,6 @@ public class MainInterface {
 		});
 	}
 	
-	private void createReservationPanel() {
-		
-		JPanel reservations = new JPanel();
-		mainPanel.add(reservations, "reserv");
-		reservations.setLayout(null);
-		
-		JLabel reserv_warning_lbl = new JLabel("");
-		reserv_warning_lbl.setForeground(Color.RED);
-		reserv_warning_lbl.setBounds(517, 57, 185, 88);
-		reservations.add(reserv_warning_lbl);
-		
-		JScrollPane reserv_scroll = new JScrollPane();
-		reserv_scroll.setBounds(23, 57, 484, 462);
-		reservations.add(reserv_scroll);
-		
-		reserv_table = new JTable() {
-			private static final long serialVersionUID = 1L;
-			public boolean isCellEditable(int row, int column){  
-		          return false;  
-		    };
-		};
-		
-		reserv_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		reserv_scroll.setViewportView(reserv_table);
-		ReservationController.fetchAll(reserv_table, filtre.Tous);
-		
-		JComboBox reserv_filtre = new JComboBox();
-		reserv_filtre.setModel(new DefaultComboBoxModel(filtre.values()));
-		reserv_filtre.setMaximumRowCount(4);
-		reserv_filtre.setBounds(517, 432, 185, 21);
-		reservations.add(reserv_filtre);
-		
-		JButton reserv_actualiser_btn = new JButton("Actualiser");
-		reserv_actualiser_btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ReservationController.fetchAll(reserv_table, (filtre)reserv_filtre.getSelectedItem());
-				
-				//Reset warning label on succesful reload
-				reserv_warning_lbl.setText("");
-			}
-		});
-		reserv_actualiser_btn.setBounds(517, 463, 185, 56);
-		reservations.add(reserv_actualiser_btn);
-		
-		JLabel filtre_lbl = new JLabel("Filtre :");
-		filtre_lbl.setBounds(517, 401, 185, 21);
-		reservations.add(filtre_lbl);
-		
-		JButton newReserv_btn = new JButton("Nouveau reservation");
-		newReserv_btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Open reservation creation window
-				CreerReservation newReserv = new CreerReservation(reserv_table);
-				
-				//Reset warning label on succesful operation
-				reserv_warning_lbl.setText("");
-			}
-		});
-		newReserv_btn.setBounds(517, 155, 185, 56);
-		reservations.add(newReserv_btn);
-		
-		JButton delReserv_btn = new JButton("Supprimer reservation");
-		delReserv_btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int index = reserv_table.getSelectedRow();
-				if(index < 0) {
-					// if user hasnt selected any row :
-					reserv_warning_lbl.setText("<html>Veuillez Selectionner une reservation à supprimer.</html>");
-					// ^ html tag is for automatic text wrapping
-					return;
-				} //else
-				
-				
-				// Verification prompt, ask user if he really wants to delete element
-				int result = JOptionPane.showConfirmDialog(reservations, "Etes vous sûr?","Verification", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				
-				//if user wants to delete element
-				if(result == JOptionPane.YES_OPTION) {
-					String codeReserv = (String) reserv_table.getValueAt(index, 0);
-					ReservationController.deleteReservation(codeReserv);
-					ReservationController.fetchAll(reserv_table, (filtre)reserv_filtre.getSelectedItem());	
-				}
-				//Reset warning label on succesful operation
-				reserv_warning_lbl.setText("");
-			}
-		});
-		delReserv_btn.setBounds(517, 225, 185, 56);
-		reservations.add(delReserv_btn);
-		
-		JButton modReserv_btn = new JButton("Modifier reservation");
-		modReserv_btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = reserv_table.getSelectedRow();
-				if(index < 0) {
-					// if user hasnt selected any row :
-					reserv_warning_lbl.setText("<html>Veuillez Selectionner une reservation à modifier.</html>");
-					// ^ html tag is for automatic text wrapping
-					return;
-				}
-				String codeReserv = reserv_table.getValueAt(index, 0).toString();
-				String dateDep = reserv_table.getValueAt(index, 4).toString();
-				String dateRet = reserv_table.getValueAt(index, 5).toString();
-				boolean isValid = (boolean)reserv_table.getValueAt(index, 6);
-				boolean isCanceled = (boolean)reserv_table.getValueAt(index, 7);
-				
-				//Open reservation modification window
-				ModifierReservation newReserv = new ModifierReservation(reserv_table, codeReserv, dateDep, dateRet, isValid, isCanceled);
-				
-				//Reset warning label on succesful operation
-				reserv_warning_lbl.setText("");
-			}
-		});
-		modReserv_btn.setBounds(517, 291, 185, 56);
-		reservations.add(modReserv_btn);
-		
-		reserv_field = new JTextField();
-		reserv_field.setBounds(23, 10, 371, 37);
-		reservations.add(reserv_field);
-		reserv_field.setColumns(10);
-		
-		JButton searchReserv_btn = new JButton("Rechercher");
-		searchReserv_btn.setBounds(404, 10, 103, 37);
-		searchReserv_btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String codeReserv = reserv_field.getText();
-				if(codeReserv.isEmpty()) {
-					reserv_warning_lbl.setText("<html>Veuillez Saisir un code à rechercher.</html>");
-					return;
-				}
-				//search for reservation
-				ReservationController.findReservation(codeReserv, reserv_table);
-				
-				//Reset warning label on succesful operation
-				reserv_warning_lbl.setText("");
-			}
-		});
-		reservations.add(searchReserv_btn);
-	}
-
 	private void createFacturePanel() {
 		JPanel factures = new JPanel();
 		mainPanel.add(factures, "facture");
