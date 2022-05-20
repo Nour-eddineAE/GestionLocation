@@ -11,7 +11,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import connectionManager.ConnectionManager;
-import exceptions.InvalidDate;
 import model.Client;
 import model.Reservation;
 import model.Reservation.filtre;

@@ -10,23 +10,17 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
 import controller.ClientController;
-import controller.ReservationController;
-import controller.ReservationController.filtre;
 import controller.tempReservationController;
-import exceptions.InvalidDate;
 import view.ReservationPanel;
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.text.DateFormat;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.ListSelectionModel;

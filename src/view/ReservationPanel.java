@@ -9,23 +9,18 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-import controller.ReservationController;
 import controller.tempReservationController;
 import interfaces.CreerReservation;
 import interfaces.ModifierReservation;
 import model.ReservationTableModel;
 import model.Reservation;
 import model.Reservation.filtre;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ReservationPanel extends JPanel {
 
