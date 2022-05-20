@@ -18,11 +18,15 @@ import javax.swing.SwingConstants;
 import controller.ClientController;
 import controller.ReservationController;
 import controller.ReservationController.filtre;
+import controller.tempReservationController;
 import exceptions.InvalidDate;
+import view.ReservationPanel;
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.ListSelectionModel;
@@ -33,10 +37,13 @@ public class CreerReservation {
 	private JTable reserv_client_table;
 	private JTable reserv_table;
 	
-	private String dateDepart = "null-null-null", dateRetour = "null-null-null";
-	private JTable serv_vehi_table;
+	private String dateDepart, dateRetour;
+	private JTable reserv_vehi_table;
 	private Color mainColor;
 	private Color secondaryColor;
+	private JLabel warning_lbl;
+	
+	private tempReservationController cont;
 
 	/**
 	 * Launch the application.
@@ -62,10 +69,10 @@ public class CreerReservation {
 		secondaryColor = new Color(224, 199, 242);
 		initialize();
 	}
-	public CreerReservation(JTable reserv_table) {
-		this.reserv_table = reserv_table;
+	public CreerReservation(ReservationPanel panel) {
 		mainColor = new Color(75, 0, 130);
 		secondaryColor = new Color(224, 199, 242);
+		cont = new tempReservationController(panel, this);
 		initialize();
 	}
 
@@ -86,7 +93,7 @@ public class CreerReservation {
 		reserv_client_Scroll.setBounds(29, 58, 452, 150);
 		frmCreerReservation.getContentPane().add(reserv_client_Scroll);
 		
-		JLabel warning_lbl = new JLabel("");
+		warning_lbl = new JLabel("");
 		warning_lbl.setForeground(Color.RED);
 		warning_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		warning_lbl.setBounds(218, 548, 559, 34);
@@ -138,14 +145,14 @@ public class CreerReservation {
 		frmCreerReservation.getContentPane().add(reserv_vehi_Scroll);
 		
 		//to make table cells uneditable
-		serv_vehi_table = new JTable() {
+		reserv_vehi_table = new JTable() {
 			private static final long serialVersionUID = 1L;
 			public boolean isCellEditable(int row, int column){  
 		          return false;  
 		    };
 		};
-		serv_vehi_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		reserv_vehi_Scroll.setViewportView(serv_vehi_table);
+		reserv_vehi_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		reserv_vehi_Scroll.setViewportView(reserv_vehi_table);
 		
 		JButton reserv_vehi_actualiser = new JButton("Actualiser");
 		reserv_vehi_actualiser.addActionListener(new ActionListener() {
@@ -162,38 +169,7 @@ public class CreerReservation {
 		sauvegarder_btn.setBackground(mainColor);
 		sauvegarder_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int index = reserv_client_table.getSelectedRow();
-				if(index < 0) {
-					//si aucun client n'est choisi
-					warning_lbl.setText("<html>Veuillez choisir un client.</html>");
-					return;
-				}
-				//TODO: check if user hasnt chosen any vehicle
-				
-				String codeClient = Integer.toString((int)reserv_client_table.getValueAt(index, 0));
-				warning_lbl.setText("");
-				try {
-					if(ReservationController.isReservationDateAvailable("ABC", dateDepart, dateRetour))
-						ReservationController.createReservation(codeClient, "ABC", dateDepart, dateRetour);
-					else {
-						warning_lbl.setText("<html>Vehicule déja reservé durant la période choisi.</html>");
-						return;
-					}
-				} catch (SQLException e1) {
-					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION ,JOptionPane.ERROR_MESSAGE);
-					e1.printStackTrace();
-					return;
-				} catch (InvalidDate e1) {
-					warning_lbl.setText(e1.getMessage());
-					JOptionPane.showConfirmDialog(null, e1.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION ,JOptionPane.ERROR_MESSAGE);
-					e1.printStackTrace();
-					return;
-				} 
-				
-				//refill main table
-				ReservationController.fetchAll(reserv_table, filtre.Tous);
-				warning_lbl.setText("");
-				JOptionPane.showConfirmDialog(null, "Operation Effectuee", "Operation Effectuee", JOptionPane.DEFAULT_OPTION ,JOptionPane.INFORMATION_MESSAGE);
+				cont.CreerReservation();
 			}
 		});
 		sauvegarder_btn.setBounds(869, 548, 109, 34);
@@ -244,7 +220,7 @@ public class CreerReservation {
 		mois_comboBox.setBackground(secondaryColor);
 		dateDepInput.add(mois_comboBox);
 		
-		setupDayChooser(annee_comboBox, mois_comboBox, jour_comboBox);
+		setupDayPicker(annee_comboBox, mois_comboBox, jour_comboBox);
 		
 		for(JComboBox box : new JComboBox[]{annee_comboBox, jour_comboBox, mois_comboBox} ) {
 			//Foreach combo box update date value on change
@@ -298,12 +274,12 @@ public class CreerReservation {
 		mois_comboBox.setBackground(secondaryColor);
 		dateRetInput.add(mois_comboBox);
 		
-		setupDayChooser(annee_comboBox, mois_comboBox, jour_comboBox);
+		setupDayPicker(annee_comboBox, mois_comboBox, jour_comboBox);
 		for(JComboBox box : new JComboBox[]{annee_comboBox, jour_comboBox, mois_comboBox} ) {
 			//Foreach combo box update date value on change
 			box.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					dateRetour = annee_comboBox.getSelectedItem() + "-" + mois_comboBox.getSelectedItem() + "-" + jour_comboBox.getSelectedItem();
+						dateRetour = annee_comboBox.getSelectedItem() + "-" + mois_comboBox.getSelectedItem() + "-" + jour_comboBox.getSelectedItem();
 				}
 			});
 			
@@ -326,7 +302,7 @@ public class CreerReservation {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void setupDayChooser(JComboBox annee, JComboBox mois, JComboBox jour) {
+	public static void setupDayPicker(JComboBox annee, JComboBox mois, JComboBox jour) {
 		mois.addActionListener(new ActionListener() {
 			// les valeurs de comboBox des jours depend de mois et l'annee
 			
@@ -359,4 +335,28 @@ public class CreerReservation {
 			}
 		});
 	}
+
+
+	
+	//Getters
+	public JTable getReserv_client_table() {
+		return reserv_client_table;
+	}
+	
+	public Date getDateDepart() {
+		return Date.valueOf(dateDepart);
+	}
+	
+	public Date getDateRetour() {
+		return Date.valueOf(dateRetour);
+	}
+	
+	public JTable getReserv_vehi_table() {
+		return reserv_vehi_table;
+	}
+
+	public JLabel getWarning_lbl() {
+		return warning_lbl;
+	}
+	
 }

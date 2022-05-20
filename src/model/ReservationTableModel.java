@@ -48,6 +48,7 @@ public class ReservationTableModel extends AbstractTableModel{
 	}
 	
 	public void loadReservation(ArrayList<Reservation> list) {
+		rows.clear();
 		for(Reservation r: list) {
 			Client c = r.getClient();
 			String[] row = {

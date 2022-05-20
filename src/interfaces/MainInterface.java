@@ -33,6 +33,9 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import model.Reservation.filtre;
 import view.ReservationPanel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class MainInterface {
 
@@ -85,10 +88,8 @@ public class MainInterface {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setEnabled(false);
-		frame.setResizable(false);
 		frame.setBounds(100, 100, 1000, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
 		mainColor = new Color(75, 0, 130);
 		secondaryColor = new Color(224, 199, 242);
@@ -96,27 +97,21 @@ public class MainInterface {
 		navFontSize = 12;
 		
 		JPanel titleBar = new JPanel();
-		titleBar.setBackground(mainColor);
 		titleBar.setBounds(0, 0, 986, 102);
-		frame.getContentPane().add(titleBar);
-		titleBar.setLayout(null);
+		titleBar.setBackground(mainColor);
 		
 		JLabel logoPlaceHolder = new JLabel("LOGO here");
+		logoPlaceHolder.setBounds(333, 17, 315, 75);
 		logoPlaceHolder.setHorizontalAlignment(SwingConstants.CENTER);
 		logoPlaceHolder.setForeground(new Color(255, 255, 255));
 		logoPlaceHolder.setFont(new Font("Tahoma", Font.BOLD, 24));
-		logoPlaceHolder.setBounds(333, 17, 315, 75);
-		titleBar.add(logoPlaceHolder);
 		
 		JPanel sideBar = new JPanel();
 		sideBar.setBounds(0, 100, 234, 563);
 		sideBar.setBackground(secondaryColor);
-		frame.getContentPane().add(sideBar);
-		sideBar.setLayout(null);
 		
 		JPanel navigation = new JPanel();
 		navigation.setBounds(0, 80, 234, 388);
-		sideBar.add(navigation);
 		navigation.setBackground(secondaryColor);
 		navigation.setLayout(new GridLayout(8, 1, 0, 0));
 		
@@ -138,7 +133,6 @@ public class MainInterface {
 		
 		mainPanel = new JPanel();
 		mainPanel.setBounds(244, 106, 732, 547);
-		frame.getContentPane().add(mainPanel);
 		mainPanel.setLayout(new CardLayout(0, 0));
 		cl = (CardLayout) mainPanel.getLayout();
 		
@@ -155,7 +149,15 @@ public class MainInterface {
 		
 		//createReservationPanel();
 		ReservationPanel reservPanel = new ReservationPanel();
+		reservPanel.getReserv_field().setBounds(23, 10, 371, 37);
+		reservPanel.getReserv_filtre().setBounds(517, 432, 185, 21);
+		reservPanel.getReserv_table().setBounds(24, 82, 482, 0);
+		reservPanel.getReserv_warning_lbl().setBounds(517, 57, 185, 88);
 		mainPanel.add(reservPanel, "reserv");
+		reservPanel.add(reservPanel.getReserv_warning_lbl());
+		reservPanel.add(reservPanel.getReserv_filtre());
+		reservPanel.add(reservPanel.getReserv_field());
+		reservPanel.setLayout(null);
 		
 		//END PANEL RESERVATIONS ---------------------------------------------------------------------
 		JPanel contrats = new JPanel();
@@ -272,6 +274,14 @@ public class MainInterface {
 		//*********************************************************************************************************************
 		
 		cl.show(mainPanel, "facture");
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().add(sideBar);
+		sideBar.setLayout(null);
+		sideBar.add(navigation);
+		frame.getContentPane().add(mainPanel);
+		frame.getContentPane().add(titleBar);
+		titleBar.setLayout(null);
+		titleBar.add(logoPlaceHolder);
 		
 	}
 	
@@ -361,7 +371,7 @@ public class MainInterface {
 		newReserv_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Open reservation creation window
-				CreerReservation newReserv = new CreerReservation(reserv_table);
+				//CreerReservation newReserv = new CreerReservation(this);
 				
 				//Reset warning label on succesful operation
 				reserv_warning_lbl.setText("");
