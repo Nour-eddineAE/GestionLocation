@@ -4,48 +4,37 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import connectionManager.ConnectionManager;
+import dao.ClientDAO;
+import model.Client;
 
 public class ClientController {
 	
 	public static void fetchAll (JTable table) {
-		String query = "SELECT * FROM client";
-		ResultSet result = ConnectionManager.execute(query);
+		ArrayList<Client> list = ClientDAO.actualiserClient();
 		DefaultTableModel dtm = new DefaultTableModel();
 		dtm.addColumn("Id");
 		dtm.addColumn("nom");
 		dtm.addColumn("prenom");
 		dtm.addColumn("num Tel");
 		table.setModel(dtm);
-		try {
-			while (result.next()) {
-				Object[] object = {result.getString("id"), result.getString("nom"), result.getString("prenom"), result.getString("numTel")};
-				dtm.addRow(object);
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Iterator itr = list.iterator();
+		
+		while (itr.hasNext()) {
+			Client client = (Client)itr.next();
+			Object[] object = {client.getCodeClient(), client.getNomClient(), client.getPrenomClient(), client.getNumTelClient()};
+			dtm.addRow(object);
 		}
 		
 	}
 	
-	public static boolean creatClient (String nom, String prenom, String numTel) {
-		try {
-			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("INSERT INTO `client` (`id`, `nom`, `prenom`, `numTel`) VALUES (NULL, ?, ?, ?)");
-			prepared.setString(1, nom);
-			prepared.setString(2, prenom);
-			prepared.setString(3, numTel);
-			prepared.execute();
-			return true;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return false;
-		}
+	public static boolean creatClient (Client client) {
+		return ClientDAO.creerClient(client);
 	}
 	
 	public static void findClient (String nom, JTable table) {

@@ -8,10 +8,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableModel;
 
 import controller.ClientController;
 import java.awt.event.ActionListener;
@@ -44,11 +47,15 @@ public class ModifierClient extends JFrame {
 	 * Create the frame.
 	 */
 	public ModifierClient() {
+		
+	};
+	
+	public ModifierClient(JTable table, int index) {
 		frame = new JFrame();
 		this.frame.setVisible(true);
 		frame.getContentPane().setEnabled(false);
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 450, 305);
+		frame.setBounds(400, 200, 450, 305);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -56,16 +63,19 @@ public class ModifierClient extends JFrame {
 		textField.setBounds(217, 40, 207, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
+		textField.setText(table.getModel().getValueAt(index, 1).toString());
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(217, 85, 207, 20);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
+		textField_1.setText(table.getModel().getValueAt(index, 2).toString());
 		
 		textField_2 = new JTextField();
 		textField_2.setBounds(217, 131, 207, 20);
 		frame.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
+		textField_2.setText(table.getModel().getValueAt(index, 3).toString());
 		
 		JButton btnNewButton = new JButton("Sauvgarder");
 		btnNewButton.addMouseListener(new MouseAdapter() {
@@ -73,13 +83,11 @@ public class ModifierClient extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				boolean b = ClientController.modifyClient(ModifierClient.id, textField.getText(), textField_1.getText(), textField_2.getText());
 				if (b) {
-					OperationEffectue op = new OperationEffectue();
+					JOptionPane.showConfirmDialog(null, "Opération Effectuée avce Succée", "Succée", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				} else {
-					OperationEchouee op = new OperationEchouee();
+					JOptionPane.showConfirmDialog(null, "Opération Echouée", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				}
-				textField.setText("");
-				textField_1.setText("");
-				textField_2.setText("");
+				ClientController.fetchAll(table);
 			}
 		});
 		btnNewButton.setBounds(305, 208, 89, 23);
