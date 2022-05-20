@@ -15,7 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-import controller.tempReservationController;
+import controller.ReservationController;
 import interfaces.CreerReservation;
 import interfaces.ModifierReservation;
 import model.ReservationTableModel;
@@ -28,7 +28,7 @@ public class ReservationPanel extends JPanel {
 	private JTable reserv_table;
 	private JComboBox reserv_filtre;
 	private ReservationTableModel reserv_model = new ReservationTableModel();
-	private tempReservationController cont = new tempReservationController(this);
+	private ReservationController cont = new ReservationController(this);
 	private JLabel reserv_warning_lbl;
 	private JTextField reserv_field;
 	

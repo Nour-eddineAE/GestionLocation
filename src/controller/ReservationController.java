@@ -21,7 +21,7 @@ import view.ReservationPanel;
  * @version 1.0
  */
 
-public class tempReservationController {
+public class ReservationController {
 	private ReservationPanel reserv_panel;
 	private CreerReservation creer_reserv;
 	private ModifierReservation mod_reserv;
@@ -29,14 +29,14 @@ public class tempReservationController {
 	/**
 	 * Constructeur par defaut
 	 */
-	public tempReservationController() {
+	public ReservationController() {
 	}
 	
 	/**
 	 * Constructeur pour associer le panel des reservation à son controlleur
 	 * @param reserv_panel
 	 */
-	public tempReservationController(ReservationPanel reserv_panel) {
+	public ReservationController(ReservationPanel reserv_panel) {
 		this.reserv_panel = reserv_panel;
 	}
 	
@@ -45,7 +45,7 @@ public class tempReservationController {
 	 * @param reserv_panel
 	 * @param creer_reserv
 	 */
-	public tempReservationController(ReservationPanel reserv_panel, CreerReservation creer_reserv) {
+	public ReservationController(ReservationPanel reserv_panel, CreerReservation creer_reserv) {
 		this.creer_reserv = creer_reserv;
 		this.reserv_panel = reserv_panel;
 	}
@@ -55,7 +55,7 @@ public class tempReservationController {
 	 * @param reserv_panel
 	 * @param mod_reserv
 	 */
-	public tempReservationController(ReservationPanel reserv_panel, ModifierReservation mod_reserv) {
+	public ReservationController(ReservationPanel reserv_panel, ModifierReservation mod_reserv) {
 		this.mod_reserv = mod_reserv;
 		this.reserv_panel = reserv_panel;
 	}

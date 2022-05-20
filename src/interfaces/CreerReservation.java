@@ -15,7 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
 import controller.ClientController;
-import controller.tempReservationController;
+import controller.ReservationController;
 import view.ReservationPanel;
 
 import javax.swing.DefaultComboBoxModel;
@@ -37,7 +37,7 @@ public class CreerReservation {
 	private Color secondaryColor;
 	private JLabel warning_lbl;
 	
-	private tempReservationController cont;
+	private ReservationController cont;
 
 	/**
 	 * Launch the application.
@@ -66,7 +66,7 @@ public class CreerReservation {
 	public CreerReservation(ReservationPanel panel) {
 		mainColor = new Color(75, 0, 130);
 		secondaryColor = new Color(224, 199, 242);
-		cont = new tempReservationController(panel, this);
+		cont = new ReservationController(panel, this);
 		initialize();
 	}
 

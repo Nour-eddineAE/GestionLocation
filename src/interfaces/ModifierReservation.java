@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
-import controller.tempReservationController;
+import controller.ReservationController;
 import model.Reservation;
 import view.ReservationPanel;
 
@@ -35,7 +35,7 @@ public class ModifierReservation {
 	private boolean isCanceled;
 	private int codeReserv;
 	
-	private tempReservationController cont;
+	private ReservationController cont;
 	private JLabel warning_lbl;
 	
 
@@ -73,7 +73,7 @@ public class ModifierReservation {
 		this.codeReserv = r.getCodeReservation();
 		this.codeVehicule = r.getCodeVehicule();
 		
-		this.cont = new tempReservationController(reserv_panel, this);
+		this.cont = new ReservationController(reserv_panel, this);
 		mainColor = new Color(75, 0, 130);
 		secondaryColor = new Color(224, 199, 242);
 		initialize();
