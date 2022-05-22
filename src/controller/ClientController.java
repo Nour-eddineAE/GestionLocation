@@ -61,14 +61,7 @@ public class ClientController {
 	}
 	
 	public static void deleteClient (String id) {
-		try {
-			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("DELETE FROM `client` WHERE `client`.`codeClient` = ?");
-			prepared.setString(1, id);
-			prepared.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ClientDAO.supprimerClient(Integer.parseInt(id));
 	}
 	
 	public static boolean modifyClient (Client client) {

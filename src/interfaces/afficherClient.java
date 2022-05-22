@@ -3,10 +3,16 @@ package interfaces;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,11 +25,13 @@ import controller.ClientController;
 import model.Client;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.Color;
+import java.awt.Canvas;
 
 public class afficherClient extends JFrame {
 
@@ -43,6 +51,7 @@ public class afficherClient extends JFrame {
 			public void run() {
 				try {
 					afficherClient window = new afficherClient();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -128,12 +137,12 @@ public class afficherClient extends JFrame {
 		//textField_3.setText(client.getAddresseClient());
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(41, 280, 703, 151);
+		panel_1.setBounds(41, 280, 322, 151);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 280, 703, 151);
+		scrollPane.setBounds(41, 280, 357, 151);
 		panel.add(scrollPane);
 		
 		table = new JTable();
@@ -152,6 +161,18 @@ public class afficherClient extends JFrame {
 		panel.add(textField_4);
 		textField_4.setColumns(10);
 		//textField.setText(""+client.getCodeClient());
+		
+		try {
+			URL url = new URL("https://unsplash.com/photos/QXevDflbl8A");
+			BufferedImage image = ImageIO.read(url);
+			ImageIcon imageIcon = new ImageIcon(image);
+			JLabel lblNewLabel_5 = new JLabel(imageIcon, JLabel.CENTER);
+			lblNewLabel_5.setBounds(565, 33, 179, 217);
+			panel.add(lblNewLabel_5);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	};
 	
@@ -255,11 +276,17 @@ public class afficherClient extends JFrame {
 		textField_4.setColumns(10);
 		textField_4.setText(client.getNumTelClient());
 		
-		ImageIcon image = new ImageIcon(client.getImage());
-		
-		JLabel lblNewLabel_5 = new JLabel(image, JLabel.CENTER);
-		lblNewLabel_5.setBounds(565, 33, 179, 217);
-		panel.add(lblNewLabel_5);
+		try {
+			File fichier = new File(client.getImage());
+			BufferedImage image = ImageIO.read(fichier);
+			ImageIcon imageIcon = new ImageIcon(image);
+			JLabel lblNewLabel_5 = new JLabel(imageIcon, JLabel.CENTER);
+			lblNewLabel_5.setBounds(565, 33, 179, 217);
+			panel.add(lblNewLabel_5);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

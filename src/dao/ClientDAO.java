@@ -108,4 +108,15 @@ public class ClientDAO {
 		}
 		return false;
 	}
+	
+	public static void supprimerClient (int code) {
+		try {
+			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("DELETE FROM `client` WHERE `client`.`codeClient` = ?");
+			prepared.setInt(1, code);
+			prepared.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
