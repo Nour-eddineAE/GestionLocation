@@ -1,3 +1,5 @@
-/interfaces/
-/dao/
+/connectionManager/
 /controller/
+/dao/
+/interfaces/
+/model/
