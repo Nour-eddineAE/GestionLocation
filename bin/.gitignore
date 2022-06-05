@@ -1,5 +1,2 @@
-/connectionManager/
-/controller/
-/dao/
 /interfaces/
-/model/
+/view/

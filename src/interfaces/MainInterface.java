@@ -22,6 +22,10 @@ import javax.swing.table.DefaultTableModel;
 import controller.ClientController;
 import controller.ParkingController;
 import model.Client;
+import view.AfficherClientPanel;
+import view.ClientMainView;
+import view.ModifierClientPanel;
+import view.NouveauClientPanel;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -45,10 +49,8 @@ public class MainInterface {
 	private String currentPane;
 	private LinkedHashMap<String, JLabel> navItemList;
 	// client panel field
-	private JTable clienttable;
-	private JTextField clienttextField;
 	private JTable parkingtable;
-	protected JTextField parkingtextField;
+	private JTextField parkingtextField;
 
 	/**
 	 * Launch the application.
@@ -71,7 +73,7 @@ public class MainInterface {
 	 */
 	public MainInterface() {
 		initialize();
-		ClientController.fetchAll(clienttable);
+		//ClientController.fetchAll(clienttable);
 		ParkingController.fetchAll(parkingtable);
 	}
 
@@ -157,8 +159,9 @@ public class MainInterface {
 		frame.getContentPane().add(mainPanel);
 		mainPanel.setLayout(new CardLayout(0, 0));
 		cl = (CardLayout) mainPanel.getLayout();
-
-		JPanel client = new JPanel();
+		
+		// Client Panel generation
+		ClientMainView client = new ClientMainView(getMainPanel());
 		mainPanel.add(client, "client");
 
 		JPanel parking = new JPanel();
@@ -202,7 +205,8 @@ public class MainInterface {
 		client.setLayout(null);
 
 		// Client Panel generation
-		setupClientPanel(client);
+		//setupClientPanel(client);
+		
 		
 		// Parking Panel generation 
 		setupParkingPanel(parking);
@@ -242,112 +246,6 @@ public class MainInterface {
 				}
 			}
 		});
-	}
-
-	private void setupClientPanel(JPanel panel) {
-		JScrollPane clientscrollPane = new JScrollPane();
-		clientscrollPane.setBounds(10, 58, 574, 478);
-		panel.add(clientscrollPane);
-
-		clienttable = new JTable();
-		clienttable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		Object[] clientcolumns = { "id", "nom", "prenom", "numTel" };
-		DefaultTableModel clientmodel = new DefaultTableModel();
-		clientmodel.setColumnCount(4);
-		clientmodel.setColumnIdentifiers(clientcolumns);
-		clienttable.setModel(clientmodel);
-		clientscrollPane.setViewportView(clienttable);
-
-		JButton clientbtnNewButton = new JButton("Rechercher");
-		clientbtnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String string = clienttextField.getText();
-				ClientController.findClientByName(string, clienttable);
-				clienttextField.setText("");
-			}
-		});
-		clientbtnNewButton.setBounds(594, 11, 128, 36);
-		panel.add(clientbtnNewButton);
-
-		JButton clientbtnNewButton_1 = new JButton("Nouveau Client");
-		clientbtnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CreerNouveauClient nouveauClient = new CreerNouveauClient(clienttable);
-			}
-		});
-		clientbtnNewButton_1.setBounds(594, 76, 128, 36);
-		panel.add(clientbtnNewButton_1);
-
-		clienttextField = new JTextField();
-		clienttextField.setBounds(10, 11, 574, 36);
-		panel.add(clienttextField);
-		clienttextField.setColumns(10);
-
-		JButton clientbtnNewButton_2 = new JButton("Modifier");
-		clientbtnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = clienttable.getSelectedRow();
-				if (index >= 0) {
-					int code = (int) clienttable.getModel().getValueAt(index, 0);
-					Client client = ClientController.findClientByCode(code);
-					ModifierClient window = new ModifierClient(clienttable, client);
-				} else {
-					JOptionPane.showConfirmDialog(null,
-							"Tu dois séléctionnée un élément du tableau pour le modifier!", "Attention",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		});
-		clientbtnNewButton_2.setBounds(594, 170, 128, 36);
-		panel.add(clientbtnNewButton_2);
-
-		JButton clientbtnNewButton_3 = new JButton("Actualiser");
-		clientbtnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ClientController.fetchAll(clienttable);
-			}
-		});
-		clientbtnNewButton_3.setBounds(594, 264, 128, 36);
-		panel.add(clientbtnNewButton_3);
-
-		JButton clientbtnNewButton_4 = new JButton("Supprimer");
-		clientbtnNewButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = clienttable.getSelectedRow();
-				if (index >= 0) {
-					int result = JOptionPane.showConfirmDialog(null, "Avez-vous Sure?", "Confirmation",
-							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-					if (result == JOptionPane.YES_OPTION) {
-						ClientController.deleteClient(clienttable.getModel().getValueAt(index, 0).toString());
-						ClientController.fetchAll(clienttable);
-					}
-				} else {
-					JOptionPane.showConfirmDialog(null,
-							"Tu dois séléctionnée un élément du tableau pour le supprimer!", "Attention",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		});
-		clientbtnNewButton_4.setBounds(594, 217, 128, 36);
-		panel.add(clientbtnNewButton_4);
-
-		JButton clientbtnNewButton_5 = new JButton("Afficher");
-		clientbtnNewButton_5.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent e) {
-				int index = clienttable.getSelectedRow();
-				if (index >= 0) {
-					int code = Integer.parseInt(clienttable.getModel().getValueAt(index, 0).toString());
-					Client client = ClientController.findClientByCode(code);
-					afficherClient window = new afficherClient(client);
-				} else {
-					JOptionPane.showConfirmDialog(null,
-							"Tu dois séléctionnée un élément du tableau pour l'afficher!", "Attention",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		});
-		clientbtnNewButton_5.setBounds(594, 123, 128, 36);
-		panel.add(clientbtnNewButton_5);
 	}
 	
 	private void setupParkingPanel(JPanel panel) {
@@ -452,5 +350,9 @@ public class MainInterface {
 		});
 		parkingbtnNewButton_4.setBounds(594, 264, 128, 36);
 		panel.add(parkingbtnNewButton_4);
+	}
+	
+	public JPanel getMainPanel () {
+		return this.mainPanel;
 	}
 }

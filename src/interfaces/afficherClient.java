@@ -32,6 +32,9 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 import java.awt.Canvas;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class afficherClient extends JFrame {
 
@@ -39,7 +42,6 @@ public class afficherClient extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-	private JTable table;
 	private JFrame frame;
 	private JTextField textField_4;
 
@@ -72,7 +74,7 @@ public class afficherClient extends JFrame {
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 784, 461);
+		panel.setBounds(0, 0, 732, 547);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -134,19 +136,6 @@ public class afficherClient extends JFrame {
 		textField_3.setBounds(118, 162, 398, 32);
 		panel.add(textField_3);
 		textField_3.setColumns(10);
-		//textField_3.setText(client.getAddresseClient());
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(41, 280, 322, 151);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 280, 357, 151);
-		panel.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
 		
 		JLabel lblNewLabel_4 = new JLabel("Addresse");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -167,8 +156,16 @@ public class afficherClient extends JFrame {
 			BufferedImage image = ImageIO.read(url);
 			ImageIcon imageIcon = new ImageIcon(image);
 			JLabel lblNewLabel_5 = new JLabel(imageIcon, JLabel.CENTER);
-			lblNewLabel_5.setBounds(565, 33, 179, 217);
+			lblNewLabel_5.setBounds(552, 33, 179, 217);
 			panel.add(lblNewLabel_5);
+			
+			JButton btnNewButton = new JButton("New button");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			btnNewButton.setBounds(585, 392, 105, 47);
+			panel.add(btnNewButton);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -258,9 +255,6 @@ public class afficherClient extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(41, 280, 703, 151);
 		panel.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
 		
 		JLabel lblNewLabel_4 = new JLabel("Addresse");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
