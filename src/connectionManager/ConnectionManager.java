@@ -20,6 +20,7 @@ public class ConnectionManager {
 			connection = DriverManager.getConnection(URL, USER, PASS);
 		} catch (Exception e) {
 			JOptionPane.showConfirmDialog(null, "Pas de connexion avec Base de Donnée", "Information", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
 		}
 	}
 
