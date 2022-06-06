@@ -73,9 +73,7 @@ public class ModifierClient extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				boolean b = ClientController.modifyClient(ModifierClient.id, textField.getText(), textField_1.getText(), textField_2.getText());
 				if (b) {
-					OperationEffectue op = new OperationEffectue();
 				} else {
-					OperationEchouee op = new OperationEchouee();
 				}
 				textField.setText("");
 				textField_1.setText("");

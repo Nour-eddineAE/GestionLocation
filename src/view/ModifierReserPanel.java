@@ -1,33 +1,28 @@
-package interfaces;
+package view;
 
+import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import java.util.Calendar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.time.Year;
+import java.util.Calendar;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import controller.ReservationController;
+import interfaces.MainInterface;
 import model.Reservation;
-import view.ReservationPanel;
 
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import javax.swing.JCheckBox;
-
-public class ModifierReservation {
-
-	private JFrame frmModReservation;
-	private ReservationPanel reserv_panel;
-	
+public class ModifierReserPanel extends JPanel {
 	private String dateDepart, dateRetour, codeVehicule;
 	private Color mainColor;
 	private Color secondaryColor;
@@ -35,45 +30,35 @@ public class ModifierReservation {
 	private boolean isCanceled;
 	private int codeReserv;
 	
+	private MainInterface mInterface;
+	private CardLayout cl;
 	private ReservationController cont;
 	private JLabel warning_lbl;
 	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ModifierReservation window = new ModifierReservation();
-					window.frmModReservation.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private ModifierReserPanel self = this;
 
 	/**
 	 * Create the application.
 	 */
-	public ModifierReservation() {
+	public ModifierReserPanel() {
 		mainColor = new Color(75, 0, 130);
 		secondaryColor = new Color(224, 199, 242);
+		this.setBounds(0, 0, 732, 547);
 		initialize();
 	}
 	
-	public ModifierReservation(ReservationPanel reserv_panel, Reservation r) {
+	public ModifierReserPanel(MainInterface mInterface, Reservation r, ReservationController cont) {
+		this.cont = cont;
+		this.mInterface = mInterface;
+		this.cl = (CardLayout) mInterface.getMainPanel().getLayout();
 		this.dateDepart = r.getDateDepart().toString();
 		this.dateRetour = r.getDateRetour().toString();
 		this.isValid = r.isValid();
 		this.isCanceled = r.isCanceled();
-		this.reserv_panel = reserv_panel;
+		//this.reserv_panel = reserv_panel;
 		this.codeReserv = r.getCodeReservation();
-		this.codeVehicule = r.getCodeVehicule();
+		this.codeVehicule = r.getVehicule().getCodeVehicule();
 		
-		this.cont = new ReservationController(reserv_panel, this);
 		mainColor = new Color(75, 0, 130);
 		secondaryColor = new Color(224, 199, 242);
 		initialize();
@@ -83,22 +68,15 @@ public class ModifierReservation {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmModReservation = new JFrame();
-		frmModReservation.getContentPane().setBackground(new Color(255, 255, 255));
-		frmModReservation.setResizable(false);
-		frmModReservation.setVisible(true);
-		frmModReservation.setTitle("Creer reservation");
-		frmModReservation.setBounds(100, 100, 1053, 471);
-		frmModReservation.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmModReservation.getContentPane().setLayout(null);
+		this.setLayout(null);
 		
 		JLabel dateDepart_lbl = new JLabel("Date depart:");
-		dateDepart_lbl.setBounds(225, 48, 124, 28);
-		frmModReservation.getContentPane().add(dateDepart_lbl);
+		dateDepart_lbl.setBounds(80, 141, 124, 28);
+		this.add(dateDepart_lbl);
 		
 		JLabel dateRetour_lbl = new JLabel("Date Retour:");
-		dateRetour_lbl.setBounds(225, 163, 124, 28);
-		frmModReservation.getContentPane().add(dateRetour_lbl);
+		dateRetour_lbl.setBounds(80, 270, 124, 28);
+		this.add(dateRetour_lbl);
 		
 		//Creation des panel de choix de date
 		dateDep();
@@ -106,61 +84,65 @@ public class ModifierReservation {
 		
 		
 		JCheckBox valide_box = new JCheckBox("Valid\u00E9");
+		valide_box.setHorizontalAlignment(SwingConstants.CENTER);
 		valide_box.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isValid = valide_box.isSelected();
 			}
 		});
 		valide_box.setSelected(isValid);
-		valide_box.setBounds(225, 320, 270, 21);
-		frmModReservation.getContentPane().add(valide_box);
+		valide_box.setBounds(81, 403, 270, 21);
+		this.add(valide_box);
 		
 		JCheckBox annul_box = new JCheckBox("Annul\u00E9");
+		annul_box.setHorizontalAlignment(SwingConstants.CENTER);
 		annul_box.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isCanceled = annul_box.isSelected();
 			}
 		});
 		annul_box.setSelected(isCanceled);
-		annul_box.setBounds(514, 320, 270, 21);
-		frmModReservation.getContentPane().add(annul_box);
+		annul_box.setBounds(369, 403, 270, 21);
+		this.add(annul_box);
 		
 		JButton sauvegarder_btn = new JButton("Sauvegarder");
 		sauvegarder_btn.setForeground(new Color(255, 255, 255));
 		sauvegarder_btn.setBackground(mainColor);
-		sauvegarder_btn.setBounds(869, 379, 109, 34);
+		sauvegarder_btn.setBounds(613, 489, 109, 48);
 		sauvegarder_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cont.ModifierReservation();
+				cl.show(mInterface.getMainPanel(), "reserv");
 			}
 		});
-		frmModReservation.getContentPane().add(sauvegarder_btn);
+		this.add(sauvegarder_btn);
 		
 		JButton Annuler_btn = new JButton("Annuler");
 		Annuler_btn.setForeground(new Color(255, 255, 255));
 		Annuler_btn.setBackground(mainColor);
 		Annuler_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmModReservation.dispose();
+				cl.show(mInterface.getMainPanel(), "reserv");
+				mInterface.getMainPanel().remove(self);
 			}
 		});
-		Annuler_btn.setBounds(29, 379, 109, 34);
-		frmModReservation.getContentPane().add(Annuler_btn);
+		Annuler_btn.setBounds(10, 489, 109, 48);
+		this.add(Annuler_btn);
 		
 		JLabel codeReserv_lbl = new JLabel("N\u00B0 reservation:");
-		codeReserv_lbl.setBounds(225, 25, 160, 13);
-		frmModReservation.getContentPane().add(codeReserv_lbl);
+		codeReserv_lbl.setBounds(80, 85, 160, 13);
+		this.add(codeReserv_lbl);
 		
 		JLabel codeReservValue_lbl = new JLabel(Integer.toString(codeReserv));
 		codeReservValue_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		codeReservValue_lbl.setBounds(326, 25, 160, 13);
-		frmModReservation.getContentPane().add(codeReservValue_lbl);
+		codeReservValue_lbl.setBounds(217, 85, 160, 13);
+		this.add(codeReservValue_lbl);
 		
 		warning_lbl = new JLabel("");
 		warning_lbl.setForeground(Color.RED);
 		warning_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		warning_lbl.setBounds(225, 378, 559, 35);
-		frmModReservation.getContentPane().add(warning_lbl);
+		warning_lbl.setBounds(135, 489, 469, 48);
+		this.add(warning_lbl);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -168,8 +150,8 @@ public class ModifierReservation {
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		
 		JPanel dateDepInput = new JPanel();
-		dateDepInput.setBounds(225, 86, 559, 67);
-		frmModReservation.getContentPane().add(dateDepInput);
+		dateDepInput.setBounds(80, 179, 559, 67);
+		this.add(dateDepInput);
 		dateDepInput.setLayout(null);
 		
 		JComboBox annee_comboBox = new JComboBox();
@@ -228,8 +210,8 @@ public class ModifierReservation {
 		
 		JPanel dateRetInput = new JPanel();
 		dateRetInput.setLayout(null);
-		dateRetInput.setBounds(225, 201, 559, 67);
-		frmModReservation.getContentPane().add(dateRetInput);
+		dateRetInput.setBounds(80, 308, 559, 67);
+		this.add(dateRetInput);
 		
 		JComboBox annee_comboBox = new JComboBox();
 		annee_comboBox.setModel(new DefaultComboBoxModel(new String[] {Integer.toString(currentYear), Integer.toString(currentYear+1), Integer.toString(currentYear+2), Integer.toString(currentYear+3), Integer.toString(currentYear+4)}));
@@ -281,63 +263,43 @@ public class ModifierReservation {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void setupDayChooser(JComboBox annee, JComboBox mois, JComboBox jour) {
+	private void setupDayChooser(JComboBox annee, JComboBox mois, JComboBox jour) {
 		mois.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switch((String)mois.getSelectedItem()) {
-					case "1": case"3": case"5": case"7": case "8": case "10": case "12": 
-						jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
-								"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-								"20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
-								"30", "31"}));
-						break;
-					case "2":
-						if(Year.isLeap( Integer.parseInt((String)annee.getSelectedItem()))) {
-							jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
-									"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-									"20", "21", "22", "23", "24", "25", "26", "27", "28", "29"}));
-						}else {
-							jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
-									"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-									"20", "21", "22", "23", "24", "25", "26", "27", "28"}));
-						}
-						break;
-					default:
-						jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
-								"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-								"20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
-								"30"}));
-						break;
-				}
+				setupJour(annee, mois, jour);			
 			}
 		});
-		switch((String)mois.getSelectedItem()) {
-			case "1": case"3": case"5": case"7": case "8": case "10": case "12": 
-				jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
-						"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-						"20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
-						"30", "31"}));
-				break;
-			case "2":
-				if(Year.isLeap( Integer.parseInt((String)annee.getSelectedItem()))) {
-					jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
-							"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-							"20", "21", "22", "23", "24", "25", "26", "27", "28", "29"}));
-				}else {
-					jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
-							"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-							"20", "21", "22", "23", "24", "25", "26", "27", "28"}));
-				}
-				break;
-			default:
-				jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
-						"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-						"20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
-						"30"}));
-				break;
-		}
+		setupJour(annee, mois, jour);
 	}
-
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void setupJour(JComboBox annee, JComboBox mois, JComboBox jour) {
+		switch((String)mois.getSelectedItem()) {
+		case "01": case "03": case"05": case"07": case "08": case "10": case "12": 
+			jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
+					"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
+					"20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
+					"30", "31"}));
+			break;
+		case "02":
+			if(Year.isLeap( Integer.parseInt((String)annee.getSelectedItem()))) {
+				jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
+						"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
+						"20", "21", "22", "23", "24", "25", "26", "27", "28", "29"}));
+			}else {
+				jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
+						"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
+						"20", "21", "22", "23", "24", "25", "26", "27", "28"}));
+			}
+			break;
+		default:
+			jour.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09",
+					"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
+					"20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
+					"30"}));
+			break;
+	}
+	}
 	
 	//Getters
 	public Date getDateDepart() {

@@ -12,8 +12,9 @@ import connectionManager.ConnectionManager;
 import model.Client;
 import model.Reservation;
 import model.Reservation.filtre;
+import model.Vehicule;
 
-public class ReservationDAO {
+public interface ReservationDAO {
 	
 	/**
 	 * Recherche tous les reservations stockées dans la base de donnees
@@ -49,10 +50,11 @@ public class ReservationDAO {
 				Reservation r = new Reservation();
 				
 				r.setClient(new Client());
+				r.setVehicule(new Vehicule());
 				r.setCodeReservation(result.getInt("codeReservation"));
 				
 				r.getClient().setCodeClient(result.getInt("codeClient"));
-				r.setCodeVehicule(result.getString("codeVehicule"));
+				r.getVehicule().setCodeVehicule(result.getString("codeVehicule"));
 				
 				r.setDateDepart(result.getDate("dateDepReservation"));
 				r.setDateRetour(result.getDate("dateRetReservation"));
@@ -72,11 +74,20 @@ public class ReservationDAO {
 					c.setPrenom(result2.getString("prenomClient"));
 				}
 				
+				query = "SELECT * FROM vehicule WHERE codeMatricule LIKE ?;";
+				ps = ConnectionManager.getConnection().prepareStatement(query);
+				ps.setString(1, query);
+				result2 = ps.executeQuery();
+				if(result2.next()) {
+					Vehicule v = r.getVehicule();
+					v.setPrixLocation(result2.getInt("prixLocation"));
+				}
+				
 				//Ajouter la reservation a la list
 				reservList.add(r);
 			}			
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 		
 		return reservList;
@@ -89,7 +100,7 @@ public class ReservationDAO {
 	 * @return ArrayList<Reservation> qui contient une seule reservation aux max.
 	 */
 	public static ArrayList<Reservation> findReservation(int codeReservation) {
-		String query = "SELECT * FROM reservation, client WHERE reservation.codeClient = client.codeClient AND codeReservation = ?;";
+		String query = "SELECT * FROM reservation WHERE codeReservation = ?;";
 		PreparedStatement preparedSt;
 		
 		ArrayList<Reservation> reservList = new ArrayList<Reservation>();
@@ -103,10 +114,11 @@ public class ReservationDAO {
 				Reservation r = new Reservation();
 				
 				r.setClient(new Client());
+				r.setVehicule(new Vehicule());
 				r.setCodeReservation(result.getInt("codeReservation"));
 				
 				r.getClient().setCodeClient(result.getInt("codeClient"));
-				r.setCodeVehicule(result.getString("codeVehicule"));
+				r.getVehicule().setCodeVehicule(result.getString("codeVehicule"));
 				
 				r.setDateDepart(result.getDate("dateDepReservation"));
 				r.setDateRetour(result.getDate("dateRetReservation"));
@@ -126,11 +138,21 @@ public class ReservationDAO {
 					c.setPrenom(result2.getString("prenomClient"));
 				}
 				
+				query = "SELECT * FROM vehicule WHERE codeMatricule LIKE ?;";
+				ps = ConnectionManager.getConnection().prepareStatement(query);
+				ps.setString(1, query);
+				result2 = ps.executeQuery();
+				if(result2.next()) {
+					Vehicule v = r.getVehicule();
+					v.setPrixLocation(result2.getInt("prixLocation"));
+				}
+				
+				
 				//Ajouter la reservation a la list
 				reservList.add(r);
 			}
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Recherche Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 		
 		return reservList;
@@ -159,7 +181,7 @@ public class ReservationDAO {
 			prepared.execute();
 			
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Creation Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 	}
@@ -192,6 +214,7 @@ public class ReservationDAO {
 			prepared.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Modification Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 	}
@@ -205,7 +228,7 @@ public class ReservationDAO {
 			prepared.setInt(1, codeReserv);
 			prepared.execute();
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Supression Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -248,6 +271,7 @@ public class ReservationDAO {
 			return !result.next();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Validation Date Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 		return false;

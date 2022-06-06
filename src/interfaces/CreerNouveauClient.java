@@ -74,9 +74,7 @@ public class CreerNouveauClient extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				boolean b = ClientController.creatClient(textField.getText(), textField_1.getText(), textField_2.getText());
 				if (b) {
-					OperationEffectue op = new OperationEffectue();
 				} else {
-					OperationEchouee op = new OperationEchouee();
 				}
 				textField.setText("");
 				textField_1.setText("");
