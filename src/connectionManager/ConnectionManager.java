@@ -16,7 +16,7 @@ public class ConnectionManager {
 
 	static {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(URL, USER, PASS);
 		} catch (Exception e) {
 			JOptionPane.showConfirmDialog(null, "Pas de connexion avec Base de Donnes", "Information", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);

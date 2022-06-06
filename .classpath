@@ -6,11 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="mysql Connector/mysql-connector-java-8.0.28.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="libs/barcodes-7.2.2.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -72,6 +67,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/svg-7.2.2.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="mysql Connector/mysql-connector-java-8.0.28.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
