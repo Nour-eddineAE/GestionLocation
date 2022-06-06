@@ -2,8 +2,8 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: May 15, 2022 at 09:10 PM
+-- Host: localhost:8889
+-- Generation Time: May 20, 2022 at 11:24 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -33,15 +33,19 @@ CREATE TABLE `client` (
   `prenomClient` varchar(20) NOT NULL,
   `adresseClient` varchar(50) NOT NULL,
   `telClient` varchar(20) NOT NULL,
-  `imageClient` varchar(50) NOT NULL COMMENT 'Path/link to client image'
+  `imageClient` varchar(200) NOT NULL,
+  `permisScanneeClient` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`codeClient`, `nomClient`, `prenomClient`, `adresseClient`, `telClient`, `imageClient`) VALUES
-(1, 'test', 'prenom', 'hello', '64546465', 'jgshfdsdf');
+INSERT INTO `client` (`codeClient`, `nomClient`, `prenomClient`, `adresseClient`, `telClient`, `imageClient`, `permisScanneeClient`) VALUES
+(4, 'nom1', 'p1', 'a1', 't1', 'C:\\Users\\HP ELITEBOOK\\Documents\\WebDevelopmentProjects\\images\\pexels-andrea-piacquadio-3777931.jpg', 'C:\\Users\\HP ELITEBOOK\\Documents\\WebDevelopmentProjects\\images\\kangaroo-6557734_960_720.webp'),
+(5, 'nom', 'prenom', 'tel', 'ad', 'C:\\Users\\HP ELITEBOOK\\Desktop\\Sans titre.png', 'permisScannee'),
+(6, 'n6', 'p6', 'a6', 't6', 'C:\\Users\\HP ELITEBOOK\\Desktop\\Sans titre.png', 'C:\\Users\\HP ELITEBOOK\\Documents\\WebDevelopmentProjects\\images\\kangaroo-6557734_960_720.webp'),
+(7, 'nom7', 'prenom7', 'a7', 't7', 'C:\\Users\\HP ELITEBOOK\\Desktop\\Sans titre.png', 'C:\\Users\\HP ELITEBOOK\\Desktop\\Sans titre.png');
 
 -- --------------------------------------------------------
 
@@ -76,6 +80,18 @@ CREATE TABLE `facture` (
 
 INSERT INTO `facture` (`codeFacture`, `dateFacture`, `montantFacture`, `codeContrat`) VALUES
 (1, '2022-05-02', 420, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `parking`
+--
+
+CREATE TABLE `parking` (
+  `id` int(11) NOT NULL,
+  `designation` varchar(50) NOT NULL,
+  `nombre` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -150,6 +166,12 @@ ALTER TABLE `facture`
   ADD PRIMARY KEY (`codeFacture`);
 
 --
+-- Indexes for table `parking`
+--
+ALTER TABLE `parking`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `reservation`
 --
 ALTER TABLE `reservation`
@@ -169,7 +191,7 @@ ALTER TABLE `vehicule`
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `codeClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `codeClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `contrat`
@@ -182,6 +204,12 @@ ALTER TABLE `contrat`
 --
 ALTER TABLE `facture`
   MODIFY `codeFacture` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `parking`
+--
+ALTER TABLE `parking`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reservation`
