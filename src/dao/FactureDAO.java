@@ -37,8 +37,8 @@ public interface FactureDAO {
 				f.setMontant(result.getInt("montantFacture"));
 				
 				Client client = new Client();
-				client.setNom(result.getString("nomClient"));
-				client.setPrenom(result.getString("prenomClient"));
+				client.setNomClient(result.getString("nomClient"));
+				client.setPrenomClient(result.getString("prenomClient"));
 				client.setCodeClient(result.getInt("codeClient"));
 				
 				Vehicule vehicule = new Vehicule();
@@ -95,8 +95,8 @@ public interface FactureDAO {
 				f.setMontant(result.getInt("montantFacture"));
 				
 				Client client = new Client();
-				client.setNom(result.getString("nomClient"));
-				client.setPrenom(result.getString("prenomClient"));
+				client.setNomClient(result.getString("nomClient"));
+				client.setPrenomClient(result.getString("prenomClient"));
 				client.setCodeClient(result.getInt("codeClient"));
 				
 				Vehicule vehicule = new Vehicule();
@@ -194,8 +194,8 @@ public interface FactureDAO {
 				f.setMontant(result.getInt("montantFacture"));
 				
 				Client client = new Client();
-				client.setNom(result.getString("nomClient"));
-				client.setPrenom(result.getString("prenomClient"));
+				client.setNomClient(result.getString("nomClient"));
+				client.setPrenomClient(result.getString("prenomClient"));
 				client.setCodeClient(result.getInt("codeClient"));
 				
 				Vehicule vehicule = new Vehicule();

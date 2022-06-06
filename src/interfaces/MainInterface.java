@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,25 +28,13 @@ import javax.swing.table.DefaultTableModel;
 import controller.ClientController;
 import controller.ReservationController;
 import controller.FactureController;
+import view.ClientMainView;
 import view.CreerFacturePanel;
 import view.CreerReservPanel;
 import view.FacturePanel;
 import view.ReservationPanel;
 import controller.ParkingController;
-import model.Client;
-import view.AfficherClientPanel;
-import view.ClientMainView;
-import view.ModifierClientPanel;
-import view.NouveauClientPanel;
 
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.CardLayout;
-import java.util.LinkedHashMap;
-import java.awt.FlowLayout;
 
 public class MainInterface {
 
@@ -59,10 +48,7 @@ public class MainInterface {
 	private JPanel mainPanel;
 	private String currentPane;
 	private LinkedHashMap<String, JLabel> navItemList;
-	// client panel field
-	private JTable clienttable;
-	private JTextField clienttextField;
-
+	
 	//CONTROLLERS @ABD-AB
 	private ReservationController reservController;
 	private FactureController factureController;
@@ -111,6 +97,7 @@ public class MainInterface {
 		secondaryColor = new Color(224, 199, 242);
 		highlight = new Color(202, 168, 227);
 		navFontSize = 12;
+		frame.getContentPane().setLayout(null);
 
 		JPanel titleBar = new JPanel();
 		titleBar.setBackground(mainColor);
@@ -134,24 +121,8 @@ public class MainInterface {
 		navigation.setBackground(secondaryColor);
 		navigation.setLayout(new GridLayout(8, 1, 0, 0));
 
-		navItemList = new LinkedHashMap<String, JLabel>();
-		navItemList.put("client", new JLabel("Gestion de clients"));
-		navItemList.put("reserv", new JLabel("Gestion des reservations"));
-		navItemList.put("contrat", new JLabel("Gestion des contrats"));
-		navItemList.put("facture", new JLabel("Gestion des factures"));
-		navItemList.put("sanction", new JLabel("Gestion des sanctions"));
-		navItemList.put("vehicule", new JLabel("Gestion des vehicules"));
-		navItemList.put("parking", new JLabel("Gestion des parkings"));
-		navItemList.put("user", new JLabel("Gestion des utilisateurs"));
-
-		for(String item : navItemList.keySet()) {
-			JLabel lab = navItemList.get(item);
-			setupNavItem(lab, item);
-			navigation.add(lab);
-		}
-
 		mainPanel = new JPanel();
-		mainPanel.setBounds(244, 106, 732, 547);
+		mainPanel.setBounds(234, 102, 752, 561);
 		mainPanel.setLayout(new CardLayout(0, 0));
 		cl = (CardLayout) mainPanel.getLayout();
 
@@ -172,21 +143,22 @@ public class MainInterface {
 
 
 		//END PANEL RESERVATIONS ---------------------------------------------------------------------
+		
 		JPanel contrats = new JPanel();
 		mainPanel.add(contrats, "contrat");
 
 		JLabel lblContrats = new JLabel("contrats");
 		contrats.add(lblContrats);
 
-		//Panel des factures @ABD-AB-------------------------------------------------------------------------
+		//Panel des factures @ABD-AB-------------------------------------------------------------------
 
 		FacturePanel factures = new FacturePanel(this);
 		mainPanel.add(factures, "facture");
 
-		//END Panel des factures ---------------------------------------------------------------------
+		//END Panel des factures ----------------------------------------------------------------------
 		
 		
-		//Panel des sanctions ---------------------------------------------------------------------
+		//Panel des sanctions -------------------------------------------------------------------------
 		
 		JPanel sanctions = new JPanel();
 		mainPanel.add(sanctions, "sanction");
@@ -216,7 +188,7 @@ public class MainInterface {
 		sideBar.add(navigation);
 		frame.getContentPane().add(mainPanel);
 
-		//PANEL CREATION FACTURE @ABD-AB -------------------------------------------------------------------------------------------
+		//PANEL CREATION FACTURE @ABD-AB ----------------------------------------------------------------
 		CreerFacturePanel creerFacturePanel = new CreerFacturePanel(this);
 		mainPanel.add(creerFacturePanel, "newFacture");
 
@@ -228,6 +200,23 @@ public class MainInterface {
 
 		// Parking Panel generation
 		setupParkingPanel(parking);
+		
+		
+		navItemList = new LinkedHashMap<String, JLabel>();
+		navItemList.put("client", new JLabel("Gestion de clients"));
+		navItemList.put("reserv", new JLabel("Gestion des reservations"));
+		navItemList.put("contrat", new JLabel("Gestion des contrats"));
+		navItemList.put("facture", new JLabel("Gestion des factures"));
+		navItemList.put("sanction", new JLabel("Gestion des sanctions"));
+		navItemList.put("vehicule", new JLabel("Gestion des vehicules"));
+		navItemList.put("parking", new JLabel("Gestion des parkings"));
+		navItemList.put("user", new JLabel("Gestion des utilisateurs"));
+
+		for(String item : navItemList.keySet()) {
+			JLabel lab = navItemList.get(item);
+			setupNavItem(lab, item);
+			navigation.add(lab);
+		}
 
 	}
 
@@ -337,7 +326,7 @@ public class MainInterface {
 					ModifierParking.setId(parkingtable.getModel().getValueAt(index, 0).toString());
 					ModifierParking window = new ModifierParking(parkingtable, index);
 				} else {
-					JOptionPane.showConfirmDialog(null, "Tu dois s�l�ctionn�e un �l�ment du tableau pour le modifier!",
+					JOptionPane.showConfirmDialog(null, "Tu dois selectionner un element du tableau pour le modifier!",
 							"Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
 			}
@@ -366,7 +355,7 @@ public class MainInterface {
 						ParkingController.fetchAll(parkingtable);
 					}
 				} else {
-					JOptionPane.showConfirmDialog(null, "Tu dois s�l�ctionn�e un �l�ment du tableau pour le supprimer!",
+					JOptionPane.showConfirmDialog(null, "Tu dois selectionner un element du tableau pour le supprimer!",
 							"Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
 			}

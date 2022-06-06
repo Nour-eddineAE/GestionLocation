@@ -54,8 +54,8 @@ public class ReservationTableModel extends AbstractTableModel{
 			Client c = r.getClient();
 			String[] row = {
 					Integer.toString(r.getCodeReservation()),
-					c.getNom(),
-					c.getPrenom(),
+					c.getNomClient(),
+					c.getPrenomClient(),
 					r.getVehicule().getCodeVehicule(),
 					r.getDateDepart().toString(),
 					r.getDateRetour().toString(),

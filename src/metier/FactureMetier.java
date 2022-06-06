@@ -4,9 +4,6 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
@@ -23,7 +20,6 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.VerticalAlignment;
 
-import connectionManager.ConnectionManager;
 import model.Facture;
 
 public interface FactureMetier {
@@ -90,7 +86,7 @@ public interface FactureMetier {
 					);
 			
 			clientInfo.addCell(
-					new Cell().add(new Paragraph(f.getContrat().getReservation().getClient().getNom()))
+					new Cell().add(new Paragraph(f.getContrat().getReservation().getClient().getNomClient()))
 						.setFontSize(7f)
 						.setBorder(Border.NO_BORDER)
 					);
@@ -117,7 +113,7 @@ public interface FactureMetier {
 					);
 			
 			clientInfo.addCell(
-					new Cell().add(new Paragraph(f.getContrat().getReservation().getClient().getPrenom()))
+					new Cell().add(new Paragraph(f.getContrat().getReservation().getClient().getPrenomClient()))
 						.setFontSize(7f)
 						.setBorder(Border.NO_BORDER)
 					);

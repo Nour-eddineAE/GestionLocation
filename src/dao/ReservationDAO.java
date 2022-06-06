@@ -70,8 +70,8 @@ public interface ReservationDAO {
 				ResultSet result2 = ps.executeQuery();
 				if(result2.next()) {
 					Client c = r.getClient();
-					c.setNom(result2.getString("nomClient"));
-					c.setPrenom(result2.getString("prenomClient"));
+					c.setNomClient(result2.getString("nomClient"));
+					c.setPrenomClient(result2.getString("prenomClient"));
 				}
 				
 				query = "SELECT * FROM vehicule WHERE codeMatricule LIKE ?;";
@@ -134,8 +134,8 @@ public interface ReservationDAO {
 				ResultSet result2 = ps.executeQuery();
 				if(result2.next()) {
 					Client c = r.getClient();
-					c.setNom(result2.getString("nomClient"));
-					c.setPrenom(result2.getString("prenomClient"));
+					c.setNomClient(result2.getString("nomClient"));
+					c.setPrenomClient(result2.getString("prenomClient"));
 				}
 				
 				query = "SELECT * FROM vehicule WHERE codeMatricule LIKE ?;";

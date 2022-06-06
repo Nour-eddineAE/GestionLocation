@@ -50,8 +50,8 @@ public class FactureTableModel extends AbstractTableModel {
 		for(Facture f: fact_list) {
 			String[] row = {
 				Integer.toString(f.getCodeFacture()),
-				f.getContrat().getReservation().getClient().getPrenom(),
-				f.getContrat().getReservation().getClient().getNom(),
+				f.getContrat().getReservation().getClient().getPrenomClient(),
+				f.getContrat().getReservation().getClient().getNomClient(),
 				Integer.toString(f.getContrat().getCodeContrat()),
 				Integer.toString(f.getMontant())
 			};
