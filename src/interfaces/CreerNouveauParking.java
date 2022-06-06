@@ -111,9 +111,9 @@ public class CreerNouveauParking {
 			public void actionPerformed(ActionEvent e) {
 				boolean b = ParkingController.creatParking(textField.getText(), Integer.parseInt(textField_1.getText()));
 				if (b) {
-					JOptionPane.showConfirmDialog(null, "Opération Effectuée avce Succée", "Succée", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showConfirmDialog(null, "Opï¿½ration Effectuï¿½e avce Succï¿½e", "Succï¿½e", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				} else {
-					JOptionPane.showConfirmDialog(null, "Opération Echouée", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showConfirmDialog(null, "Opï¿½ration Echouï¿½e", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				}
 				textField.setText("");
 				textField_1.setText("");

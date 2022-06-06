@@ -73,7 +73,7 @@ public class MainInterface {
 	 */
 	public MainInterface() {
 		initialize();
-		//ClientController.fetchAll(clienttable);
+		// ClientController.fetchAll(clienttable);
 		ParkingController.fetchAll(parkingtable);
 	}
 
@@ -159,7 +159,7 @@ public class MainInterface {
 		frame.getContentPane().add(mainPanel);
 		mainPanel.setLayout(new CardLayout(0, 0));
 		cl = (CardLayout) mainPanel.getLayout();
-		
+
 		// Client Panel generation
 		ClientMainView client = new ClientMainView(getMainPanel());
 		mainPanel.add(client, "client");
@@ -202,13 +202,8 @@ public class MainInterface {
 
 		JLabel lblUtilisateurs = new JLabel("utilisateurs");
 		utilisateurs.add(lblUtilisateurs);
-		client.setLayout(null);
 
-		// Client Panel generation
-		//setupClientPanel(client);
-		
-		
-		// Parking Panel generation 
+		// Parking Panel generation
 		setupParkingPanel(parking);
 
 	}
@@ -247,7 +242,7 @@ public class MainInterface {
 			}
 		});
 	}
-	
+
 	private void setupParkingPanel(JPanel panel) {
 		panel.setLayout(null);
 		JScrollPane parkingscrollPane = new JScrollPane();
@@ -282,22 +277,21 @@ public class MainInterface {
 		});
 		parkingbtnNewButton_1.setBounds(594, 76, 128, 36);
 		panel.add(parkingbtnNewButton_1);
-		
-				JButton parkingbtnNewButton_5 = new JButton("Afficher");
-				parkingbtnNewButton_5.addActionListener(new ActionListener() {
-					public void actionPerformed (ActionEvent e) {
-						int index = parkingtable.getSelectedRow();
-						if (index >= 0) {
-							
-						} else {
-							JOptionPane.showConfirmDialog(null,
-									"Tu dois séléctionnée un élément du tableau pour l'afficher!", "Attention",
-									JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
-						}
-					}
-				});
-				parkingbtnNewButton_5.setBounds(594, 123, 128, 36);
-				panel.add(parkingbtnNewButton_5);
+
+		JButton parkingbtnNewButton_5 = new JButton("Afficher");
+		parkingbtnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = parkingtable.getSelectedRow();
+				if (index >= 0) {
+
+				} else {
+					JOptionPane.showConfirmDialog(null, "Tu dois séléctionnée un élément du tableau pour l'afficher!",
+							"Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+		parkingbtnNewButton_5.setBounds(594, 123, 128, 36);
+		panel.add(parkingbtnNewButton_5);
 
 		parkingtextField = new JTextField();
 		parkingtextField.setBounds(10, 11, 574, 36);
@@ -312,9 +306,8 @@ public class MainInterface {
 					ModifierParking.setId(parkingtable.getModel().getValueAt(index, 0).toString());
 					ModifierParking window = new ModifierParking(parkingtable, index);
 				} else {
-					JOptionPane.showConfirmDialog(null,
-							"Tu dois séléctionnée un élément du tableau pour le modifier!", "Attention",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showConfirmDialog(null, "Tu dois séléctionnée un élément du tableau pour le modifier!",
+							"Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -342,17 +335,16 @@ public class MainInterface {
 						ParkingController.fetchAll(parkingtable);
 					}
 				} else {
-					JOptionPane.showConfirmDialog(null,
-							"Tu dois séléctionnée un élément du tableau pour le supprimer!", "Attention",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showConfirmDialog(null, "Tu dois séléctionnée un élément du tableau pour le supprimer!",
+							"Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
 		parkingbtnNewButton_4.setBounds(594, 264, 128, 36);
 		panel.add(parkingbtnNewButton_4);
 	}
-	
-	public JPanel getMainPanel () {
+
+	public JPanel getMainPanel() {
 		return this.mainPanel;
 	}
 }

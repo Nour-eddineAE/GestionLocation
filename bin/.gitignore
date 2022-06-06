@@ -1,2 +1,5 @@
-/interfaces/
 /view/
+/controller/
+/dao/
+/interfaces/
+/model/

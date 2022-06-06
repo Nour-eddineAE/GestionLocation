@@ -18,24 +18,27 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ClientController;
 import model.Client;
+import java.awt.Color;
 
 public class ClientMainView extends JPanel {
-	
+
+	// on a besion de ces variables à l'interieur de plusieurs fonction donc on les
+	// rendre globals
 	private JTable clienttable;
 	private CardLayout cl;
-	private JTextField clienttextField;
+	private JTextField searchclienttextField;
 
-	public ClientMainView (JPanel panel) {
+	public ClientMainView(JPanel panel) {
 		initialize(panel);
 		ClientController.fetchAll(clienttable);
 	}
-	
-	
-		private void initialize(JPanel panel) {
+
+	private void initialize(JPanel panel) {
+		// on a besion de cl pour revenir au menu principal
 		this.cl = (CardLayout) panel.getLayout();
 		this.setLayout(null);
-		
-		
+		this.setBounds(0, 0, 766, 598);
+
 		JScrollPane clientscrollPane = new JScrollPane();
 		clientscrollPane.setBounds(10, 76, 574, 478);
 		this.add(clientscrollPane);
@@ -48,77 +51,88 @@ public class ClientMainView extends JPanel {
 		clientmodel.setColumnIdentifiers(clientcolumns);
 		clienttable.setModel(clientmodel);
 		clientscrollPane.setViewportView(clienttable);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setBounds(10, 11, 574, 90);
-		this.add(lblNewLabel_1);
 
-		JButton clientbtnNewButton = new JButton("Rechercher");
-		clientbtnNewButton.addActionListener(new ActionListener() {
+		JLabel warninglbl = new JLabel("");
+		warninglbl.setForeground(new Color(255, 0, 0));
+		warninglbl.setHorizontalAlignment(SwingConstants.LEFT);
+		warninglbl.setBounds(10, 51, 574, 22);
+		this.add(warninglbl);
+
+		JButton buttonRecherche = new JButton("Rechercher");
+		buttonRecherche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String string = clienttextField.getText();
+				String string = searchclienttextField.getText();
+				// si le champ de recherche est vide une message doit affiché
 				if (!string.isBlank()) {
-				ClientController.findClientByName(string, clienttable);
-				clienttextField.setText("");
+					ClientController.findClientByName(string, clienttable);
+					searchclienttextField.setText("");
+					warninglbl.setText("");
 				} else {
-					lblNewLabel_1.setText("*Tu dois remplir le nom de client tu as en train de chercher");
+					warninglbl.setText("*Vous deuvez remplir le nom de client tu as en train de chercher");
 				}
 			}
 		});
-		clientbtnNewButton.setBounds(594, 11, 128, 36);
-		this.add(clientbtnNewButton);
+		buttonRecherche.setBounds(594, 11, 128, 36);
+		this.add(buttonRecherche);
 
-		JButton clientbtnNewButton_1 = new JButton("Nouveau Client");
-		clientbtnNewButton_1.addActionListener(new ActionListener() {
+		JButton nouveauClientButton = new JButton("Nouveau Client");
+		nouveauClientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NouveauClientPanel nouveauClientPanel = new NouveauClientPanel(panel,clienttable);
+				// ouvrir la fenetre créer nouveau client
+				NouveauClientPanel nouveauClientPanel = new NouveauClientPanel(panel, clienttable);
 				panel.add(nouveauClientPanel, "nouveauClientPanel");
 				cl.show(panel, "nouveauClientPanel");
+				warninglbl.setText("");
 			}
 		});
-		clientbtnNewButton_1.setBounds(594, 76, 128, 36);
-		this.add(clientbtnNewButton_1);
+		nouveauClientButton.setBounds(594, 76, 128, 36);
+		this.add(nouveauClientButton);
 
-		clienttextField = new JTextField();
-		clienttextField.setBounds(10, 11, 574, 36);
-		this.add(clienttextField);
-		clienttextField.setColumns(10);
+		searchclienttextField = new JTextField();
+		searchclienttextField.setBounds(10, 11, 574, 36);
+		this.add(searchclienttextField);
+		searchclienttextField.setColumns(10);
 
-		JButton clientbtnNewButton_2 = new JButton("Modifier");
-		clientbtnNewButton_2.addActionListener(new ActionListener() {
+		JButton modifierClientButton = new JButton("Modifier");
+		modifierClientButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				// recuperer la ligne du tableau séléctionnée
 				int index = clienttable.getSelectedRow();
 				if (index >= 0) {
 					int code = (int) clienttable.getModel().getValueAt(index, 0);
 					Client client = ClientController.findClientByCode(code);
+					// ouvrir la fenetre modifier client
 					ModifierClientPanel modifierClientPanel = new ModifierClientPanel(panel, client, clienttable);
 					panel.add(modifierClientPanel, "modifierClientPanel");
 					cl.show(panel, "modifierClientPanel");
 				} else {
-					JOptionPane.showConfirmDialog(null,
-							"Tu dois séléctionnée un élément du tableau pour le modifier!", "Attention",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+					// si l'utilisateur ne séléctionne aucun ligne de tableau
+					JOptionPane.showConfirmDialog(null, "Tu dois séléctionnée un élément du tableau pour le modifier!",
+							"Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
+				warninglbl.setText("");
 			}
 		});
-		clientbtnNewButton_2.setBounds(594, 170, 128, 36);
-		this.add(clientbtnNewButton_2);
+		modifierClientButton.setBounds(594, 170, 128, 36);
+		this.add(modifierClientButton);
 
-		JButton clientbtnNewButton_3 = new JButton("Actualiser");
-		clientbtnNewButton_3.addActionListener(new ActionListener() {
+		JButton actualiserClientButton = new JButton("Actualiser");
+		actualiserClientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// rafraîchir le tableau des clients
 				ClientController.fetchAll(clienttable);
+				warninglbl.setText("");
 			}
 		});
-		clientbtnNewButton_3.setBounds(594, 264, 128, 36);
-		this.add(clientbtnNewButton_3);
+		actualiserClientButton.setBounds(594, 264, 128, 36);
+		this.add(actualiserClientButton);
 
-		JButton clientbtnNewButton_4 = new JButton("Supprimer");
-		clientbtnNewButton_4.addActionListener(new ActionListener() {
+		JButton supprimerClientButton = new JButton("Supprimer");
+		supprimerClientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = clienttable.getSelectedRow();
+				// tester si le client a séléctionné une ligne
 				if (index >= 0) {
 					int result = JOptionPane.showConfirmDialog(null, "Avez-vous Sure?", "Confirmation",
 							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -127,18 +141,18 @@ public class ClientMainView extends JPanel {
 						ClientController.fetchAll(clienttable);
 					}
 				} else {
-					JOptionPane.showConfirmDialog(null,
-							"Tu dois séléctionnée un élément du tableau pour le supprimer!", "Attention",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showConfirmDialog(null, "Tu dois séléctionnée un élément du tableau pour le supprimer!",
+							"Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
+				warninglbl.setText("");
 			}
 		});
-		clientbtnNewButton_4.setBounds(594, 217, 128, 36);
-		this.add(clientbtnNewButton_4);
+		supprimerClientButton.setBounds(594, 217, 128, 36);
+		this.add(supprimerClientButton);
 
-		JButton clientbtnNewButton_5 = new JButton("Afficher");
-		clientbtnNewButton_5.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent e) {
+		JButton afficherClientButton = new JButton("Afficher");
+		afficherClientButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				int index = clienttable.getSelectedRow();
 				if (index >= 0) {
 					int code = Integer.parseInt(clienttable.getModel().getValueAt(index, 0).toString());
@@ -147,14 +161,14 @@ public class ClientMainView extends JPanel {
 					panel.add(afficherClientPanel, "afficherClientPanel");
 					cl.show(panel, "afficherClientPanel");
 				} else {
-					JOptionPane.showConfirmDialog(null,
-							"Tu dois séléctionnée un élément du tableau pour l'afficher!", "Attention",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showConfirmDialog(null, "Tu dois séléctionnée un élément du tableau pour l'afficher!",
+							"Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
+				warninglbl.setText("");
 			}
 		});
-		clientbtnNewButton_5.setBounds(594, 123, 128, 36);
-		this.add(clientbtnNewButton_5);
+		afficherClientButton.setBounds(594, 123, 128, 36);
+		this.add(afficherClientButton);
 	}
 
 }

@@ -14,58 +14,77 @@ import dao.ClientDAO;
 import model.Client;
 
 public class ClientController {
-	
-	public static void fetchAll (JTable table) {
+
+	public static void fetchAll(JTable table) {
+		// rederiger le travaille de recherche au couche DAO
 		ArrayList<Client> list = ClientDAO.actualiserClient();
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("Id");
-		dtm.addColumn("nom");
-		dtm.addColumn("prenom");
-		dtm.addColumn("num Tel");
+		// preparer le model
+		DefaultTableModel dtm = preparerModel(list);
 		table.setModel(dtm);
-		Iterator itr = list.iterator();
-		
-		while (itr.hasNext()) {
-			Client client = (Client)itr.next();
-			Object[] object = {client.getCodeClient(), client.getNomClient(), client.getPrenomClient(), client.getNumTelClient()};
-			dtm.addRow(object);
-		}
-		
 	}
-	
-	public static boolean creatClient (Client client) {
+
+	public static boolean creatClient(Client client) {
+		// rederiger le travaille d'interaction avec base de donnée au couche DAO
 		return ClientDAO.creerClient(client);
 	}
-	
-	public static void findClientByName (String nom, JTable table) {
+
+	public static void findClientByName(String nom, JTable table) {
 		ArrayList<Client> list = ClientDAO.findClient(nom);
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("Id");
-		dtm.addColumn("nom");
-		dtm.addColumn("prenom");
-		dtm.addColumn("num Tel");
+		DefaultTableModel dtm = preparerModel(list);
 		table.setModel(dtm);
-		Iterator itr = list.iterator();
-		
-		while (itr.hasNext()) {
-			Client client = (Client)itr.next();
-			Object[] object = {client.getCodeClient(), client.getNomClient(), client.getPrenomClient(), client.getNumTelClient()};
-			dtm.addRow(object);
-		}
-		
 	}
-	
-	public static Client findClientByCode (int code) {
+
+	public static Client findClientByCode(int code) {
 		Client client = ClientDAO.chercherClient(code);
 		return client;
 	}
-	
-	public static void deleteClient (String id) {
+
+	public static void deleteClient(String id) {
 		ClientDAO.supprimerClient(Integer.parseInt(id));
 	}
-	
-	public static boolean modifyClient (Client client) {
+
+	public static boolean modifyClient(Client client) {
 		return ClientDAO.modifierClient(client);
+	}
+
+	public static DefaultTableModel preparerModel(ArrayList<Client> list) {
+		// preparer le model du tableau
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("Id");
+		dtm.addColumn("nom");
+		dtm.addColumn("prenom");
+		dtm.addColumn("num Tel");
+
+		Iterator itr = list.iterator();
+
+		// remplir le model par les informations extraites de base de données
+		while (itr.hasNext()) {
+			Client client = (Client) itr.next();
+			Object[] object = { client.getCodeClient(), client.getNomClient(), client.getPrenomClient(),
+					client.getNumTelClient() };
+			dtm.addRow(object);
+		}
+
+		return dtm;
+	}
+
+	public static void findVehicule(JTable table, String code) {
+		ResultSet result = ClientDAO.chercherVehicule(code);
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("Matricule");
+		dtm.addColumn("Marque");
+		dtm.addColumn("Date de départ");
+		dtm.addColumn("Date de retour");
+		try {
+			while (result.next()) {
+				Object[] object = { result.getString(1), result.getString(2), result.getString(3),
+						result.getString(4) };
+				dtm.addRow(object);
+			}
+			table.setModel(dtm);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

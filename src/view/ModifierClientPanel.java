@@ -23,156 +23,174 @@ import model.Client;
 
 public class ModifierClientPanel extends JPanel {
 
+	//on a besion de ces variables à l'interieur de plusieurs fonction donc on les rendre globals
 	private CardLayout cl;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField nomClientTextField;
+	private JTextField prenomClientTextField;
+	private JTextField teleClientTextField;
+	private JTextField adresseClientTextField;
 
 	/**
 	 * Create the panel.
 	 */
 	public ModifierClientPanel(JPanel panel, Client client, JTable table) {
+		//on a besion de cl pour revenir au menu principal
 		this.cl = (CardLayout) panel.getLayout();
 		this.setLayout(null);
+		this.setBounds(0, 0, 766, 598);
 		
-		textField = new JTextField();
-		textField.setBounds(217, 40, 408, 20);
-		this.add(textField);
-		textField.setColumns(10);
-		textField.setText(client.getNomClient());
+		nomClientTextField = new JTextField();
+		nomClientTextField.setBounds(217, 40, 408, 20);
+		this.add(nomClientTextField);
+		nomClientTextField.setColumns(10);
+		nomClientTextField.setText(client.getNomClient());
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(217, 85, 408, 20);
-		this.add(textField_1);
-		textField_1.setColumns(10);
-		textField_1.setText(client.getPrenomClient());
+		prenomClientTextField = new JTextField();
+		prenomClientTextField.setBounds(217, 85, 408, 20);
+		this.add(prenomClientTextField);
+		prenomClientTextField.setColumns(10);
+		prenomClientTextField.setText(client.getPrenomClient());
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(217, 131, 408, 20);
-		this.add(textField_2);
-		textField_2.setColumns(10);
-		textField_2.setText(client.getNumTelClient());
+		teleClientTextField = new JTextField();
+		teleClientTextField.setBounds(217, 131, 408, 20);
+		this.add(teleClientTextField);
+		teleClientTextField.setColumns(10);
+		teleClientTextField.setText(client.getNumTelClient()+"");
 
-		textField_3 = new JTextField();
-		textField_3.setBounds(217, 185, 408, 20);
-		this.add(textField_3);
-		textField_3.setColumns(10);
-		textField_3.setText(client.getAddresseClient());
+		adresseClientTextField = new JTextField();
+		adresseClientTextField.setBounds(217, 185, 408, 20);
+		this.add(adresseClientTextField);
+		adresseClientTextField.setColumns(10);
+		adresseClientTextField.setText(client.getAddresseClient());
 		
-		JLabel lblNewLabel = new JLabel("nom client");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(0, 43, 197, 14);
-		this.add(lblNewLabel);
+		JLabel nomClientlbl = new JLabel("nom client");
+		nomClientlbl.setHorizontalAlignment(SwingConstants.CENTER);
+		nomClientlbl.setBounds(0, 43, 197, 14);
+		this.add(nomClientlbl);
 		
-		JLabel lblNewLabel_1 = new JLabel("prenom client");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(10, 88, 197, 14);
-		this.add(lblNewLabel_1);
+		JLabel prenomClientlbl = new JLabel("prenom client");
+		prenomClientlbl.setHorizontalAlignment(SwingConstants.CENTER);
+		prenomClientlbl.setBounds(10, 88, 197, 14);
+		this.add(prenomClientlbl);
 		
-		JLabel lblNewLabel_2 = new JLabel("num Tel client");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(10, 134, 197, 14);
-		this.add(lblNewLabel_2);
+		JLabel teleClientlbl = new JLabel("num Tel client");
+		teleClientlbl.setHorizontalAlignment(SwingConstants.CENTER);
+		teleClientlbl.setBounds(10, 134, 197, 14);
+		this.add(teleClientlbl);
 		
-		JLabel lblNewLabel_6 = new JLabel(client.getImage());
-		lblNewLabel_6.setBounds(336, 240, 289, 14);
-		this.add(lblNewLabel_6);
+		JLabel imagePath = new JLabel(client.getImage());
+		imagePath.setBounds(336, 240, 289, 14);
+		this.add(imagePath);
 		
-		JLabel lblNewLabel_7 = new JLabel(client.getPermisScannee());
-		lblNewLabel_7.setBounds(336, 292, 289, 14);
-		this.add(lblNewLabel_7);
+		JLabel permisPath = new JLabel(client.getPermisScannee());
+		permisPath.setBounds(336, 292, 289, 14);
+		this.add(permisPath);
 		
-		JButton btnNewButton_1 = new JButton("Effacer");
-		btnNewButton_1.addMouseListener(new MouseAdapter() {
+		JButton buttonEffacer = new JButton("Effacer");
+		buttonEffacer.addMouseListener(new MouseAdapter() {
 			@Override
+			//effacer tous les informations pour les redéfinir
 			public void mouseClicked(MouseEvent e) {
-				textField.setText("");
-				textField_1.setText("");
-				textField_2.setText("");
-				textField_3.setText("");
-				lblNewLabel_6.setText("");
-				lblNewLabel_7.setText("");
+				nomClientTextField.setText("");
+				prenomClientTextField.setText("");
+				teleClientTextField.setText("");
+				adresseClientTextField.setText("");
+				imagePath.setText("");
+				permisPath.setText("");
 			}
 		});
-		btnNewButton_1.setBounds(272, 346, 129, 43);
-		this.add(btnNewButton_1);
+		buttonEffacer.setBounds(272, 346, 129, 43);
+		this.add(buttonEffacer);
 		
-		JButton btnNewButton_2 = new JButton("Retour");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton buttonRetour = new JButton("Retour");
+		buttonRetour.addActionListener(new ActionListener() {
+			//retour au page principale
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panel, "client");
 			}
 		});
-		btnNewButton_2.setBounds(68, 346, 129, 43);
-		this.add(btnNewButton_2);
+		buttonRetour.setBounds(68, 346, 129, 43);
+		this.add(buttonRetour);
 		
-		JLabel lblNewLabel_3 = new JLabel("Adresse Client");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setBounds(10, 188, 187, 14);
-		this.add(lblNewLabel_3);
+		JLabel adressrClientlbl = new JLabel("Adresse Client");
+		adressrClientlbl.setHorizontalAlignment(SwingConstants.CENTER);
+		adressrClientlbl.setBounds(10, 188, 187, 14);
+		this.add(adressrClientlbl);
 		
-		JLabel lblNewLabel_4 = new JLabel("Image Client");
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4.setBounds(10, 240, 187, 14);
-		this.add(lblNewLabel_4);
+		JLabel imageClientlbl = new JLabel("Image Client");
+		imageClientlbl.setHorizontalAlignment(SwingConstants.CENTER);
+		imageClientlbl.setBounds(10, 240, 187, 14);
+		this.add(imageClientlbl);
 		
-		JLabel lblNewLabel_5 = new JLabel("Permis Scan\u00E9e de Client");
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5.setBounds(10, 292, 187, 14);
-		this.add(lblNewLabel_5);
+		JLabel permisClientlbl = new JLabel("Permis Scan\u00E9e de Client");
+		permisClientlbl.setHorizontalAlignment(SwingConstants.CENTER);
+		permisClientlbl.setBounds(10, 292, 187, 14);
+		this.add(permisClientlbl);
 		
-		JButton btnNewButton_3 = new JButton("choisir un fichier");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton imageButton = new JButton("choisir un fichier");
+		imageButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//ouvrir une fenetre pour séléctionné l'image
+				JFileChooser chooser = new JFileChooser();
+				chooser.setDialogTitle("Choisir une Image");
+				chooser.showOpenDialog(null);
+				File file = chooser.getSelectedFile();
+				//si l'utisitaeur ne séléctionne aucune image
+				if (file != null) {
+					imagePath.setText(file.getAbsolutePath());
+				} else {
+					JOptionPane.showConfirmDialog(null, "tu dois séléctionnée une image", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		imageButton.setBounds(217, 236, 109, 23);
+		this.add(imageButton);
+		
+		JButton permisButton = new JButton("choisir un fichier");
+		permisButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setDialogTitle("Choisir une Image");
 				chooser.showOpenDialog(null);
 				File file = chooser.getSelectedFile();
 				if (file != null) {
-					lblNewLabel_6.setText(file.getAbsolutePath());
+					permisPath.setText(file.getAbsolutePath());
 				} else {
 					JOptionPane.showConfirmDialog(null, "tu dois séléctionnée une image", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		btnNewButton_3.setBounds(217, 236, 109, 23);
-		this.add(btnNewButton_3);
+		permisButton.setBounds(217, 288, 109, 23);
+		this.add(permisButton);
 		
-		JButton btnNewButton_4 = new JButton("choisir un fichier");
-		btnNewButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new JFileChooser();
-				chooser.setDialogTitle("Choisir une Image");
-				chooser.showOpenDialog(null);
-				File file = chooser.getSelectedFile();
-				lblNewLabel_7.setText(file.getAbsolutePath());
-			}
-		});
-		btnNewButton_4.setBounds(217, 288, 109, 23);
-		this.add(btnNewButton_4);
-		
-		JButton btnNewButton = new JButton("Sauvgarder");
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		JButton buttonSauvgarder = new JButton("Sauvgarder");
+		buttonSauvgarder.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (!textField.getText().isBlank() && !textField_1.getText().isBlank() && !textField_3.getText().isBlank() && !textField_2.getText().isBlank() && !lblNewLabel_6.getText().isBlank() && !lblNewLabel_7.getText().isBlank()) {
-				Client client1 = new Client(textField.getText(), textField_1.getText(), textField_3.getText(), textField_2.getText(), lblNewLabel_6.getText(), lblNewLabel_7.getText());
-				client1.setCodeClient(client.getCodeClient());
-				boolean b = ClientController.modifyClient(client1);
-				if (b) {
-					JOptionPane.showConfirmDialog(null, "Opération Effectuée avce Succée", "Succée", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					JOptionPane.showConfirmDialog(null, "Opération Echouée", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-				}
+				//tester si l'utilisateur remplir tous les champs
+				if (!nomClientTextField.getText().isBlank() && !prenomClientTextField.getText().isBlank() && !adresseClientTextField.getText().isBlank() && !teleClientTextField.getText().isBlank() && !imagePath.getText().isBlank() && !permisPath.getText().isBlank()) {
+					//tester si l'utilisateur ne fait des fautes lors de saisie
+					if (nomClientTextField.getText().matches("[a-zA-Z]*") && prenomClientTextField.getText().matches("[a-zA-Z]*") && teleClientTextField.getText().matches("[0-9]*")) {
+						Client client1 = new Client(nomClientTextField.getText(), prenomClientTextField.getText(), adresseClientTextField.getText(), Long.parseLong(teleClientTextField.getText()), imagePath.getText(), permisPath.getText());
+						client1.setCodeClient(client.getCodeClient());
+						boolean b = ClientController.modifyClient(client1);
+						if (b) {
+							JOptionPane.showConfirmDialog(null, "Opération Effectuée avce Succée", "Succée", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							JOptionPane.showConfirmDialog(null, "Opération Echouée", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						JOptionPane.showConfirmDialog(null, "nom : chaine de caractere \n prenom : chaine de caractere \n num tele : nombre", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+					}
 				} else {
 					JOptionPane.showConfirmDialog(null, "Tu dois remplir tous les champs", "Echoue", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
+				// rafraîchir le tableau
 				ClientController.fetchAll(table);
 			}
 		});
-		btnNewButton.setBounds(496, 346, 129, 43);
-		this.add(btnNewButton);
+		buttonSauvgarder.setBounds(496, 346, 129, 43);
+		this.add(buttonSauvgarder);
 
 	}
 

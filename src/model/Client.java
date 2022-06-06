@@ -7,11 +7,11 @@ public class Client {
 	private String nomClient;
 	private String prenomClient;
 	private String addresseClient;
-	private String numTelClient;
+	private long numTelClient;
 	private String image;
 	private String permisScannee;
-	
-	public Client(int codeClient, String nomClient, String prenomClient, String addresseClient, String numTelClient,
+
+	public Client(int codeClient, String nomClient, String prenomClient, String addresseClient, long numTelClient,
 			String image, String permisScannee) {
 		super();
 		this.codeClient = codeClient;
@@ -55,11 +55,11 @@ public class Client {
 		this.addresseClient = addresseClient;
 	}
 
-	public String getNumTelClient() {
+	public long getNumTelClient() {
 		return numTelClient;
 	}
 
-	public void setNumTelClient(String numTelClient) {
+	public void setNumTelClient(long numTelClient) {
 		this.numTelClient = numTelClient;
 	}
 
@@ -79,7 +79,7 @@ public class Client {
 		this.permisScannee = permisScannee;
 	}
 
-	public Client(String nomClient, String prenomClient, String addresseClient, String numTelClient, String image,
+	public Client(String nomClient, String prenomClient, String addresseClient, long numTelClient, String image,
 			String permisScannee) {
 		super();
 		this.nomClient = nomClient;
