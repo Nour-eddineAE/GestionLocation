@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 public class ConnectionManager {
 	private static String USER = "root";
 	private static String PASS = "root";
@@ -17,7 +19,8 @@ public class ConnectionManager {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(URL, USER, PASS);
 		} catch (Exception e) {
-			e.getLocalizedMessage();
+			JOptionPane.showConfirmDialog(null, "Pas de connexion avec Base de Donnes", "Information", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
 		}
 	}
 
