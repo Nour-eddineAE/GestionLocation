@@ -225,26 +225,6 @@ public class MainInterface {
 			navigation.add(lab);
 		}
 
-		// Parking Panel generation
-		setupParkingPanel(parking);
-		
-		
-		navItemList = new LinkedHashMap<String, JLabel>();
-		navItemList.put("client", new JLabel("Gestion de clients"));
-		navItemList.put("reserv", new JLabel("Gestion des reservations"));
-		navItemList.put("contrat", new JLabel("Gestion des contrats"));
-		navItemList.put("facture", new JLabel("Gestion des factures"));
-		navItemList.put("sanction", new JLabel("Gestion des sanctions"));
-		navItemList.put("vehicule", new JLabel("Gestion des vehicules"));
-		navItemList.put("parking", new JLabel("Gestion des parkings"));
-		navItemList.put("user", new JLabel("Gestion des utilisateurs"));
-
-		for(String item : navItemList.keySet()) {
-			JLabel lab = navItemList.get(item);
-			setupNavItem(lab, item);
-			navigation.add(lab);
-		}
-
 	}
 
 	private void setupNavItem(JLabel lab, String name) {
