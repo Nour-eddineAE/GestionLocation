@@ -44,7 +44,6 @@ public class CreerReservPanel extends JPanel {
 	}
 	public CreerReservPanel(MainInterface mInterface) {
 		this.mInterface = mInterface;
-		viewColors.SECONDARY = new Color(224, 199, 242);
 		initialize();
 
 		this.cl = (CardLayout) mInterface.getMainPanel().getLayout();

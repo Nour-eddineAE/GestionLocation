@@ -78,6 +78,7 @@ public interface FactureDAO {
 				+ "WHERE facture.codeContrat = contrat.codeContrat "
 				+ "AND contrat.codeReservation = reservation.codeReservation "
 				+ "AND reservation.codeClient = client.codeClient "
+				+ "AND contrat.codeMatricule = vehicule.codeMatricule "
 				+ "AND codeFacture = ? "
 				+ "ORDER BY dateFacture DESC;";
 		
@@ -178,6 +179,7 @@ public interface FactureDAO {
 				+ "WHERE facture.codeContrat = contrat.codeContrat "
 				+ "AND contrat.codeReservation = reservation.codeReservation "
 				+ "AND reservation.codeClient = client.codeClient "
+				+ "AND contrat.codeMatricule = vehicule.codeMatricule "
 				+ "AND contrat.codeContrat = ? "
 				+ "ORDER BY dateFacture DESC;";
 		
