@@ -2,7 +2,6 @@ package view;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -13,7 +12,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -24,8 +22,6 @@ import model.Reservation;
 
 public class ModifierReserPanel extends JPanel {
 	private String dateDepart, dateRetour, codeVehicule;
-	private Color mainColor;
-	private Color secondaryColor;
 	private boolean isValid;
 	private boolean isCanceled;
 	private int codeReserv;
@@ -41,8 +37,6 @@ public class ModifierReserPanel extends JPanel {
 	 * Create the application.
 	 */
 	public ModifierReserPanel() {
-		mainColor = new Color(75, 0, 130);
-		secondaryColor = new Color(224, 199, 242);
 		this.setBounds(0, 0, 732, 547);
 		initialize();
 	}
@@ -59,8 +53,6 @@ public class ModifierReserPanel extends JPanel {
 		this.codeReserv = r.getCodeReservation();
 		this.codeVehicule = r.getVehicule().getCodeVehicule();
 		
-		mainColor = new Color(75, 0, 130);
-		secondaryColor = new Color(224, 199, 242);
 		initialize();
 	}
 
@@ -107,19 +99,19 @@ public class ModifierReserPanel extends JPanel {
 		
 		JButton sauvegarder_btn = new JButton("Sauvegarder");
 		sauvegarder_btn.setForeground(new Color(255, 255, 255));
-		sauvegarder_btn.setBackground(mainColor);
+		sauvegarder_btn.setBackground(viewColors.MAIN);
 		sauvegarder_btn.setBounds(613, 489, 109, 48);
 		sauvegarder_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cont.ModifierReservation();
-				cl.show(mInterface.getMainPanel(), "reserv");
+				//cl.show(mInterface.getMainPanel(), "reserv");
 			}
 		});
 		this.add(sauvegarder_btn);
 		
-		JButton Annuler_btn = new JButton("Annuler");
+		JButton Annuler_btn = new JButton("Retourner");
 		Annuler_btn.setForeground(new Color(255, 255, 255));
-		Annuler_btn.setBackground(mainColor);
+		Annuler_btn.setBackground(viewColors.MAIN);
 		Annuler_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(mInterface.getMainPanel(), "reserv");
@@ -155,7 +147,7 @@ public class ModifierReserPanel extends JPanel {
 		dateDepInput.setLayout(null);
 		
 		JComboBox annee_comboBox = new JComboBox();
-		annee_comboBox.setBackground(secondaryColor);
+		annee_comboBox.setBackground(viewColors.SECONDARY);
 		annee_comboBox.setModel(new DefaultComboBoxModel(new String[] {Integer.toString(currentYear), Integer.toString(currentYear+1), Integer.toString(currentYear+2), Integer.toString(currentYear+3), Integer.toString(currentYear+4)}));
 		annee_comboBox.setBounds(41, 27, 124, 27);
 		annee_comboBox.setSelectedItem(dateDepart.split("-")[0]);
@@ -163,14 +155,14 @@ public class ModifierReserPanel extends JPanel {
 		
 		JComboBox jour_comboBox = new JComboBox();
 		jour_comboBox.setBounds(388, 27, 124, 27);
-		jour_comboBox.setBackground(secondaryColor);
+		jour_comboBox.setBackground(viewColors.SECONDARY);
 		dateDepInput.add(jour_comboBox);
 		
 		JComboBox mois_comboBox = new JComboBox();
 		
 		mois_comboBox.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		mois_comboBox.setBounds(212, 27, 124, 27);
-		mois_comboBox.setBackground(secondaryColor);
+		mois_comboBox.setBackground(viewColors.SECONDARY);
 		mois_comboBox.setSelectedItem(dateDepart.split("-")[1]);
 		dateDepInput.add(mois_comboBox);
 		
@@ -216,19 +208,19 @@ public class ModifierReserPanel extends JPanel {
 		JComboBox annee_comboBox = new JComboBox();
 		annee_comboBox.setModel(new DefaultComboBoxModel(new String[] {Integer.toString(currentYear), Integer.toString(currentYear+1), Integer.toString(currentYear+2), Integer.toString(currentYear+3), Integer.toString(currentYear+4)}));
 		annee_comboBox.setBounds(42, 27, 124, 27);
-		annee_comboBox.setBackground(secondaryColor);
+		annee_comboBox.setBackground(viewColors.SECONDARY);
 		annee_comboBox.setSelectedItem(dateRetour.split("-")[0]);
 		dateRetInput.add(annee_comboBox);
 		
 		JComboBox jour_comboBox = new JComboBox();
 		jour_comboBox.setBounds(391, 27, 124, 27);
-		jour_comboBox.setBackground(secondaryColor);
+		jour_comboBox.setBackground(viewColors.SECONDARY);
 		dateRetInput.add(jour_comboBox);
 		
 		JComboBox mois_comboBox = new JComboBox();
 		mois_comboBox.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		mois_comboBox.setBounds(212, 27, 124, 27);
-		mois_comboBox.setBackground(secondaryColor);
+		mois_comboBox.setBackground(viewColors.SECONDARY);
 		mois_comboBox.setSelectedItem(dateRetour.split("-")[1]);
 		dateRetInput.add(mois_comboBox);
 		
@@ -262,7 +254,7 @@ public class ModifierReserPanel extends JPanel {
 		dateRetInput.add(jourDep_lbl);
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes" })
 	private void setupDayChooser(JComboBox annee, JComboBox mois, JComboBox jour) {
 		mois.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

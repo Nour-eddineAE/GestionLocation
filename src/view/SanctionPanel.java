@@ -39,6 +39,7 @@ public class SanctionPanel extends JPanel {
 		
 		sanctions_table = new JTable(table_model);
 		sanctions_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		sanctions_table.setSelectionBackground(viewColors.SECONDARY);
 		sanction_scroll.setViewportView(sanctions_table);
 		
 		JLabel sanctions_lbl = new JLabel("Les clients sanctionn\u00E9es :");
@@ -46,8 +47,8 @@ public class SanctionPanel extends JPanel {
 		this.add(sanctions_lbl);
 		
 		JButton actualiser_btn = new JButton("Actualiser");
+		actualiser_btn.setBackground(viewColors.SECONDARY);
 		actualiser_btn.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cont.Actualiser();
@@ -59,9 +60,9 @@ public class SanctionPanel extends JPanel {
 		
 		JButton plusInfo_btn = new JButton("Plus d'informations");
 		plusInfo_btn.setBounds(522, 260, 188, 50);
+		plusInfo_btn.setBackground(viewColors.SECONDARY);
 		
 		plusInfo_btn.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				warning_lbl.setText("");
@@ -77,9 +78,9 @@ public class SanctionPanel extends JPanel {
 		this.add(warning_lbl);
 		
 		JButton regler_btn = new JButton("Regler");
+		regler_btn.setBackground(viewColors.SECONDARY);
 		regler_btn.setBounds(522, 320, 188, 50);
 		regler_btn.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				warning_lbl.setText("");
