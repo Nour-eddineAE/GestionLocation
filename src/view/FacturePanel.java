@@ -41,6 +41,7 @@ public class FacturePanel extends JPanel {
 		add(scrollPane);
 		
 		facture_table = new JTable(factureTableModel);
+		facture_table.setSelectionBackground(viewColors.SECONDARY);
 		scrollPane.setViewportView(facture_table);
 		facture_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
@@ -57,6 +58,10 @@ public class FacturePanel extends JPanel {
 		facture_field.setColumns(10);
 		
 		JButton searchFacture_btn = new JButton("Rechercher");
+		
+		searchFacture_btn.setBackground(viewColors.MAIN);
+		searchFacture_btn.setForeground(viewColors.WHITE);
+		
 		searchFacture_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cont.RechercherFacture();
@@ -66,6 +71,8 @@ public class FacturePanel extends JPanel {
 		this.add(searchFacture_btn);
 		
 		JButton newFacture_btn = new JButton("Nouvelle facture");
+		newFacture_btn.setBackground(viewColors.SECONDARY);
+		
 		newFacture_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(mInterface.getMainPanel(), "newFacture");
@@ -75,15 +82,17 @@ public class FacturePanel extends JPanel {
 		this.add(newFacture_btn);
 		
 		JButton dltFacture_btn = new JButton("Supprimer");
+		dltFacture_btn.setBackground(viewColors.SECONDARY);
 		dltFacture_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cont.SupprimerFacture();
 			}
 		});
-		dltFacture_btn.setBounds(535, 273, 164, 43);
+		dltFacture_btn.setBounds(535, 328, 164, 43);
 		this.add(dltFacture_btn);
 		
 		JButton facture_actualiser_btn = new JButton("Actualiser");
+		facture_actualiser_btn.setBackground(viewColors.SECONDARY);
 		facture_actualiser_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cont.ActualiserTableau();
@@ -91,6 +100,18 @@ public class FacturePanel extends JPanel {
 		});
 		facture_actualiser_btn.setBounds(535, 494, 164, 43);
 		this.add(facture_actualiser_btn);
+		
+		JButton imprimer_btn = new JButton("Imprimer");
+		imprimer_btn.setBackground(viewColors.SECONDARY);
+		imprimer_btn.setBounds(535, 275, 164, 43);
+		imprimer_btn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cont.imprimerFacture();
+			}
+		});
+		add(imprimer_btn);
 		
 	}
 	

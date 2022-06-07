@@ -22,6 +22,7 @@ public class FactureController {
 		this.cfPanel = cfPanel;
 		
 		this.fPanel.setFactureController(this);
+		ActualiserTableau();
 	}
 	
 	/**
@@ -94,6 +95,19 @@ public class FactureController {
 		}
 		FactureMetier.createPdf(fact);
 		cfPanel.goBack();
+		ActualiserTableau();
+	}
+	
+	public void imprimerFacture() {
+		int index = fPanel.getFacture_table().getSelectedRow();
+		if(index < 0) {
+			fPanel.getFacture_warning_lbl().setText("<html>Veuillez choisir une facture à imprimer.</html>");
+			return;
+		}
+		
+		Facture f = FactureDAO.findFacture(Integer.parseInt((String) fPanel.getFacture_table().getValueAt(index, 0))).get(0);
+		
+		FactureMetier.createPdf(f);
 		ActualiserTableau();
 	}
 }

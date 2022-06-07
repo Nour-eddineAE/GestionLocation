@@ -136,6 +136,11 @@ public class ReservationController {
 		int codeReserv = mod_reserv.getCodeReserv();
 		boolean isValid = mod_reserv.isValid();
 		boolean isCanceled = mod_reserv.isCanceled();
+		
+		if(isValid && isCanceled) {
+			mod_reserv.getWarning_lbl().setText("Une reservation ne peut pas être validée est annulée aux même temps.");
+			return;
+		}
 
 		if(checkDates(dateDep, dateRet)) {
 			if(ReservationDAO.isReservationDateAvailable(codeVehicule, dateDep, dateRet, codeReserv)) {

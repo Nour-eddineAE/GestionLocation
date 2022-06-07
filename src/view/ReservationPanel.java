@@ -55,15 +55,18 @@ public class ReservationPanel extends JPanel {
 		reserv_table = new JTable(reserv_model);
 
 		reserv_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		reserv_table.setSelectionBackground(viewColors.SECONDARY);
 		reserv_scroll.setViewportView(reserv_table);
-		//ReservationController.fetchAll(reserv_table, filtre.Tous);
 
 		reserv_filtre = new JComboBox();
+		reserv_filtre.setBackground(viewColors.SECONDARY);
+		
 		reserv_filtre.setBounds(522, 432, 193, 21);
 		reserv_filtre.setModel(new DefaultComboBoxModel(filtre.values()));
 		reserv_filtre.setMaximumRowCount(4);
 
 		JButton reserv_actualiser_btn = new JButton("Actualiser");
+		reserv_actualiser_btn.setBackground(viewColors.SECONDARY);
 		reserv_actualiser_btn.setBounds(522, 463, 193, 56);
 		reserv_actualiser_btn.addActionListener(new ActionListener() {
 			@Override
@@ -78,6 +81,7 @@ public class ReservationPanel extends JPanel {
 		filtre_lbl.setBounds(522, 401, 193, 21);
 
 		JButton newReserv_btn = new JButton("Nouveau reservation");
+		newReserv_btn.setBackground(viewColors.SECONDARY);
 		newReserv_btn.setBounds(522, 155, 193, 56);
 		newReserv_btn.addActionListener(new ActionListener() {
 			@Override
@@ -90,6 +94,7 @@ public class ReservationPanel extends JPanel {
 		});
 
 		JButton delReserv_btn = new JButton("Supprimer reservation");
+		delReserv_btn.setBackground(viewColors.SECONDARY);
 		delReserv_btn.setBounds(522, 225, 193, 56);
 		delReserv_btn.addActionListener(new ActionListener() {
 			@Override
@@ -99,6 +104,7 @@ public class ReservationPanel extends JPanel {
 		});
 
 		JButton modReserv_btn = new JButton("Modifier reservation");
+		modReserv_btn.setBackground(viewColors.SECONDARY);
 		modReserv_btn.setBounds(522, 291, 193, 56);
 		modReserv_btn.addActionListener(new ActionListener() {
 			@Override
@@ -138,6 +144,8 @@ public class ReservationPanel extends JPanel {
 		reserv_field.setColumns(10);
 
 		JButton searchReserv_btn = new JButton("Rechercher");
+		searchReserv_btn.setBackground(viewColors.MAIN);
+		searchReserv_btn.setForeground(viewColors.WHITE);
 		searchReserv_btn.setBounds(404, 10, 103, 37);
 		searchReserv_btn.addActionListener(new ActionListener() {
 			@Override

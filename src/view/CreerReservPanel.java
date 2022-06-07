@@ -28,8 +28,6 @@ public class CreerReservPanel extends JPanel {
 
 	private String dateDepart, dateRetour;
 	private JTable reserv_vehi_table;
-	private Color mainColor;
-	private Color secondaryColor;
 	private JLabel warning_lbl;
 
 
@@ -41,15 +39,12 @@ public class CreerReservPanel extends JPanel {
 	 * Create the application.
 	 */
 	public CreerReservPanel() {
-		mainColor = new Color(75, 0, 130);
 		this.setBounds(0, 0, 732, 547);
-		secondaryColor = new Color(224, 199, 242);
 		initialize();
 	}
 	public CreerReservPanel(MainInterface mInterface) {
 		this.mInterface = mInterface;
-		mainColor = new Color(75, 0, 130);
-		secondaryColor = new Color(224, 199, 242);
+		viewColors.SECONDARY = new Color(224, 199, 242);
 		initialize();
 
 		this.cl = (CardLayout) mInterface.getMainPanel().getLayout();
@@ -80,6 +75,7 @@ public class CreerReservPanel extends JPanel {
 		};
 
 		reserv_client_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		reserv_client_table.setSelectionBackground(viewColors.SECONDARY);
 		reserv_client_table.setBackground(new Color(255, 255, 255));
 		reserv_client_Scroll.setViewportView(reserv_client_table);
 
@@ -96,13 +92,12 @@ public class CreerReservPanel extends JPanel {
 		this.add(dateRetour_lbl);
 
 		JButton reserv_client_actualiser = new JButton("Actualiser");
-		reserv_client_actualiser.setBackground(secondaryColor);
+		reserv_client_actualiser.setBackground(viewColors.SECONDARY);
 		reserv_client_actualiser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//To refill client table
 				ClientController.fetchAll(reserv_client_table);
-
 				warning_lbl.setText("");
 			}
 		});
@@ -128,24 +123,25 @@ public class CreerReservPanel extends JPanel {
 		    }
 		};
 		reserv_vehi_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		reserv_vehi_table.setSelectionBackground(viewColors.SECONDARY);
 		reserv_vehi_Scroll.setViewportView(reserv_vehi_table);
 
 		JButton reserv_vehi_actualiser = new JButton("Actualiser");
 		reserv_vehi_actualiser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//To refill vehicle table
+				//TODO: refill vehicle table
 
 				warning_lbl.setText("");
 			}
 		});
-		reserv_vehi_actualiser.setBackground(secondaryColor);
+		reserv_vehi_actualiser.setBackground(viewColors.SECONDARY);
 		reserv_vehi_actualiser.setBounds(570, 141, 152, 21);
 		this.add(reserv_vehi_actualiser);
 
 		JButton sauvegarder_btn = new JButton("Sauvegarder");
-		sauvegarder_btn.setForeground(new Color(255, 255, 255));
-		sauvegarder_btn.setBackground(mainColor);
+		sauvegarder_btn.setForeground(viewColors.WHITE);
+		sauvegarder_btn.setBackground(viewColors.MAIN);
 		sauvegarder_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -157,7 +153,7 @@ public class CreerReservPanel extends JPanel {
 
 		JButton Annuler_btn = new JButton("Annuler");
 		Annuler_btn.setForeground(new Color(255, 255, 255));
-		Annuler_btn.setBackground(mainColor);
+		Annuler_btn.setBackground(viewColors.MAIN);
 		Annuler_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -185,21 +181,21 @@ public class CreerReservPanel extends JPanel {
 		dateDepInput.setLayout(null);
 
 		JComboBox annee_comboBox = new JComboBox();
-		annee_comboBox.setBackground(secondaryColor);
+		annee_comboBox.setBackground(viewColors.SECONDARY);
 		annee_comboBox.setModel(new DefaultComboBoxModel(new String[] {Integer.toString(currentYear), Integer.toString(currentYear+1), Integer.toString(currentYear+2), Integer.toString(currentYear+3), Integer.toString(currentYear+4)}));
 		annee_comboBox.setBounds(10, 27, 124, 27);
 		dateDepInput.add(annee_comboBox);
 
 		JComboBox jour_comboBox = new JComboBox();
 		jour_comboBox.setBounds(278, 27, 124, 27);
-		jour_comboBox.setBackground(secondaryColor);
+		jour_comboBox.setBackground(viewColors.SECONDARY);
 		dateDepInput.add(jour_comboBox);
 
 		JComboBox mois_comboBox = new JComboBox();
 
 		mois_comboBox.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		mois_comboBox.setBounds(144, 27, 124, 27);
-		mois_comboBox.setBackground(secondaryColor);
+		mois_comboBox.setBackground(viewColors.SECONDARY);
 		dateDepInput.add(mois_comboBox);
 
 		setupDayChooser(annee_comboBox, mois_comboBox, jour_comboBox);
@@ -243,18 +239,18 @@ public class CreerReservPanel extends JPanel {
 		JComboBox annee_comboBox = new JComboBox();
 		annee_comboBox.setModel(new DefaultComboBoxModel(new String[] {Integer.toString(currentYear), Integer.toString(currentYear+1), Integer.toString(currentYear+2), Integer.toString(currentYear+3), Integer.toString(currentYear+4)}));
 		annee_comboBox.setBounds(10, 27, 124, 27);
-		annee_comboBox.setBackground(secondaryColor);
+		annee_comboBox.setBackground(viewColors.SECONDARY);
 		dateRetInput.add(annee_comboBox);
 
 		JComboBox jour_comboBox = new JComboBox();
 		jour_comboBox.setBounds(278, 27, 124, 27);
-		jour_comboBox.setBackground(secondaryColor);
+		jour_comboBox.setBackground(viewColors.SECONDARY);
 		dateRetInput.add(jour_comboBox);
 
 		JComboBox mois_comboBox = new JComboBox();
 		mois_comboBox.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		mois_comboBox.setBounds(144, 27, 124, 27);
-		mois_comboBox.setBackground(secondaryColor);
+		mois_comboBox.setBackground(viewColors.SECONDARY);
 		dateRetInput.add(mois_comboBox);
 
 		setupDayChooser(annee_comboBox, mois_comboBox, jour_comboBox);
