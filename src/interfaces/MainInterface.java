@@ -27,12 +27,15 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ClientController;
 import controller.ReservationController;
+import controller.SanctionController;
 import controller.FactureController;
 import view.ClientMainView;
 import view.CreerFacturePanel;
 import view.CreerReservPanel;
 import view.FacturePanel;
 import view.ReservationPanel;
+import view.SanctionInfoPanel;
+import view.SanctionPanel;
 import controller.ParkingController;
 
 
@@ -52,8 +55,10 @@ public class MainInterface {
 	//CONTROLLERS @ABD-AB
 	private ReservationController reservController;
 	private FactureController factureController;
+	private SanctionController sanctionController;
 	private JTable parkingtable;
 	private JTextField parkingtextField;
+	private JTable contrat_table;
 
 	/**
 	 * Launch the application.
@@ -115,12 +120,17 @@ public class MainInterface {
 		JPanel sideBar = new JPanel();
 		sideBar.setBounds(0, 94, 234, 569);
 		sideBar.setBackground(secondaryColor);
-
+		
+		
 		JPanel navigation = new JPanel();
 		navigation.setBounds(0, 80, 234, 388);
 		navigation.setBackground(secondaryColor);
 		navigation.setLayout(new GridLayout(8, 1, 0, 0));
-
+		
+		frame.getContentPane().add(sideBar);
+		sideBar.setLayout(null);
+		sideBar.add(navigation);
+		
 		mainPanel = new JPanel();
 		mainPanel.setBounds(234, 102, 752, 561);
 		mainPanel.setLayout(new CardLayout(0, 0));
@@ -154,17 +164,20 @@ public class MainInterface {
 
 		FacturePanel factures = new FacturePanel(this);
 		mainPanel.add(factures, "facture");
+		
+		CreerFacturePanel creerFacturePanel = new CreerFacturePanel(this);
+		mainPanel.add(creerFacturePanel, "newFacture");
 
 		//END Panel des factures ----------------------------------------------------------------------
 		
 		
 		//Panel des sanctions -------------------------------------------------------------------------
 		
-		JPanel sanctions = new JPanel();
+		SanctionPanel sanctions = new SanctionPanel();
 		mainPanel.add(sanctions, "sanction");
-
-		JLabel sanctions_1 = new JLabel("sanctions");
-		sanctions.add(sanctions_1);
+		
+		SanctionInfoPanel sanctionInfo = new SanctionInfoPanel();
+		mainPanel.add(sanctionInfo, "sanctionInfo");
 		
 		//END Panel des Sanctions ---------------------------------------------------------------------
 		
@@ -183,20 +196,34 @@ public class MainInterface {
 
 		
 		cl.show(mainPanel, "facture");
-		frame.getContentPane().add(sideBar);
-		sideBar.setLayout(null);
-		sideBar.add(navigation);
 		frame.getContentPane().add(mainPanel);
-
-		//PANEL CREATION FACTURE @ABD-AB ----------------------------------------------------------------
-		CreerFacturePanel creerFacturePanel = new CreerFacturePanel(this);
-		mainPanel.add(creerFacturePanel, "newFacture");
+		
 
 		//Association des panels aux controlleurs @ABD-AB
 		factureController = new FactureController(factures, creerFacturePanel);
-		factureController.ActualiserTableau();
-
 		reservController = new ReservationController(reservPanel, createReservPanel);
+		sanctionController = new SanctionController(sanctions, sanctionInfo, this);
+		
+
+		// Parking Panel generation
+		setupParkingPanel(parking);
+		
+		
+		navItemList = new LinkedHashMap<String, JLabel>();
+		navItemList.put("client", new JLabel("Gestion de clients"));
+		navItemList.put("reserv", new JLabel("Gestion des reservations"));
+		navItemList.put("contrat", new JLabel("Gestion des contrats"));
+		navItemList.put("facture", new JLabel("Gestion des factures"));
+		navItemList.put("sanction", new JLabel("Gestion des sanctions"));
+		navItemList.put("vehicule", new JLabel("Gestion des vehicules"));
+		navItemList.put("parking", new JLabel("Gestion des parkings"));
+		navItemList.put("user", new JLabel("Gestion des utilisateurs"));
+
+		for(String item : navItemList.keySet()) {
+			JLabel lab = navItemList.get(item);
+			setupNavItem(lab, item);
+			navigation.add(lab);
+		}
 
 		// Parking Panel generation
 		setupParkingPanel(parking);
@@ -305,7 +332,7 @@ public class MainInterface {
 				if (index >= 0) {
 
 				} else {
-					JOptionPane.showConfirmDialog(null, "Tu dois s�l�ctionn�e un �l�ment du tableau pour l'afficher!",
+					JOptionPane.showConfirmDialog(null, "Tu dois selectionner un element du tableau pour l'afficher!",
 							"Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
 			}

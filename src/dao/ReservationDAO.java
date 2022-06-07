@@ -253,6 +253,7 @@ public interface ReservationDAO {
 					 + "AND (dateDepReservation <= ? AND dateRetReservation >= ?)";
 		
 		if(codeReserv > 0) {
+			//Pour la modification : exlusion de la reservation qu'on veut modifier
 			query += " AND codeReservation <> ?;";
 		}
 		PreparedStatement preparedSt;

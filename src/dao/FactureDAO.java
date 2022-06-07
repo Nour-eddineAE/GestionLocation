@@ -223,4 +223,5 @@ public interface FactureDAO {
 		
 		return f;
 	}
+
 }
