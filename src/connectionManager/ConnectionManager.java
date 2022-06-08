@@ -5,13 +5,16 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.LogManager;
 
 import javax.swing.JOptionPane;
 
+import log.LogMgr;
+
 public class ConnectionManager {
-	private static String USER = "root";
-	private static String PASS = "root";
-	private static String URL = "jdbc:mysql://localhost:3306/location";
+	private static String USER = Config.USER;
+	private static String PASS = Config.PASS;
+	private static String URL = "jdbc:mysql://"+Config.IP+":"+Config.PORT+"/"+Config.DB_NAME;
 	private static Connection connection;
 
 	static {
@@ -20,6 +23,7 @@ public class ConnectionManager {
 			connection = DriverManager.getConnection(URL, USER, PASS);
 		} catch (Exception e) {
 			JOptionPane.showConfirmDialog(null, "Pas de connexion avec Base de Donnes", "Information", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur de connection.", e);
 			System.exit(0);
 		}
 	}
@@ -34,6 +38,7 @@ public class ConnectionManager {
 			ResultSet result = statement.executeQuery(string);
 			return result;
 		} catch (SQLException e) {
+			LogMgr.error("Erreur Execution requete.", e);
 			e.printStackTrace();
 		}
 

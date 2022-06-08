@@ -1,2 +1,7 @@
 /view/
 /controller/
+/connectionManager/
+/dao/
+/interfaces/
+/model/
+/log/
