@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import connectionManager.ConnectionManager;
+import log.LogMgr;
 import model.*;
 
 public interface FactureDAO {
@@ -62,6 +63,7 @@ public interface FactureDAO {
 			
 		} catch (SQLException e) {
 			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Facture", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Facture.", e);
 		}
 		
 		return fact_list;
@@ -120,7 +122,8 @@ public interface FactureDAO {
 			}
 			
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Recherche Facture", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Recherche Facture", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Recherche Facture.", e);
 		}
 		
 		return fact_list;
@@ -136,7 +139,8 @@ public interface FactureDAO {
 			prepared.setInt(1, codeFacture);
 			prepared.execute();
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Supression Facture", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Supression Facture", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Supression Facture.", e);
 		}
 	}
 
@@ -164,7 +168,8 @@ public interface FactureDAO {
 			prepared.setInt(2, codeContrat);
 			prepared.execute();
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Creation Facture", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Creation Facture", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Creation Facture", e);
 		}
 	}
 
@@ -220,7 +225,8 @@ public interface FactureDAO {
 			}
 			
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Recherche Facture par code Contrat", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Recherche Facture par code Contrat", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Recherche Facture par code Contrat", e);
 		}
 		
 		return f;

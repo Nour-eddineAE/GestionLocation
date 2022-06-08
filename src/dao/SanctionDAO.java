@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import connectionManager.ConnectionManager;
+import log.LogMgr;
 import model.*;
 
 public interface SanctionDAO {
@@ -45,7 +46,8 @@ public interface SanctionDAO {
 				sList.add(s);
 			}
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Sanction", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Sanction", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Sanction", e);
 		}
 		
 		return sList;
@@ -95,7 +97,8 @@ public interface SanctionDAO {
 				cList.add(cont);
 			}
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Recherche Contrats de Sanction", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Recherche Contrats de Sanction", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Recherche Contrats de Sanction", e);
 		}
 		return cList;
 	}
@@ -116,7 +119,8 @@ public interface SanctionDAO {
 			ps.setInt(1, codeClient);
 			ps.execute();
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Reglement Sanction", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Reglement Sanction", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Reglement Sanction", e);
 		}
 		
 	}

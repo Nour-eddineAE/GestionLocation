@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import connectionManager.ConnectionManager;
+import log.LogMgr;
 import model.Client;
 import model.Reservation;
 import model.Reservation.filtre;
@@ -87,7 +88,8 @@ public interface ReservationDAO {
 				reservList.add(r);
 			}			
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Reservation", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Reservation", e);
 		}
 		
 		return reservList;
@@ -152,7 +154,8 @@ public interface ReservationDAO {
 				reservList.add(r);
 			}
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Recherche Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Recherche Reservation", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Recherche Reservation", e);
 		}
 		
 		return reservList;
@@ -181,8 +184,8 @@ public interface ReservationDAO {
 			prepared.execute();
 			
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Creation Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, "Erreur Creation Reservation", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Creation Reservation", e);
 		}
 	}
 	
@@ -213,9 +216,8 @@ public interface ReservationDAO {
 			prepared.setInt(5, codeReservation);
 			prepared.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Modification Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, "Erreur Modification Reservation", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Modification Reservation", e);
 		}
 	}
 	/**
@@ -228,7 +230,8 @@ public interface ReservationDAO {
 			prepared.setInt(1, codeReserv);
 			prepared.execute();
 		} catch (SQLException e) {
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Supression Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Erreur Supression Reservation", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Supression Reservation", e);
 		}
 	}
 	
@@ -271,9 +274,8 @@ public interface ReservationDAO {
 			//if there is no reservation return true; 
 			return !result.next();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			JOptionPane.showConfirmDialog(null, e.getMessage(), "Erreur Validation Date Reservation", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(null, "Erreur Validation Date Reservation", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Validation Date Reservation", e);
 		}
 		return false;
 	}

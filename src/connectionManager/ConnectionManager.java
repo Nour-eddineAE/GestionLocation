@@ -38,6 +38,7 @@ public class ConnectionManager {
 			ResultSet result = statement.executeQuery(string);
 			return result;
 		} catch (SQLException e) {
+			LogMgr.error("Erreur Execution requete.", e);
 			e.printStackTrace();
 		}
 
