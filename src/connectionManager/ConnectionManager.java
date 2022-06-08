@@ -9,9 +9,9 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class ConnectionManager {
-	private static String USER = "root";
-	private static String PASS = "root";
-	private static String URL = "jdbc:mysql://localhost:3306/location";
+	private static String USER = Config.USER;
+	private static String PASS = Config.PASS;
+	private static String URL = "jdbc:mysql://"+Config.IP+":"+Config.PORT+"/"+Config.DB_NAME;
 	private static Connection connection;
 
 	static {
