@@ -35,7 +35,7 @@ public class ClientController {
 	
 	public static boolean creatClient (String nom, String prenom, String numTel) {
 		try {
-			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("INSERT INTO `client` (`id`, `nom`, `prenom`, `numTel`) VALUES (NULL, ?, ?, ?)");
+			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("INSERT INTO `client1` (`id`, `nomClient`, `prenomClient`, `telClient`) VALUES (?, ?, ?)");
 			prepared.setString(1, nom);
 			prepared.setString(2, prenom);
 			prepared.setString(3, numTel);
@@ -88,7 +88,7 @@ public class ClientController {
 	
 	public static boolean modifyClient (String id, String nom, String prenom, String numTel) {
 		try {
-			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("UPDATE `client` SET `nom` = ?, `prenom` = ?, `numTel` = ? WHERE `client`.`id` = ?");
+			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement("UPDATE `client1` SET `nom` = ?, `prenom` = ?, `numTel` = ? WHERE `client`.`id` = ?");
 			prepared.setString(1, nom);
 			prepared.setString(2, prenom);
 			prepared.setString(3, numTel);

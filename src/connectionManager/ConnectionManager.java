@@ -9,12 +9,12 @@ import java.sql.Statement;
 public class ConnectionManager {
 	private static String USER = "root";
 	private static String PASS = "root";
-	private static String URL = "jdbc:mysql://localhost:8889/ProjectDB";
+	private static String URL = "jdbc:mysql://localhost:3306/projectdb";
 	private static Connection connection;
 
 	static {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			/*Class.forName("com.mysql.jdbc.Driver");*/
 			connection = DriverManager.getConnection(URL, USER, PASS);
 		} catch (Exception e) {
 			e.getLocalizedMessage();

@@ -1,26 +1,15 @@
 package interfaces;
 
-import java.awt.EventQueue;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-
-import java.awt.Color;
 import javax.swing.JLabel;
-import java.awt.Font;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
-
-import controller.ClientController;
-
+import view.UserPanel;
+import view.VehiculePanel;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.EventQueue;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.CardLayout;
@@ -28,7 +17,7 @@ import java.util.LinkedHashMap;
 
 public class MainInterface {
 
-	private JFrame frame;
+	JFrame frame;
 	private Color mainColor;
 	private Color secondaryColor;
 	private Color highlight;
@@ -38,9 +27,9 @@ public class MainInterface {
 	private JPanel mainPanel;
 	private String currentPane;
 	private LinkedHashMap<String, JLabel> navItemList;
-	// client panel field
-	private JTable clienttable;
-	private JTextField clienttextField;
+	
+	private boolean isAdmin;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -50,6 +39,7 @@ public class MainInterface {
 				try {
 					MainInterface window = new MainInterface();
 					window.frame.setVisible(true);
+					window.frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -62,11 +52,18 @@ public class MainInterface {
 	 */
 	public MainInterface() {
 		initialize();
-		ClientController.fetchAll(clienttable);
 	}
-
+	
+	public MainInterface(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+		initialize();
+		
+	}
+	
+	
 	/**
 	 * Initialize the contents of the frame.
+	 * 
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -136,11 +133,11 @@ public class MainInterface {
 		navItemList.put("user", new JLabel("Gestion des utilisateurs"));
 		
 		for(String item : navItemList.keySet()) {
+			if(!isAdmin && item.equals("user")) continue;
 			JLabel lab = navItemList.get(item);
 			setupNavItem(lab, item);
 			navigation.add(lab);
 		}
-		
 		mainPanel = new JPanel();
 		mainPanel.setBounds(244, 106, 732, 547);
 		frame.getContentPane().add(mainPanel);
@@ -180,102 +177,22 @@ public class MainInterface {
 		JLabel sanctions_1 = new JLabel("sanctions");
 		sanctions.add(sanctions_1);
 		
-		JPanel vehicules = new JPanel();
+		
+		
+		
+		VehiculePanel.setNavList(navItemList);
+		VehiculePanel vehicules = new VehiculePanel(this);
 		mainPanel.add(vehicules, "vehicule");
+		vehicules.setLayout(null);
 		
 		JLabel lblVehicules = new JLabel("vehicules");
 		vehicules.add(lblVehicules);
 		
-		JPanel utilisateurs = new JPanel();
+		UserPanel.setNavList(navItemList);
+		UserPanel utilisateurs = new UserPanel(this);
 		mainPanel.add(utilisateurs, "user");
-		
-		JLabel lblUtilisateurs = new JLabel("utilisateurs");
-		utilisateurs.add(lblUtilisateurs);
+		utilisateurs.setLayout(null);
 		client.setLayout(null);
-		
-		// Client Panel generation 
-		//*********************************************************************************************************************
-		JScrollPane clientscrollPane = new JScrollPane();
-		clientscrollPane.setBounds(10, 58, 574, 478);
-		client.add(clientscrollPane);
-		
-		clienttable = new JTable();
-		clienttable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		Object[] clientcolumns = {"id", "nom", "prenom", "numTel"};
-		DefaultTableModel clientmodel = new DefaultTableModel();
-		clientmodel.setColumnCount(4);
-		clientmodel.setColumnIdentifiers(clientcolumns);
-		clienttable.setModel(clientmodel);
-		clientscrollPane.setViewportView(clienttable);
-		
-		JButton clientbtnNewButton = new JButton("Rechercher");
-		clientbtnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String string = clienttextField.getText();
-				ClientController.findClient(string, clienttable);
-				clienttextField.setText("");
-			}
-		});
-		clientbtnNewButton.setBounds(594, 11, 128, 36);
-		client.add(clientbtnNewButton);
-		
-		JButton clientbtnNewButton_1 = new JButton("Nouveau Client");
-		clientbtnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CreerNouveauClient nouveauClient = new CreerNouveauClient();
-				ClientController.fetchAll(clienttable);
-			}
-		});
-		clientbtnNewButton_1.setBounds(594, 76, 128, 36);
-		client.add(clientbtnNewButton_1);
-		
-		clienttextField = new JTextField();
-		clienttextField.setBounds(10, 11, 574, 36);
-		client.add(clienttextField);
-		clienttextField.setColumns(10);
-		
-		JButton clientbtnNewButton_2 = new JButton("Modifier");
-		clientbtnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = clienttable.getSelectedRow();
-				ModifierClient.setId(clienttable.getModel().getValueAt(index, 0).toString());
-				if (index >= 0) {
-				ModifierClient window = new ModifierClient();
-				window.setTextField(clienttable.getModel().getValueAt(index, 1).toString());
-				window.setTextField_1(clienttable.getModel().getValueAt(index, 2).toString());
-				window.setTextField_2(clienttable.getModel().getValueAt(index, 3).toString());
-				}
-			}
-		});
-		clientbtnNewButton_2.setBounds(594, 170, 128, 36);
-		client.add(clientbtnNewButton_2);
-		
-		JButton clientbtnNewButton_3 = new JButton("Actualiser");
-		clientbtnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ClientController.fetchAll(clienttable);
-			}
-		});
-		clientbtnNewButton_3.setBounds(594, 264, 128, 36);
-		client.add(clientbtnNewButton_3);
-		
-		JButton clientbtnNewButton_4 = new JButton("Supprimer");
-		clientbtnNewButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = clienttable.getSelectedRow();
-				ClientController.deleteClient(clienttable.getModel().getValueAt(index, 0).toString());
-				ClientController.fetchAll(clienttable);
-			}
-		});
-		clientbtnNewButton_4.setBounds(594, 217, 128, 36);
-		client.add(clientbtnNewButton_4);
-		
-		JButton clientbtnNewButton_5 = new JButton("Afficher");
-		clientbtnNewButton_5.setBounds(594, 123, 128, 36);
-		client.add(clientbtnNewButton_5);
-		//*********************************************************************************************************************
-		
-		
 	}
 	
 	private void setupNavItem(JLabel lab, String name) {
@@ -311,4 +228,19 @@ public class MainInterface {
 			}
 		});
 	}
+	// GETTERS
+	public JPanel getMainPanel() {
+		return this.mainPanel;
+	}
+	// SETTERS  
+
+	// AJOUTE LES PANELS AU MAINPANEL
+	public void addToMainPanel(JPanel Panel,String key) {
+		this.mainPanel.add(Panel,key);
+		Panel.setLayout(null);
+	}
+	public void showOnMainPanel(String key) {
+		cl.show(mainPanel,key);
+	}
+	
 }
