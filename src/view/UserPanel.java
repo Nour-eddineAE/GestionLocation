@@ -40,13 +40,13 @@ public class UserPanel extends JPanel{
 				UserController.autoCompletion(chercherUtilisateur.getText());
 			}
 		});
-		chercherUtilisateur.setBounds(0, 16, 595, 33);
+		chercherUtilisateur.setBounds(10, 16, 585, 33);
 		this.add(chercherUtilisateur);
 		chercherUtilisateur.setColumns(10);
 		
 		// ZONE D'AFFICHAGE
 		JScrollPane UScrollPane = new JScrollPane();
-		UScrollPane.setBounds(0, 60, 595, 503);
+		UScrollPane.setBounds(10, 60, 585, 487);
 		this.add(UScrollPane);
 		uTable = new UserTableModel();
 		userTable=new JTable(uTable);
@@ -55,6 +55,7 @@ public class UserPanel extends JPanel{
 		/**ADD NEW USER*/
 		
 		JButton addUser = new JButton("Ajouter ");
+		addUser.setBackground(viewSettings.SECONDARY);
 		addUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UserController.setWindow(mainInterface);
@@ -63,7 +64,6 @@ public class UserPanel extends JPanel{
 				UserController.createUser(UserPanel.this);
 			}
 		});
-		addUser.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		addUser.setBounds(605, 222, 117, 50);
 		this.add(addUser);
 		
@@ -77,7 +77,7 @@ public class UserPanel extends JPanel{
 				UserController.removeUser();
 			}
 		});
-		removeUser.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		removeUser.setBackground(viewSettings.SECONDARY);
 		removeUser.setBounds(605, 299, 117, 50);
 		this.add(removeUser);
 		
@@ -93,7 +93,7 @@ public class UserPanel extends JPanel{
 				UserController.changeUser();
 			}
 		});
-		changeUser.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		changeUser.setBackground(viewSettings.SECONDARY);
 		changeUser.setBounds(605, 136, 117, 50);
 		this.add(changeUser);
 		this.setLayout(null);
@@ -104,7 +104,7 @@ public class UserPanel extends JPanel{
 				UserController.fetchAll();
 			}
 		});
-		update.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		update.setBackground(viewSettings.SECONDARY);
 		update.setBounds(605, 378, 117, 50);
 		this.add(update);
 		

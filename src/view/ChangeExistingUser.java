@@ -29,8 +29,6 @@ import java.awt.Rectangle;
 public class ChangeExistingUser extends JPanel{
 	private MainInterface mInterface;
 	private CardLayout cl;
-	private Color mainColor;
-	private Color secondaryColor;
 	private JTextField newMatricule;
 	private JTextField newNom;
 	private JTextField newPrenom;
@@ -58,8 +56,6 @@ public class ChangeExistingUser extends JPanel{
 		setBounds(new Rectangle(0, 0, 732, 547));
 		this.mInterface = mInterface;
 		this.cl = (CardLayout) mInterface.getMainPanel().getLayout();
-		mainColor = new Color(75, 0, 130);
-		secondaryColor = new Color(224, 199, 242);
 		initialize();
 	}
 	
@@ -73,66 +69,61 @@ public class ChangeExistingUser extends JPanel{
 		
 		
 		newMatricule = new JTextField();
-		newMatricule.setBounds(155, 102, 188, 42);
+		newMatricule.setBounds(140, 102, 183, 42);
 		setBounds(0,0, 732, 547);
 		setLayout(null);
 		this.add(newMatricule);
 		newMatricule.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Veuillez remplir les nouveaux donn\u00E9es");
-		lblNewLabel_1.setBounds(112, 11, 483, 42);
+		lblNewLabel_1.setBounds(152, 23, 483, 42);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		this.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Prenom");
-		lblNewLabel_2.setBounds(25, 182, 120, 42);
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_2.setBounds(44, 181, 92, 42);
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(lblNewLabel_2);
 		
 		newNom = new JTextField();
-		newNom.setBounds(516, 102, 188, 42);
+		newNom.setBounds(474, 102, 195, 42);
 		newNom.setColumns(10);
 		this.add(newNom);
 		
 		JLabel lblNewLabel_3 = new JLabel("Telephone");
-		lblNewLabel_3.setBounds(386, 180, 120, 42);
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(371, 180, 82, 42);
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(lblNewLabel_3);
 		
 		newPrenom = new JTextField();
-		newPrenom.setBounds(155, 184, 188, 42);
+		newPrenom.setBounds(140, 184, 183, 42);
 		newPrenom.setColumns(10);
 		this.add(newPrenom);
 		
 		JLabel lblNewLabel_4 = new JLabel("Adresse");
-		lblNewLabel_4.setBounds(25, 257, 120, 42);
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_4.setBounds(44, 256, 92, 42);
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(lblNewLabel_4);
 		
 		newTel = new JTextField();
-		newTel.setBounds(516, 182, 188, 42);
+		newTel.setBounds(474, 183, 195, 42);
 		newTel.setColumns(10);
 		this.add(newTel);
 		
 		newAdresse = new JTextField();
-		newAdresse.setBounds(155, 259, 188, 42);
+		newAdresse.setBounds(140, 259, 183, 42);
 		newAdresse.setColumns(10);
 		this.add(newAdresse);
 		
 		lblNewLabel_7 = new JLabel("Nom");
-		lblNewLabel_7.setBounds(386, 102, 120, 42);
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_7.setBounds(371, 102, 82, 42);
+		lblNewLabel_7.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(lblNewLabel_7);
 		
 		
 // check box for user status
 		StatusChkBox = new JCheckBox("Statut d'utilisateur");
-		StatusChkBox.setBounds(377, 330, 177, 40);
+		StatusChkBox.setBounds(362, 330, 177, 40);
 		StatusChkBox.setSelected(true);
 		StatusChkBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -143,12 +134,11 @@ public class ChangeExistingUser extends JPanel{
 		StatusChkBox.setHorizontalTextPosition(SwingConstants.LEADING);
 		StatusChkBox.setIconTextGap(20);
 		StatusChkBox.setHorizontalAlignment(SwingConstants.LEFT);
-		StatusChkBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		this.add(StatusChkBox);
 		
 		// button to save modifications
 		saveModification = new JButton("Enregistrer");
-		saveModification.setBounds(25, 471, 164, 42);
+		saveModification.setBounds(540, 471, 164, 42);
 		saveModification.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!UserController.empty(ChangeExistingUser.this)) {
@@ -173,70 +163,65 @@ public class ChangeExistingUser extends JPanel{
 			}
 		});
 		
-		saveModification.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		saveModification.setBackground(viewSettings.SECONDARY);
 		this.add(saveModification);
 		
 		btnEffacerTout = new JButton("Effacer tout");
-		btnEffacerTout.setBounds(288, 471, 164, 42);
+		btnEffacerTout.setBounds(281, 471, 164, 42);
 		/** REMOVES ANY INPUT FROM THE TEXT FIELDS*/
 		btnEffacerTout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UserController.emptyUpdateFields(ChangeExistingUser.this);
 			}
 		});
-		btnEffacerTout.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnEffacerTout.setBackground(viewSettings.SECONDARY);
 		this.add(btnEffacerTout);
 		
 		btnAnnuler = new JButton("Annuler");
-		btnAnnuler.setBounds(512, 471, 164, 42);
+		btnAnnuler.setBounds(25, 471, 164, 42);
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mInterface.showOnMainPanel("user");
 			}
 		});
-		btnAnnuler.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAnnuler.setBackground(viewSettings.SECONDARY);
 		this.add(btnAnnuler);
 		
 		userSuspendu = new JLabel("Suspendu");
-		userSuspendu.setBounds(558, 330, 164, 42);
+		userSuspendu.setBounds(543, 330, 164, 42);
 		userSuspendu.setVisible(false);
 		userSuspendu.setHorizontalAlignment(SwingConstants.CENTER);
-		userSuspendu.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(userSuspendu);
 		
 		userActif = new JLabel("Actif");
 		userActif.setBounds(558, 330, 164, 42);
 		userActif.setVisible(false);
 		userActif.setHorizontalAlignment(SwingConstants.CENTER);
-		userActif.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(userActif);
 		
 		JLabel lblNewLabel_7_1 = new JLabel("Matricule");
-		lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_7_1.setBounds(25, 100, 120, 42);
+		lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_7_1.setBounds(44, 99, 92, 42);
 		add(lblNewLabel_7_1);
 		
 		lblNewLabel = new JLabel("Mot de passe");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setBounds(25, 329, 120, 42);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel.setBounds(44, 328, 92, 42);
 		add(lblNewLabel);
 		
 		newPassword = new JTextField();
 		newPassword.setColumns(10);
-		newPassword.setBounds(155, 329, 188, 42);
+		newPassword.setBounds(140, 329, 183, 42);
 		add(newPassword);
 		
 		username = new JTextField();
 		username.setColumns(10);
-		username.setBounds(516, 259, 188, 42);
+		username.setBounds(474, 258, 195, 42);
 		add(username);
 		
 		lblNewLabel_5 = new JLabel("Username");
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_5.setBounds(386, 257, 120, 42);
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_5.setBounds(371, 257, 82, 42);
 		add(lblNewLabel_5);
 		
 		
@@ -259,15 +244,6 @@ public class ChangeExistingUser extends JPanel{
 	public MainInterface getmInterface() {
 		return mInterface;
 	}
-
-
-
-
-	public Color getMainColor() {
-		return mainColor;
-	}
-
-
 
 
 	public JTextField getNewMatricule() {
