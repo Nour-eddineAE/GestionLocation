@@ -26,8 +26,6 @@ public class ChangeExistingVehicle extends JPanel{
 
 	// ATTRIBUTS DE LA CLASSE ADDNEWVEHICULE
 	private MainInterface mainInterface;
-	private Color mainColor;
-	private Color secondaryColor;
 	private JTable table;
 	private CardLayout cl;
 	private JTextField ImmatriculationVehicule;
@@ -53,8 +51,6 @@ public class ChangeExistingVehicle extends JPanel{
 		setBounds(new Rectangle(0, 0, 732, 547));
 		this.mainInterface = mainInterface;
 		this.cl = (CardLayout) mainInterface.getMainPanel().getLayout();
-		mainColor = new Color(75, 0, 130);
-		secondaryColor = new Color(224, 199, 242);
 		initialize();
 	}
 	// METHODE INITIALIZE QUI CREE UN PANEL
@@ -64,58 +60,53 @@ public class ChangeExistingVehicle extends JPanel{
 		setLayout(null);
 		JLabel lblNewLabel = new JLabel("Modification d'un vehicule existant");
 		lblNewLabel.setBounds(116, 11, 549, 46);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(lblNewLabel);
 		
 		JLabel Matricule_lbl = new JLabel("Immatriculation:");
-		Matricule_lbl.setBounds(27, 86, 142, 37);
-		Matricule_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		Matricule_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		Matricule_lbl.setBounds(70, 67, 262, 27);
+		Matricule_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(Matricule_lbl);
 		
 		ImmatriculationVehicule = new JTextField();
-		ImmatriculationVehicule.setBounds(206, 86, 153, 37);
+		ImmatriculationVehicule.setBounds(70, 96, 262, 27);
 		ImmatriculationVehicule.setColumns(10);
 		this.add(ImmatriculationVehicule);
 		
 		JLabel marque_lbl = new JLabel("Marque:");
-		marque_lbl.setBounds(374, 86, 142, 37);
-		marque_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		marque_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		marque_lbl.setBounds(366, 71, 142, 19);
+		marque_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(marque_lbl);
 		
 		marqueVehicule = new JTextField();
-		marqueVehicule.setBounds(553, 86, 153, 37);
+		marqueVehicule.setBounds(366, 96, 279, 27);
 		marqueVehicule.setColumns(10);
 		this.add(marqueVehicule);
 		
 		JLabel type_lbl = new JLabel("Type:");
-		type_lbl.setBounds(27, 152, 142, 37);
-		type_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		type_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		type_lbl.setBounds(70, 133, 262, 13);
+		type_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(type_lbl);
 		
 		typeVehicule = new JTextField();
-		typeVehicule.setBounds(205, 153, 153, 37);
+		typeVehicule.setBounds(70, 156, 262, 27);
 		typeVehicule.setColumns(10);
 		this.add(typeVehicule);
 		
 		JLabel lblNewLabel_1_1_3 = new JLabel("Carburant:");
-		lblNewLabel_1_1_3.setBounds(374, 151, 142, 37);
-		lblNewLabel_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1_1_3.setBounds(366, 133, 142, 13);
+		lblNewLabel_1_1_3.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(lblNewLabel_1_1_3);
 		
 		carburant = new JTextField();
-		carburant.setBounds(553, 152, 153, 37);
+		carburant.setBounds(366, 156, 279, 27);
 		carburant.setColumns(10);
 		this.add(carburant);
 		
 	// BOUTON ENREGISTRER  VEHICULE
 		JButton saveChanges = new JButton("Enregistrer");
-		saveChanges.setBounds(27, 469, 159, 54);
-		saveChanges.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		saveChanges.setBackground(viewSettings.SECONDARY);
+		saveChanges.setBounds(531, 479, 159, 42);
 		saveChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!VehiculeController.empty(ChangeExistingVehicle.this)) {
@@ -144,41 +135,39 @@ public class ChangeExistingVehicle extends JPanel{
 		
 	// BOUTON POUR VIDER TOUT LES CHAMPS	
 		JButton emptyAllFields = new JButton("Effacer tout");
-		emptyAllFields.setBounds(284, 469, 159, 54);
+		emptyAllFields.setBackground(viewSettings.SECONDARY);
+		emptyAllFields.setBounds(284, 481, 159, 42);
 		emptyAllFields.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VehiculeController.emptyVehicleFields(ChangeExistingVehicle.this);
 			}
 		});
-		emptyAllFields.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		this.add(emptyAllFields);
 		
 	// BOUTON POUR ANNULER L'AJOUT	
 		JButton CancelChanging = new JButton("Annuler");
-		CancelChanging.setBounds(547, 469, 159, 54);
+		CancelChanging.setBackground(viewSettings.SECONDARY);
+		CancelChanging.setBounds(27, 481, 159, 42);
 		CancelChanging.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VehiculeController.cancel(ChangeExistingVehicle.this.mainInterface);//Annuler l'enregistrement
 			}
 		});
-		CancelChanging.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		this.add(CancelChanging);
 		
 		JLabel lblNewLabel_1_1_5_1 = new JLabel("Kilom\u00E9trage:");
-		lblNewLabel_1_1_5_1.setBounds(27, 215, 142, 38);
-		lblNewLabel_1_1_5_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1_5_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1_1_5_1.setBounds(70, 204, 262, 13);
+		lblNewLabel_1_1_5_1.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(lblNewLabel_1_1_5_1);
 		
 		kilometrage = new JTextField();
-		kilometrage.setBounds(206, 218, 153, 37);
+		kilometrage.setBounds(70, 223, 262, 27);
 		kilometrage.setColumns(10);
 		this.add(kilometrage);
 		
 		JLabel lblNewLabel_1_1_5_2 = new JLabel("Code park:");
-		lblNewLabel_1_1_5_2.setBounds(27, 278, 142, 37);
-		lblNewLabel_1_1_5_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1_5_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1_1_5_2.setBounds(71, 278, 142, 19);
+		lblNewLabel_1_1_5_2.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(lblNewLabel_1_1_5_2);
 		
 		disponible = new JCheckBox("Disponibilit\u00E9:");
@@ -187,31 +176,28 @@ public class ChangeExistingVehicle extends JPanel{
 				VehiculeController.changeDisponibility(ChangeExistingVehicle.this);
 			}
 		});
-		disponible.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		disponible.setSelected(true);
 		disponible.setIconTextGap(70);
 		disponible.setHorizontalTextPosition(SwingConstants.LEFT);
 		disponible.setHorizontalAlignment(SwingConstants.LEFT);
-		disponible.setBounds(387, 278, 189, 37);
+		disponible.setBounds(366, 278, 189, 27);
 		add(disponible);
 		
 		lbl_disp = new JLabel("Disponible");
-		lbl_disp.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbl_disp.setBounds(582, 278, 120, 37);
+		lbl_disp.setBounds(478, 305, 120, 37);
 		add(lbl_disp);
 		
 		lbl_indisp = new JLabel("Indisponible");
-		lbl_indisp.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbl_indisp.setBounds(582, 278, 124, 37);
+		lbl_indisp.setBounds(478, 305, 124, 37);
 		add(lbl_indisp);
 		
 		JLabel lblNewLabel_1_1_5_2_1 = new JLabel("Date de mise en circulation:");
 		lblNewLabel_1_1_5_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1_1_5_2_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_1_1_5_2_1.setBounds(10, 377, 202, 37);
+		lblNewLabel_1_1_5_2_1.setBounds(70, 365, 202, 19);
 		add(lblNewLabel_1_1_5_2_1);
 		
 		YcomboBox = new JComboBox();
+		YcomboBox.setBackground(viewSettings.SECONDARY);
 		YcomboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -222,54 +208,53 @@ public class ChangeExistingVehicle extends JPanel{
 																"1995","1994","1993","1992","1991","1990","1989","1988","1987","1986","1985","1984","1983","1982",
 																"1981","1980","1979","1978","1977","1976","1975","1974","1973","1972","1971","1970","1969","1968",
 																"1967","1966","1965","1964","1963","1962","1961","1960"}));
-		YcomboBox.setBounds(253, 387, 110, 27);
+		YcomboBox.setBounds(144, 432, 110, 27);
 		add(YcomboBox);
 		
 		McomboBox = new JComboBox();
-		McomboBox.setBounds(419, 387, 110, 27);
+		McomboBox.setBackground(viewSettings.SECONDARY);
+		McomboBox.setBounds(310, 432, 110, 27);
 		McomboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 		add(McomboBox);
 		
 		DcomboBox = new JComboBox();
+		DcomboBox.setBackground(viewSettings.SECONDARY);
 		DcomboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		DcomboBox.setBounds(581, 387, 110, 27);
+		DcomboBox.setBounds(472, 432, 110, 27);
 		DayCBSetModel(YcomboBox,McomboBox,DcomboBox);//RENSEIGNER LE JOUR SELON L'ANNEE ET LE MOIS QUE L'UTILISATEUR A CHOISI
 		add(DcomboBox);
 		
 		JLabel annee_lbl = new JLabel("Ann\u00E9e");
 		annee_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		annee_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		annee_lbl.setBounds(253, 349, 110, 33);
+		annee_lbl.setBounds(144, 394, 110, 33);
 		add(annee_lbl);
 		
 		JLabel mois_lbl = new JLabel("Mois");
 		mois_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		mois_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		mois_lbl.setBounds(420, 352, 109, 30);
+		mois_lbl.setBounds(311, 397, 109, 30);
 		add(mois_lbl);
 		
 		JLabel jour_lbl = new JLabel("Jour");
 		jour_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		jour_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		jour_lbl.setBounds(581, 352, 110, 31);
+		jour_lbl.setBounds(472, 397, 110, 31);
 		add(jour_lbl);
 		
 		JLabel prix_lvl = new JLabel("Prix location:");
-		prix_lvl.setHorizontalAlignment(SwingConstants.CENTER);
-		prix_lvl.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		prix_lvl.setBounds(374, 215, 142, 38);
+		prix_lvl.setHorizontalAlignment(SwingConstants.LEFT);
+		prix_lvl.setBounds(366, 204, 142, 13);
 		add(prix_lvl);
 		
 		prixLocation = new JTextField();
 		prixLocation.setColumns(10);
-		prixLocation.setBounds(553, 218, 153, 37);
+		prixLocation.setBounds(366, 223, 279, 27);
 		add(prixLocation);
 		
 		parkComboBox = new JComboBox();
-		parkComboBox.setBounds(205, 278, 154, 35);
+		parkComboBox.setBackground(viewSettings.SECONDARY);
+		parkComboBox.setBounds(70, 307, 154, 35);
 		add(parkComboBox);
 		parkComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9",
 				"10", "11", "12", "13", "14", "15", "16", "17", "18","19",

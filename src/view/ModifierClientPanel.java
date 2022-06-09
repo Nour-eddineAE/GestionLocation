@@ -87,7 +87,7 @@ public class ModifierClientPanel extends JPanel {
 		this.add(permisPath);
 		
 		JButton buttonEffacer = new JButton("Effacer");
-		buttonEffacer.setBackground(viewColors.SECONDARY);
+		buttonEffacer.setBackground(viewSettings.SECONDARY);
 		buttonEffacer.addMouseListener(new MouseAdapter() {
 			@Override
 			//effacer tous les informations pour les redéfinir
@@ -104,7 +104,7 @@ public class ModifierClientPanel extends JPanel {
 		this.add(buttonEffacer);
 		
 		JButton buttonRetour = new JButton("Retour");
-		buttonRetour.setBackground(viewColors.SECONDARY);
+		buttonRetour.setBackground(viewSettings.SECONDARY);
 		buttonRetour.addActionListener(new ActionListener() {
 			//retour au page principale
 			public void actionPerformed(ActionEvent e) {
@@ -130,7 +130,7 @@ public class ModifierClientPanel extends JPanel {
 		this.add(permisClientlbl);
 		
 		JButton imageButton = new JButton("choisir un fichier");
-		imageButton.setBackground(viewColors.SECONDARY);
+		imageButton.setBackground(viewSettings.SECONDARY);
 		imageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//ouvrir une fenetre pour séléctionné l'image
@@ -150,7 +150,7 @@ public class ModifierClientPanel extends JPanel {
 		this.add(imageButton);
 		
 		JButton permisButton = new JButton("choisir un fichier");
-		permisButton.setBackground(viewColors.SECONDARY);
+		permisButton.setBackground(viewSettings.SECONDARY);
 		permisButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
@@ -168,7 +168,7 @@ public class ModifierClientPanel extends JPanel {
 		this.add(permisButton);
 		
 		JButton buttonSauvgarder = new JButton("Sauvgarder");
-		buttonSauvgarder.setBackground(viewColors.SECONDARY);
+		buttonSauvgarder.setBackground(viewSettings.SECONDARY);
 		buttonSauvgarder.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

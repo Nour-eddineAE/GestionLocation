@@ -115,7 +115,7 @@ public class AfficherClientPanel extends JPanel {
 		teleClientTextField.setText(client.getNumTelClient() + "");
 
 		JButton btnNewButton = new JButton("Retour");
-		btnNewButton.setBackground(viewColors.SECONDARY);
+		btnNewButton.setBackground(viewSettings.SECONDARY);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panel, "client");

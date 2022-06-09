@@ -42,7 +42,7 @@ public class CreerFacturePanel extends JPanel {
 		this.add(choisirContrat_lbl);
 		
 		JButton actualiser_btn = new JButton("Actualiser");
-		actualiser_btn.setBackground(viewColors.SECONDARY);
+		actualiser_btn.setBackground(viewSettings.SECONDARY);
 		actualiser_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -53,7 +53,7 @@ public class CreerFacturePanel extends JPanel {
 		this.add(actualiser_btn);
 		
 		JButton creerFacture_btn = new JButton("Creer Facture");
-		creerFacture_btn.setBackground(viewColors.SECONDARY);
+		creerFacture_btn.setBackground(viewSettings.SECONDARY);
 		creerFacture_btn.setBounds(510, 110, 184, 49);
 		
 		creerFacture_btn.addActionListener(new ActionListener() {
@@ -65,7 +65,7 @@ public class CreerFacturePanel extends JPanel {
 		this.add(creerFacture_btn);
 		
 		JButton annuler_btn = new JButton("Annuler");
-		annuler_btn.setBackground(viewColors.SECONDARY);
+		annuler_btn.setBackground(viewSettings.SECONDARY);
 		annuler_btn.setBounds(510, 488, 184, 49);
 		
 		annuler_btn.addActionListener(new ActionListener() {

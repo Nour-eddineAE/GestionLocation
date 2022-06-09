@@ -76,7 +76,7 @@ public class SanctionInfoPanel extends JPanel {
 		contrat_scroll.setViewportView(contrat_table);
 		
 		JButton retour_btn = new JButton("Retour");
-		retour_btn.setBackground(viewColors.SECONDARY);
+		retour_btn.setBackground(viewSettings.SECONDARY);
 		retour_btn.setBounds(23, 505, 146, 46);
 		retour_btn.addActionListener(new ActionListener() {
 			

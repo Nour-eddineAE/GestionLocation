@@ -45,7 +45,7 @@ public class ClientMainView extends JPanel {
 
 		clienttable = new JTable();
 		clienttable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		clienttable.setSelectionBackground(viewColors.SECONDARY);
+		clienttable.setSelectionBackground(viewSettings.SECONDARY);
 		Object[] clientcolumns = { "id", "nom", "prenom", "numTel" };
 		DefaultTableModel clientmodel = new DefaultTableModel();
 		clientmodel.setColumnCount(4);
@@ -60,8 +60,8 @@ public class ClientMainView extends JPanel {
 		this.add(warninglbl);
 
 		JButton buttonRecherche = new JButton("Rechercher");
-		buttonRecherche.setBackground(viewColors.MAIN);
-		buttonRecherche.setForeground(viewColors.WHITE);
+		buttonRecherche.setBackground(viewSettings.MAIN);
+		buttonRecherche.setForeground(viewSettings.WHITE);
 		buttonRecherche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String string = searchclienttextField.getText();
@@ -79,7 +79,7 @@ public class ClientMainView extends JPanel {
 		this.add(buttonRecherche);
 
 		JButton nouveauClientButton = new JButton("Nouveau Client");
-		nouveauClientButton.setBackground(viewColors.SECONDARY);
+		nouveauClientButton.setBackground(viewSettings.SECONDARY);
 		nouveauClientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// ouvrir la fenetre créer nouveau client
@@ -98,7 +98,7 @@ public class ClientMainView extends JPanel {
 		searchclienttextField.setColumns(10);
 
 		JButton modifierClientButton = new JButton("Modifier");
-		modifierClientButton.setBackground(viewColors.SECONDARY);
+		modifierClientButton.setBackground(viewSettings.SECONDARY);
 		modifierClientButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -123,7 +123,7 @@ public class ClientMainView extends JPanel {
 		this.add(modifierClientButton);
 
 		JButton actualiserClientButton = new JButton("Actualiser");
-		actualiserClientButton.setBackground(viewColors.SECONDARY);
+		actualiserClientButton.setBackground(viewSettings.SECONDARY);
 		actualiserClientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// rafraîchir le tableau des clients
@@ -135,7 +135,7 @@ public class ClientMainView extends JPanel {
 		this.add(actualiserClientButton);
 
 		JButton supprimerClientButton = new JButton("Supprimer");
-		supprimerClientButton.setBackground(viewColors.SECONDARY);
+		supprimerClientButton.setBackground(viewSettings.SECONDARY);
 		supprimerClientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = clienttable.getSelectedRow();
@@ -158,7 +158,7 @@ public class ClientMainView extends JPanel {
 		this.add(supprimerClientButton);
 
 		JButton afficherClientButton = new JButton("Afficher");
-		afficherClientButton.setBackground(viewColors.SECONDARY);
+		afficherClientButton.setBackground(viewSettings.SECONDARY);
 		afficherClientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = clienttable.getSelectedRow();
