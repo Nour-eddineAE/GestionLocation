@@ -41,7 +41,7 @@ import controller.ParkingController;
 
 public class MainInterface {
 
-	private JFrame frame;
+	JFrame frame;
 	private Color mainColor;
 	private Color secondaryColor;
 	private Color highlight;
@@ -60,6 +60,8 @@ public class MainInterface {
 	private JTextField parkingtextField;
 	private JTable contrat_table;
 
+	private boolean isAdmin;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -70,6 +72,7 @@ public class MainInterface {
 				try {
 					MainInterface window = new MainInterface();
 					window.frame.setVisible(true);
+					window.frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -85,9 +88,17 @@ public class MainInterface {
 		// ClientController.fetchAll(clienttable);
 		ParkingController.fetchAll(parkingtable);
 	}
-
+	
+	public MainInterface(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+		initialize();
+		
+	}
+	
+	
 	/**
 	 * Initialize the contents of the frame.
+	 * 
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -180,19 +191,6 @@ public class MainInterface {
 		mainPanel.add(sanctionInfo, "sanctionInfo");
 		
 		//END Panel des Sanctions ---------------------------------------------------------------------
-		
-		
-		JPanel vehicules = new JPanel();
-		mainPanel.add(vehicules, "vehicule");
-
-		JLabel lblVehicules = new JLabel("vehicules");
-		vehicules.add(lblVehicules);
-
-		JPanel utilisateurs = new JPanel();
-		mainPanel.add(utilisateurs, "user");
-
-		JLabel lblUtilisateurs = new JLabel("utilisateurs");
-		utilisateurs.add(lblUtilisateurs);
 
 		
 		cl.show(mainPanel, "facture");
@@ -220,11 +218,24 @@ public class MainInterface {
 		navItemList.put("user", new JLabel("Gestion des utilisateurs"));
 
 		for(String item : navItemList.keySet()) {
+			if(!isAdmin && item.equals("user")) continue;
 			JLabel lab = navItemList.get(item);
 			setupNavItem(lab, item);
 			navigation.add(lab);
 		}
 
+		VehiculePanel.setNavList(navItemList);
+		VehiculePanel vehicules = new VehiculePanel(this);
+		mainPanel.add(vehicules, "vehicule");
+		vehicules.setLayout(null);
+		
+		JLabel lblVehicules = new JLabel("vehicules");
+		vehicules.add(lblVehicules);
+		
+		UserPanel.setNavList(navItemList);
+		UserPanel utilisateurs = new UserPanel(this);
+		mainPanel.add(utilisateurs, "user");
+		utilisateurs.setLayout(null);
 	}
 
 	private void setupNavItem(JLabel lab, String name) {
@@ -261,8 +272,6 @@ public class MainInterface {
 			}
 		});
 	}
-
-
 	//GETTERS
 	public JPanel getMainPanel() {
 		return this.mainPanel;
@@ -369,5 +378,15 @@ public class MainInterface {
 		});
 		parkingbtnNewButton_4.setBounds(594, 264, 128, 36);
 		panel.add(parkingbtnNewButton_4);
+	}
+	// SETTERS  
+
+	// AJOUTE LES PANELS AU MAINPANEL
+	public void addToMainPanel(JPanel Panel,String key) {
+		this.mainPanel.add(Panel,key);
+		Panel.setLayout(null);
+	}
+	public void showOnMainPanel(String key) {
+		cl.show(mainPanel,key);
 	}
 }

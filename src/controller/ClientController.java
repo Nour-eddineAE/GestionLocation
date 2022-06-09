@@ -24,7 +24,7 @@ public class ClientController {
 	}
 
 	public static boolean creatClient(Client client) {
-		// rederiger le travaille d'interaction avec base de donnée au couche DAO
+		// rederiger le travaille d'interaction avec base de donnï¿½e au couche DAO
 		return ClientDAO.creerClient(client);
 	}
 
@@ -57,7 +57,7 @@ public class ClientController {
 
 		Iterator itr = list.iterator();
 
-		// remplir le model par les informations extraites de base de données
+		// remplir le model par les informations extraites de base de donnï¿½es
 		while (itr.hasNext()) {
 			Client client = (Client) itr.next();
 			Object[] object = { client.getCodeClient(), client.getNomClient(), client.getPrenomClient(),
@@ -73,7 +73,7 @@ public class ClientController {
 		DefaultTableModel dtm = new DefaultTableModel();
 		dtm.addColumn("Matricule");
 		dtm.addColumn("Marque");
-		dtm.addColumn("Date de départ");
+		dtm.addColumn("Date de dï¿½part");
 		dtm.addColumn("Date de retour");
 		try {
 			while (result.next()) {
