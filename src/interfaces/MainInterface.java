@@ -36,6 +36,8 @@ import view.FacturePanel;
 import view.ReservationPanel;
 import view.SanctionInfoPanel;
 import view.SanctionPanel;
+import view.UserPanel;
+import view.VehiculePanel;
 import controller.ParkingController;
 
 

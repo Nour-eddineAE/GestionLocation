@@ -68,33 +68,33 @@ public class ChangeExistingVehicle extends JPanel{
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Immatriculation:");
-		lblNewLabel_1_1.setBounds(27, 86, 142, 37);
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		this.add(lblNewLabel_1_1);
+		JLabel Matricule_lbl = new JLabel("Immatriculation:");
+		Matricule_lbl.setBounds(27, 86, 142, 37);
+		Matricule_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		Matricule_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		this.add(Matricule_lbl);
 		
 		ImmatriculationVehicule = new JTextField();
 		ImmatriculationVehicule.setBounds(206, 86, 153, 37);
 		ImmatriculationVehicule.setColumns(10);
 		this.add(ImmatriculationVehicule);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Marque:");
-		lblNewLabel_1_1_1.setBounds(374, 86, 142, 37);
-		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		this.add(lblNewLabel_1_1_1);
+		JLabel marque_lbl = new JLabel("Marque:");
+		marque_lbl.setBounds(374, 86, 142, 37);
+		marque_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		marque_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		this.add(marque_lbl);
 		
 		marqueVehicule = new JTextField();
 		marqueVehicule.setBounds(553, 86, 153, 37);
 		marqueVehicule.setColumns(10);
 		this.add(marqueVehicule);
 		
-		JLabel lblNewLabel_1_1_2 = new JLabel("Type:");
-		lblNewLabel_1_1_2.setBounds(27, 152, 142, 37);
-		lblNewLabel_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		this.add(lblNewLabel_1_1_2);
+		JLabel type_lbl = new JLabel("Type:");
+		type_lbl.setBounds(27, 152, 142, 37);
+		type_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		type_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		this.add(type_lbl);
 		
 		typeVehicule = new JTextField();
 		typeVehicule.setBounds(205, 153, 153, 37);
@@ -120,10 +120,15 @@ public class ChangeExistingVehicle extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				if(!VehiculeController.empty(ChangeExistingVehicle.this)) {
 					try {
-						@SuppressWarnings("deprecation")
-						Vehicule V = new Vehicule(ImmatriculationVehicule.getText(),marqueVehicule.getText(),typeVehicule.getText(),carburant.getText(),
-								Long.parseLong(kilometrage.getText()),Date.valueOf(YcomboBox.getSelectedItem() +"-"+McomboBox.getSelectedItem()+"-"+DcomboBox.getSelectedItem()),
-								Integer.parseInt(parkComboBox.getSelectedItem().toString()),Double.parseDouble(prixLocation.getText()),disponible.isSelected());
+						Vehicule V = new Vehicule(ImmatriculationVehicule.getText(),
+								marqueVehicule.getText(),
+								typeVehicule.getText(),
+								carburant.getText(),
+								Long.parseLong(kilometrage.getText()),
+								Date.valueOf(YcomboBox.getSelectedItem() +"-"+McomboBox.getSelectedItem()+"-"+DcomboBox.getSelectedItem()),
+								Integer.parseInt(parkComboBox.getSelectedItem().toString()),
+								Integer.parseInt(prixLocation.getText())
+								,disponible.isSelected());
 						VehiculeController.saveChanges(V,ChangeExistingVehicle.oldId);
 //						AddUser.this.mainInterface.setMainPanel(AddUser.this.userPanel,"user");	//revenir au menu precedent
 					}catch(NumberFormatException ex) {
@@ -234,29 +239,29 @@ public class ChangeExistingVehicle extends JPanel{
 		DayCBSetModel(YcomboBox,McomboBox,DcomboBox);//RENSEIGNER LE JOUR SELON L'ANNEE ET LE MOIS QUE L'UTILISATEUR A CHOISI
 		add(DcomboBox);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Ann\u00E9e");
-		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2.setBounds(253, 349, 110, 33);
-		add(lblNewLabel_1_2);
+		JLabel annee_lbl = new JLabel("Ann\u00E9e");
+		annee_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		annee_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		annee_lbl.setBounds(253, 349, 110, 33);
+		add(annee_lbl);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("Mois");
-		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_3.setBounds(420, 352, 109, 30);
-		add(lblNewLabel_1_3);
+		JLabel mois_lbl = new JLabel("Mois");
+		mois_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		mois_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		mois_lbl.setBounds(420, 352, 109, 30);
+		add(mois_lbl);
 		
-		JLabel lblNewLabel_1_4 = new JLabel("Jour");
-		lblNewLabel_1_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_4.setBounds(581, 352, 110, 31);
-		add(lblNewLabel_1_4);
+		JLabel jour_lbl = new JLabel("Jour");
+		jour_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		jour_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		jour_lbl.setBounds(581, 352, 110, 31);
+		add(jour_lbl);
 		
-		JLabel lblNewLabel_1_1_5_1_1 = new JLabel("Prix location:");
-		lblNewLabel_1_1_5_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1_5_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_1_1_5_1_1.setBounds(374, 215, 142, 38);
-		add(lblNewLabel_1_1_5_1_1);
+		JLabel prix_lvl = new JLabel("Prix location:");
+		prix_lvl.setHorizontalAlignment(SwingConstants.CENTER);
+		prix_lvl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		prix_lvl.setBounds(374, 215, 142, 38);
+		add(prix_lvl);
 		
 		prixLocation = new JTextField();
 		prixLocation.setColumns(10);

@@ -236,7 +236,7 @@ public class UserController {
 	        Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	        return null;
-	   }
+	}
 	   
 	// SETTERS 
 	public static void setTable(JTable a) {

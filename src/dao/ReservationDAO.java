@@ -75,7 +75,7 @@ public interface ReservationDAO {
 					c.setPrenomClient(result2.getString("prenomClient"));
 				}
 				
-				query = "SELECT * FROM vehicule WHERE codeMatricule LIKE ?;";
+				query = "SELECT * FROM vehicule WHERE Immatriculation LIKE ?;";
 				ps = ConnectionManager.getConnection().prepareStatement(query);
 				ps.setString(1, query);
 				result2 = ps.executeQuery();
@@ -140,7 +140,7 @@ public interface ReservationDAO {
 					c.setPrenomClient(result2.getString("prenomClient"));
 				}
 				
-				query = "SELECT * FROM vehicule WHERE codeMatricule LIKE ?;";
+				query = "SELECT * FROM vehicule WHERE Immatriculation LIKE ?;";
 				ps = ConnectionManager.getConnection().prepareStatement(query);
 				ps.setString(1, query);
 				result2 = ps.executeQuery();
@@ -251,8 +251,8 @@ public interface ReservationDAO {
 		//query that return a list of reservations that are in the specified periode
 		String query = "SELECT codeReservation "
 					 + "FROM reservation, vehicule "
-					 + "WHERE reservation.codeVehicule = vehicule.codeMatricule "
-					 + "AND vehicule.codeMatricule = ? "
+					 + "WHERE reservation.codeVehicule = vehicule.Immatriculation "
+					 + "AND vehicule.Immatriculation = ? "
 					 + "AND (dateDepReservation <= ? AND dateRetReservation >= ?)";
 		
 		if(codeReserv > 0) {

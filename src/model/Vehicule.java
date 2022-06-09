@@ -10,7 +10,7 @@ public class Vehicule {
 	private long Kilometrage;
 	private Date DMC;//date de mise en circulation,
 	private int CodePark;
-	private double PrixLocation;
+	private int PrixLocation;
 	private boolean disponible;
 	
 	public boolean isDisponible() {
@@ -20,9 +20,11 @@ public class Vehicule {
 	public void setDisponible(boolean disponible) {
 		this.disponible = disponible;
 	}
-
+	
+	public Vehicule() {
+	}
 	// constructor
-	public Vehicule(String a, String  b ,String  c ,String d, long  e,Date f,int g ,double h,boolean i) {
+	public Vehicule(String a, String  b ,String  c ,String d, long  e,Date f,int g ,int h,boolean i) {
 		this.Matricule=a;
 		this.Marque=b;
 		this.Type=c;
@@ -70,28 +72,23 @@ public class Vehicule {
 		return CodePark;
 	}
 
-
-	public double getPrixLocation() {
-		return PrixLocation;
-	}
-
 	public boolean getDisponible() {
 		return this.disponible;
 	}
 	
 	public String getCodeVehicule() {
-		return codeVehicule;
+		return this.Matricule;
 	}
 
 	public void setCodeVehicule(String codeVehicule) {
-		this.codeVehicule = codeVehicule;
+		this.Matricule = codeVehicule;
 	}
 
 	public int getPrixLocation() {
-		return prixLocation;
+		return this.PrixLocation;
 	}
 
 	public void setPrixLocation(int prixLocation) {
-		this.prixLocation = prixLocation;
+		this.PrixLocation = prixLocation;
 	}	
 }

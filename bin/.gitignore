@@ -1,7 +1,6 @@
+/interfaces/
+/dao/
+/metier/
+/model/
 /view/
 /controller/
-/connectionManager/
-/dao/
-/interfaces/
-/model/
-/log/

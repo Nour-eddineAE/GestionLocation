@@ -20,9 +20,14 @@ public class vehiculeDAO {
 		
 		try {
 			while (result.next()) {
-				Vehicule V = new Vehicule(result.getString("Immatriculation"),result.getString("marqueVehicule"),
-						result.getString("typeVehicule"),result.getString("carburant"),result.getInt("kilometrage"),
-						result.getDate("dateMiseCirculation"),result.getInt("codePark"),result.getDouble("prixLocation"),
+				Vehicule V = new Vehicule(result.getString("Immatriculation"),
+						result.getString("marqueVehicule"),
+						result.getString("typeVehicule"),
+						result.getString("carburant"),
+						result.getInt("kilometrage"),
+						result.getDate("dateMiseCirculation"),
+						result.getInt("codePark"),
+						result.getInt("prixLocation"),
 						result.getBoolean("disponible"));
 				Vehicule_list.add(V);
 			}
@@ -46,10 +51,15 @@ public class vehiculeDAO {
 			ResultSet result = prepared.executeQuery();
 			try {
 				while (result.next()) {
-					V= new Vehicule(result.getString("Immatriculation"),result.getString("marqueVehicule"),
-						result.getString("typeVehicule"),result.getString("carburant"),result.getInt("kilometrage"),
-						result.getDate("dateMiseCirculation"),result.getInt("codePark"),result.getDouble("prixLocation"),
-						result.getBoolean("disponible"));
+					V = new Vehicule(result.getString("Immatriculation"),
+							result.getString("marqueVehicule"),
+							result.getString("typeVehicule"),
+							result.getString("carburant"),
+							result.getInt("kilometrage"),
+							result.getDate("dateMiseCirculation"),
+							result.getInt("codePark"),
+							result.getInt("prixLocation"),
+							result.getBoolean("disponible"));
 					return V;
 				}
 			
@@ -95,9 +105,14 @@ public class vehiculeDAO {
 			ResultSet result = prepared.executeQuery();
 			try {
 				while (result.next()) {
-					Vehicule V = new Vehicule(result.getString("Immatriculation"),result.getString("marqueVehicule"),
-							result.getString("typeVehicule"),result.getString("carburant"),result.getInt("kilometrage"),
-							result.getDate("dateMiseCirculation"),result.getInt("codePark"),result.getDouble("prixLocation"),
+					Vehicule V = new Vehicule(result.getString("Immatriculation"),
+							result.getString("marqueVehicule"),
+							result.getString("typeVehicule"),
+							result.getString("carburant"),
+							result.getInt("kilometrage"),
+							result.getDate("dateMiseCirculation"),
+							result.getInt("codePark"),
+							result.getInt("prixLocation"),
 							result.getBoolean("disponible"));
 					Vehicule_list.add(V);
 				}
@@ -115,7 +130,7 @@ public class vehiculeDAO {
 	}
 	// MEHTODE QUI AJOUTE UN VEHICULE A  LA BASE DE DONNEES 
 	public static boolean createVehicule(Vehicule vehicule) {
-		String query="INSERT INTO `projectdb`.`vehicule` (`Immatriculation`, `marqueVehicule`, `typeVehicule`, `carburant`,"+
+		String query="INSERT INTO `vehicule` (`Immatriculation`, `marqueVehicule`, `typeVehicule`, `carburant`,"+
 					" `kilometrage`, `dateMiseCirculation`, `codePark`, `prixLocation`, `disponible`) "+
 					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		PreparedStatement prepared;
@@ -140,7 +155,7 @@ public class vehiculeDAO {
 // METHODE SUPPRIMANT UN VEHICULE A L'AIDE DE SON MATRICULE
 	public static boolean removeVehicule(String id) {
 		// TODO Auto-generated method stub
-		String query="DELETE FROM `projectdb`.`vehicule`"
+		String query="DELETE FROM `vehicule`"
 					+" WHERE (`Immatriculation` = ?);";
 		try {
 			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
@@ -155,7 +170,7 @@ public class vehiculeDAO {
 //METHODE QUI ENVOI UNE REQUTE UPDATE AFIN DE CHANGER LES ATTRIBUTS D'UN VEHICULE
 	public static boolean ChangeVehicle(Vehicule vehicule,String oldId) {
 		// TODO Auto-generated method stub
-		String query="UPDATE `projectdb`.`vehicule`"
+		String query="UPDATE `vehicule`"
 				+" SET `Immatriculation`=?, `marqueVehicule`=?, `typeVehicule`=?, `carburant`=?,"
 				+ " `kilometrage`=?, `dateMiseCirculation`=?, `codePark`=?, `prixLocation`=?, `disponible`=?"
 				+" WHERE (`Immatriculation` = ?);";

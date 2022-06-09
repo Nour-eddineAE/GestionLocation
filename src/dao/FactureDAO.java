@@ -23,7 +23,7 @@ public interface FactureDAO {
 				+ "WHERE facture.codeContrat = contrat.codeContrat "
 				+ "AND contrat.codeReservation = reservation.codeReservation "
 				+ "AND reservation.codeClient = client.codeClient "
-				+ "AND reservation.codeVehicule = vehicule.codeMatricule "
+				+ "AND reservation.codeVehicule = vehicule.Immatriculation "
 				+ "ORDER BY dateFacture DESC;";
 		
 		ResultSet result = ConnectionManager.execute(query);
@@ -80,7 +80,7 @@ public interface FactureDAO {
 				+ "WHERE facture.codeContrat = contrat.codeContrat "
 				+ "AND contrat.codeReservation = reservation.codeReservation "
 				+ "AND reservation.codeClient = client.codeClient "
-				+ "AND contrat.codeMatricule = vehicule.codeMatricule "
+				+ "AND contrat.codeMatricule = vehicule.Immatriculation"
 				+ "AND codeFacture = ? "
 				+ "ORDER BY dateFacture DESC;";
 		
@@ -184,7 +184,7 @@ public interface FactureDAO {
 				+ "WHERE facture.codeContrat = contrat.codeContrat "
 				+ "AND contrat.codeReservation = reservation.codeReservation "
 				+ "AND reservation.codeClient = client.codeClient "
-				+ "AND contrat.codeMatricule = vehicule.codeMatricule "
+				+ "AND contrat.codeMatricule = vehicule.Immatriculation"
 				+ "AND contrat.codeContrat = ? "
 				+ "ORDER BY dateFacture DESC;";
 		

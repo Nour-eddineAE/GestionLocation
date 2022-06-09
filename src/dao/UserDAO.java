@@ -142,7 +142,7 @@ public class UserDAO {
 		
 	//METHODE QUI AJOUTE UN UTILISATEUR A LA BASE DE DONNEES
 		public static boolean createUser(String nom, String prenom, String numTel,String adresse,String username,String password) {
-			String query="INSERT INTO `projectdb`.`utilisateur` ( `nomUtilisateur`, `prenomUtilisateur`, `TelUtilisateur`, `adresseUtilisateur`, `IsActive`, `IsAdmin`,`username`,`password`)"
+			String query="INSERT INTO `utilisateur` ( `nomUtilisateur`, `prenomUtilisateur`, `TelUtilisateur`, `adresseUtilisateur`, `IsActive`, `IsAdmin`,`username`,`password`)"
 						+" VALUES ( ?, ?, ?, ?, true, false,?,?);";
 			try {
 				PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
@@ -166,7 +166,7 @@ public class UserDAO {
 	//LA MTHD COMPORTE 2 VERSION (SI L'ADMINISTRATEUR TENTE DE CHANGER LE MOT DE PASSE OU PAS)
 		public static boolean modifyUser (User u,int oldId, String newPassword) {
 			if(newPassword.equals("null")) {
-				String query1="UPDATE `projectdb`.`utilisateur`"
+				String query1="UPDATE `utilisateur`"
 						+" SET `matricule` = ?, `nomUtilisateur` = ?, `prenomUtilisateur` = ?, `TelUtilisateur` = ?, `adresseUtilisateur` = ?, `IsActive` = ?, `username` = ? "
 						+" WHERE (`matricule` = ?);";
 				try {
@@ -187,7 +187,7 @@ public class UserDAO {
 					e.printStackTrace();
 				}
 			}else {
-				String query="UPDATE `projectdb`.`utilisateur`"
+				String query="UPDATE `utilisateur`"
 						+" SET `matricule` = ?, `nomUtilisateur` = ?, `prenomUtilisateur` = ?, `TelUtilisateur` = ?, `adresseUtilisateur` = ?, `IsActive` = ? , `username` = ?,`password` = ?"
 						+" WHERE (`matricule` = ?);";
 				try {
@@ -214,7 +214,7 @@ public class UserDAO {
 		}
 	//METHODE SUPPRIMANT UN UTILIDATEUR CONNU PAR SON Id
 		public static boolean removeUser(int id) {
-			String query="DELETE FROM `projectdb`.`utilisateur`"
+			String query="DELETE FROM `utilisateur`"
 						+" WHERE (`matricule` = ?);";
 			try {
 				PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
@@ -229,7 +229,7 @@ public class UserDAO {
 		}
 	// METHODE PERMETTANT DE SUSPENDRE UN UTILISATEUR
 		public static boolean suspendUser(int id, boolean NewStateValue) {//RETOURNE TRUE SI ON A BIEN CHANGER L'ATTRIBUT STATUT DE 'UTILISATEUR
-			String query="UPDATE `projectdb`.`utilisateur`"
+			String query="UPDATE `utilisateur`"
 						+" SET `IsActive` = ?"
 						+" WHERE (`matricule` = ?);";
 			try {
