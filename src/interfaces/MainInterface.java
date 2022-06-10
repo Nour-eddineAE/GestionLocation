@@ -30,6 +30,7 @@ import controller.ReservationController;
 import controller.SanctionController;
 import controller.FactureController;
 import view.ClientMainView;
+import view.ContratPanel;
 import view.CreerFacturePanel;
 import view.CreerReservPanel;
 import view.FacturePanel;
@@ -165,13 +166,7 @@ public class MainInterface {
 		mainPanel.add(createReservPanel, "newReserv");
 
 
-		//END PANEL RESERVATIONS ---------------------------------------------------------------------
-		
-		JPanel contrats = new JPanel();
-		mainPanel.add(contrats, "contrat");
-
-		JLabel lblContrats = new JLabel("contrats");
-		contrats.add(lblContrats);
+		//END PANEL RESERVATIONS --------------------------------------------------------------------
 
 		//Panel des factures @ABD-AB-------------------------------------------------------------------
 
@@ -225,7 +220,14 @@ public class MainInterface {
 			setupNavItem(lab, item);
 			navigation.add(lab);
 		}
+	// PANEL CONTRATS
+		ContratPanel.setNavList(navItemList);
+		ContratPanel contrats = new ContratPanel(this);
+		mainPanel.add(contrats, "contrat");
 
+		JLabel lblContrats = new JLabel("contrats");
+		contrats.add(lblContrats);
+	//PANEL VEHICULE
 		VehiculePanel.setNavList(navItemList);
 		VehiculePanel vehicules = new VehiculePanel(this);
 		mainPanel.add(vehicules, "vehicule");
@@ -234,6 +236,7 @@ public class MainInterface {
 		JLabel lblVehicules = new JLabel("vehicules");
 		vehicules.add(lblVehicules);
 		
+	//PANEL UTILISATEURS
 		UserPanel.setNavList(navItemList);
 		UserPanel utilisateurs = new UserPanel(this);
 		mainPanel.add(utilisateurs, "user");

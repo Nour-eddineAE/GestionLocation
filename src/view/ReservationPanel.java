@@ -80,7 +80,7 @@ public class ReservationPanel extends JPanel {
 		JLabel filtre_lbl = new JLabel("Filtre :");
 		filtre_lbl.setBounds(522, 401, 193, 21);
 
-		JButton newReserv_btn = new JButton("Nouveau reservation");
+		JButton newReserv_btn = new JButton("Nouvelle reservation");
 		newReserv_btn.setBackground(viewSettings.SECONDARY);
 		newReserv_btn.setBounds(522, 155, 193, 56);
 		newReserv_btn.addActionListener(new ActionListener() {

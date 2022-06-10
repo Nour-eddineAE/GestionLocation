@@ -9,7 +9,7 @@ public class Vehicule {
 	private String Carburant;
 	private long Kilometrage;
 	private Date DMC;//date de mise en circulation,
-	private int CodePark;
+	private String designationPark;
 	private int PrixLocation;
 	private boolean disponible;
 	
@@ -24,14 +24,14 @@ public class Vehicule {
 	public Vehicule() {
 	}
 	// constructor
-	public Vehicule(String a, String  b ,String  c ,String d, long  e,Date f,int g ,int h,boolean i) {
+	public Vehicule(String a, String  b ,String  c ,String d, long  e,Date f,String g ,int h,boolean i) {
 		this.Matricule=a;
 		this.Marque=b;
 		this.Type=c;
 		this.Carburant=d;
 		this.Kilometrage=e;
 		this.DMC=f;
-		this.CodePark=g;
+		this.designationPark=g;
 		this.PrixLocation=h;
 		this.disponible=i;
 	}
@@ -68,8 +68,8 @@ public class Vehicule {
 	}
 
 
-	public int getCodePark() {
-		return CodePark;
+	public String getNomPark() {
+		return designationPark;
 	}
 
 	public boolean getDisponible() {

@@ -117,7 +117,7 @@ public class ChangeExistingVehicle extends JPanel{
 								carburant.getText(),
 								Long.parseLong(kilometrage.getText()),
 								Date.valueOf(YcomboBox.getSelectedItem() +"-"+McomboBox.getSelectedItem()+"-"+DcomboBox.getSelectedItem()),
-								Integer.parseInt(parkComboBox.getSelectedItem().toString()),
+								parkComboBox.getSelectedItem().toString(),
 								Integer.parseInt(prixLocation.getText())
 								,disponible.isSelected());
 						VehiculeController.saveChanges(V,ChangeExistingVehicle.oldId);
@@ -165,7 +165,7 @@ public class ChangeExistingVehicle extends JPanel{
 		kilometrage.setColumns(10);
 		this.add(kilometrage);
 		
-		JLabel lblNewLabel_1_1_5_2 = new JLabel("Code park:");
+		JLabel lblNewLabel_1_1_5_2 = new JLabel("Nom parking:");
 		lblNewLabel_1_1_5_2.setBounds(71, 278, 142, 19);
 		lblNewLabel_1_1_5_2.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(lblNewLabel_1_1_5_2);
@@ -256,10 +256,7 @@ public class ChangeExistingVehicle extends JPanel{
 		parkComboBox.setBackground(viewSettings.SECONDARY);
 		parkComboBox.setBounds(70, 307, 154, 35);
 		add(parkComboBox);
-		parkComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9",
-				"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-				"20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
-				"30", "31","32","33","34","35","36","37","38","39","40"}));
+		parkComboBox.setModel(new DefaultComboBoxModel(VehiculeController.ParksNames().toArray()));
 	}
 	
 	

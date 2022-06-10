@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import connectionManager.ConnectionManager;
 import log.LogMgr;
 import model.Client;
+import model.Contrat;
 import model.Reservation;
 import model.Reservation.filtre;
 import model.Vehicule;
@@ -95,6 +96,56 @@ public interface ReservationDAO {
 		return reservList;
 	}
 
+	/**methode qui retourne la liste des reservations correspondant au critere de recherche*/
+	public static ArrayList<Reservation> findUserAutoCompleting(int codeReservation) {
+		String query="SELECT *"
+				+" FROM reservation"
+				+" WHERE  codeReservation like ?;";
+	ArrayList<Reservation> reserv_list = new ArrayList<Reservation>();
+	try {
+		PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
+		prepared.setString(1, codeReservation+"%");
+		ResultSet result = prepared.executeQuery();
+		try {
+			while (result.next()) {
+				Reservation r = new Reservation();
+				r.setClient(new Client());
+				r.setVehicule(new Vehicule());
+				r.setCodeReservation(result.getInt("codeReservation"));
+				
+				r.getClient().setCodeClient(result.getInt("codeClient"));
+				r.getVehicule().setCodeVehicule(result.getString("codeVehicule"));
+				
+				r.setDateDepart(result.getDate("dateDepReservation"));
+				r.setDateRetour(result.getDate("dateRetReservation"));
+				
+				r.setValid(result.getBoolean("isValid"));
+				r.setCanceled(result.getBoolean("isCanceled"));
+				//Rechercher les informations liees au client associee à la reservation
+				query = "SELECT * FROM client WHERE codeClient = ?;";
+				PreparedStatement ps = ConnectionManager.getConnection().prepareStatement(query);
+				ps.setInt(1, r.getClient().getCodeClient());
+				
+				ResultSet result2 = ps.executeQuery();
+				if(result2.next()) {
+					Client c = r.getClient();
+					c.setNomClient(result2.getString("nomClient"));
+					c.setPrenomClient(result2.getString("prenomClient"));
+				}
+				reserv_list.add(r);
+			}
+			
+		} catch (SQLException e) {
+			JOptionPane.showConfirmDialog(null, e.getMessage(), "vehicule display error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+		}
+		
+	} catch (SQLException e) {
+		JOptionPane.showConfirmDialog(null, e.getMessage(), "vehicule display error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+		e.printStackTrace();
+	}
+	
+	return reserv_list;
+	}
 	
 	/**
 	 * Methode qui recherche une reservation par son code
@@ -160,8 +211,21 @@ public interface ReservationDAO {
 		
 		return reservList;
 	}
-	
-	
+	/**METHODE QUI VALIDE UNE RESERVATION*/
+	public static void setReservationValid(int codeReservation) {
+		String query = "UPDATE `reservation`"
+				+ " SET  `isValid` = 1"
+				+ " WHERE `reservation`.`codeReservation` = ?;";
+		try {
+			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
+			prepared.setInt(1, codeReservation);
+			prepared.execute();
+		} catch (SQLException e) {
+			JOptionPane.showConfirmDialog(null, "Erreur Validation de la Reservation", "Erreur", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			LogMgr.error("Erreur Modification Reservation", e);
+		}
+	}
+
 	/**
 	 * Methode qui créee une nouvelle reservation dans la bd
 	 * @param codeClient
@@ -279,4 +343,7 @@ public interface ReservationDAO {
 		}
 		return false;
 	}
+
+
+	
 }

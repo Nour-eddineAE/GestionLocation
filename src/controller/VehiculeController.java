@@ -49,13 +49,20 @@ public class VehiculeController {
 		}
 	}
 	//METHODE SAUVEAGARDER L'ENREGISTREMENT
-	public static void saveNewVehicule(AddNewVehicule ANV,Vehicule vehicule) {
-			if(vehiculeDAO.createVehicule(vehicule)) {
-				VehiculeController.fetchAll();
-				JOptionPane.showMessageDialog(null,"Vehicule ajouté", "Ajouté avec succés", JOptionPane.INFORMATION_MESSAGE);
-				window.showOnMainPanel("vehicule");//revenir au menu principal
+	public static void saveNewVehicule(AddNewVehicule ANV,Vehicule v) {
+		
+		if(v.getCarburant().matches("[a-zA-Z]*") && v.getMatricule().matches("[a-zA-Z 0-9]*")&&v.getMarque().matches("[a-zA-Z 0-9]*")&&v.getType().matches("[a-zA-Z]*")) {
+				if(vehiculeDAO.createVehicule(v)) {
+					VehiculeController.fetchAll();
+					JOptionPane.showMessageDialog(null,"Vehicule ajouté", "Ajouté avec succés", JOptionPane.INFORMATION_MESSAGE);
+					window.showOnMainPanel("vehicule");//revenir au menu principal
 			}else
 				JOptionPane.showMessageDialog(null,"Ajout echoué", "Probléme d'ajout", JOptionPane.ERROR_MESSAGE);
+		}
+		else {
+			JOptionPane.showMessageDialog(null,"Seulement les alphabets sont permis pour les champs(type,carburant),"
+					+ "les alphabets et les nombres  pour les champs(matricule,marque) ", "Incorrect input", JOptionPane.ERROR_MESSAGE);
+		}
 		
 	}
 	//MRTHODE ANNULER L'ENREGISTREMENT/CHANGEMENT
@@ -77,7 +84,7 @@ public class VehiculeController {
 		AVIP.getLbl_carburant().setText(V.getCarburant());
 		AVIP.getLbl_kilometrage().setText(V.getKilometrage()+" KM");
 		AVIP.getLblDMC().setText(V.getDMC()+"");
-		AVIP.getLbl_codeParking().setText(V.getCodePark()+"");
+		AVIP.getLbl_codeParking().setText(V.getNomPark());
 		AVIP.getLbl_PLocation().setText(V.getPrixLocation()+" DH");
 		if(V.getDisponible())
 			AVIP.getLbl_disponibilite().setText("Oui");
@@ -121,7 +128,7 @@ public class VehiculeController {
 			CEV.getYcomboBox().setSelectedItem( LD.getYear()+"");
 			CEV.getMcomboBox().setSelectedItem( LD.getMonthValue()+"");
 			CEV.getDcomboBox().setSelectedItem( LD.getDayOfMonth()+"");
-			CEV.getParkComboBox().setSelectedItem(v.getCodePark()+"");;
+			CEV.getParkComboBox().setSelectedItem(v.getNomPark());;
 			CEV.getPrixLocation().setText(v.getPrixLocation()+"");
 			CEV.getDisponible().setSelected(v.getDisponible());
 			VehiculeController.changeDisponibility(CEV);
@@ -140,16 +147,24 @@ public class VehiculeController {
 		if(vehiculeDAO.verifyVehicle(v.getMatricule())&&!(v.getMatricule().equals(oldId))) {//SI LA MATRICULE EXITE DEJA MAIS DIFFERENT DE L'ANCIEN MATRICULE
 			JOptionPane.showMessageDialog(null,"the field 'matricule' exists already, change it then click save", "Id problem", JOptionPane.ERROR_MESSAGE);
 		}else {
-			if(vehiculeDAO.ChangeVehicle(v,oldId)) {
-				VehiculeController.fetchAll();
-				JOptionPane.showMessageDialog(null,"Vehicule modifié ", "Modification avec succés", JOptionPane.INFORMATION_MESSAGE);
-				window.showOnMainPanel("vehicule");//REVENIR AU MENU VEHICULE
-			}else
-				JOptionPane.showMessageDialog(null,"Ajout echoué", "Probléme d'ajout", JOptionPane.ERROR_MESSAGE);
+			if(v.getCarburant().matches("[a-zA-Z]*") && v.getMatricule().matches("[a-zA-Z 0-9]*")&&v.getMarque().matches("[a-zA-Z 0-9]*")&&v.getType().matches("[a-zA-Z]*")) {
+				if(vehiculeDAO.ChangeVehicle(v,oldId)) {
+					VehiculeController.fetchAll();
+					JOptionPane.showMessageDialog(null,"Vehicule modifié ", "Modification avec succés", JOptionPane.INFORMATION_MESSAGE);
+					window.showOnMainPanel("vehicule");//REVENIR AU MENU VEHICULE
+				}else
+					JOptionPane.showMessageDialog(null,"Modification echoué", "Probléme de modification", JOptionPane.ERROR_MESSAGE);
+			}else {
+				JOptionPane.showMessageDialog(null,"Seulement les alphabets sont permis pour les champs(type,carburant),"
+						+ "les alphabets et les nombres  pour les champs(matricule,marque) ", "Incorrect input", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 
 	}
-	
+	//FONCTION QUI RETROURNE LES NOMS DES PARKINGS
+		public static ArrayList<String> ParksNames(){
+			return vehiculeDAO.nomPark();
+		}
 	
 	
 	

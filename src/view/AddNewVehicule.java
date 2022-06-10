@@ -106,7 +106,6 @@ public class AddNewVehicule  extends JPanel{
 		JButton saveNewVehicule = new JButton("Enregistrer");
 		saveNewVehicule.setBackground(viewSettings.SECONDARY);
 		saveNewVehicule.setBounds(544, 486, 159, 37);
-		saveNewVehicule.setFont(new Font("Tahoma", Font.BOLD, viewSettings.FONTSIZE));
 		saveNewVehicule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!VehiculeController.empty(AddNewVehicule.this)) {
@@ -118,7 +117,7 @@ public class AddNewVehicule  extends JPanel{
 								carburant.getText(),
 								Long.parseLong(kilometrage.getText()),
 								Date.valueOf(YcomboBox.getSelectedItem() +"-"+McomboBox.getSelectedItem()+"-"+DcomboBox.getSelectedItem()),
-								Integer.parseInt(parkComboBox.getSelectedItem().toString()),
+								parkComboBox.getSelectedItem().toString(),
 								Integer.parseInt(prixLocation.getText()),
 								disponible.isSelected());
 						VehiculeController.saveNewVehicule(AddNewVehicule.this,V);
@@ -166,7 +165,7 @@ public class AddNewVehicule  extends JPanel{
 		kilometrage.setColumns(10);
 		this.add(kilometrage);
 		
-		JLabel code_park_lbl = new JLabel("Code park:");
+		JLabel code_park_lbl = new JLabel("Nom parking");
 		code_park_lbl.setBounds(97, 295, 112, 20);
 		code_park_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(code_park_lbl);
@@ -249,10 +248,7 @@ public class AddNewVehicule  extends JPanel{
 		parkComboBox.setBackground(viewSettings.SECONDARY);
 		parkComboBox.setBounds(97, 314, 154, 27);
 		add(parkComboBox);
-		parkComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9",
-				"10", "11", "12", "13", "14", "15", "16", "17", "18","19",
-				"20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
-				"30", "31","32","33","34","35","36","37","38","39","40"}));
+		parkComboBox.setModel(new DefaultComboBoxModel(VehiculeController.ParksNames().toArray()));
 	}
 	
 	

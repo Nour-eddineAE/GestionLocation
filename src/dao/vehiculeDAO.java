@@ -26,7 +26,7 @@ public class vehiculeDAO {
 						result.getString("carburant"),
 						result.getInt("kilometrage"),
 						result.getDate("dateMiseCirculation"),
-						result.getInt("codePark"),
+						result.getString("designationPark"),
 						result.getInt("prixLocation"),
 						result.getBoolean("disponible"));
 				Vehicule_list.add(V);
@@ -57,7 +57,7 @@ public class vehiculeDAO {
 							result.getString("carburant"),
 							result.getInt("kilometrage"),
 							result.getDate("dateMiseCirculation"),
-							result.getInt("codePark"),
+							result.getString("designationPark"),
 							result.getInt("prixLocation"),
 							result.getBoolean("disponible"));
 					return V;
@@ -111,7 +111,7 @@ public class vehiculeDAO {
 							result.getString("carburant"),
 							result.getInt("kilometrage"),
 							result.getDate("dateMiseCirculation"),
-							result.getInt("codePark"),
+							result.getString("designationPark"),
 							result.getInt("prixLocation"),
 							result.getBoolean("disponible"));
 					Vehicule_list.add(V);
@@ -131,7 +131,7 @@ public class vehiculeDAO {
 	// MEHTODE QUI AJOUTE UN VEHICULE A  LA BASE DE DONNEES 
 	public static boolean createVehicule(Vehicule vehicule) {
 		String query="INSERT INTO `vehicule` (`Immatriculation`, `marqueVehicule`, `typeVehicule`, `carburant`,"+
-					" `kilometrage`, `dateMiseCirculation`, `codePark`, `prixLocation`, `disponible`) "+
+					" `kilometrage`, `dateMiseCirculation`, `designationPark`, `prixLocation`, `disponible`) "+
 					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		PreparedStatement prepared;
 		try {
@@ -142,7 +142,7 @@ public class vehiculeDAO {
 			prepared.setString(4, vehicule.getCarburant());
 			prepared.setDouble(5, vehicule.getKilometrage());
 			prepared.setDate(6, vehicule.getDMC());
-			prepared.setInt(7, vehicule.getCodePark());
+			prepared.setString(7, vehicule.getNomPark());
 			prepared.setDouble(8, vehicule.getPrixLocation());
 			prepared.setBoolean(9, vehicule.getDisponible());
 			prepared.execute();
@@ -172,7 +172,7 @@ public class vehiculeDAO {
 		// TODO Auto-generated method stub
 		String query="UPDATE `vehicule`"
 				+" SET `Immatriculation`=?, `marqueVehicule`=?, `typeVehicule`=?, `carburant`=?,"
-				+ " `kilometrage`=?, `dateMiseCirculation`=?, `codePark`=?, `prixLocation`=?, `disponible`=?"
+				+ " `kilometrage`=?, `dateMiseCirculation`=?, `designationPark`=?, `prixLocation`=?, `disponible`=?"
 				+" WHERE (`Immatriculation` = ?);";
 		PreparedStatement prepared;
 		try {
@@ -183,7 +183,7 @@ public class vehiculeDAO {
 			prepared.setString(4, vehicule.getCarburant());
 			prepared.setDouble(5, vehicule.getKilometrage());
 			prepared.setDate(6, vehicule.getDMC());
-			prepared.setInt(7, vehicule.getCodePark());
+			prepared.setString(7, vehicule.getNomPark());
 			prepared.setDouble(8, vehicule.getPrixLocation());
 			prepared.setBoolean(9, vehicule.getDisponible());
 			prepared.setString(10,oldId);
@@ -194,6 +194,21 @@ public class vehiculeDAO {
 		}
 		
 		return false;
+	}
+	//FONCTION QUI RETOURNE LES NOMS DES PARKINGS
+	public static ArrayList<String> nomPark() {
+		String query="SELECT designation FROM parking;";
+		ArrayList<String> Parkings=new ArrayList<String>();
+		try {
+			PreparedStatement prepared = ConnectionManager.getConnection().prepareStatement(query);
+			ResultSet result = prepared.executeQuery();
+			while(result.next()) {
+				Parkings.add(result.getString("designation"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Parkings;
 	}
 	
 }
